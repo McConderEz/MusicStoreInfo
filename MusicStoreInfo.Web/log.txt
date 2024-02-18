@@ -1,0 +1,1840 @@
+dbug: 18.02.2024 19:06:54.725 CoreEventId.ShadowPropertyCreated[10600] (Microsoft.EntityFrameworkCore.Model.Validation) 
+      The property 'Store.AlbumId' was created in shadow state because there are no eligible CLR members with a matching name.
+warn: 18.02.2024 19:06:54.739 SqlServerEventId.DecimalTypeDefaultWarning[30000] (Microsoft.EntityFrameworkCore.Model.Validation) 
+      No store type was specified for the decimal property 'Price' on entity type 'ProductAlbum'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values in 'OnModelCreating' using 'HasColumnType', specify precision and scale using 'HasPrecision', or configure a value converter using 'HasConversion'.
+dbug: 18.02.2024 19:06:54.795 CoreEventId.ContextInitialized[10403] (Microsoft.EntityFrameworkCore.Infrastructure) 
+      Entity Framework Core 8.0.2 initialized 'MusicStoreDbContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer:8.0.2' with options: None
+dbug: 18.02.2024 19:06:54.802 RelationalEventId.ConnectionCreating[20005] (Microsoft.EntityFrameworkCore.Database.Connection) 
+      Creating DbConnection.
+dbug: 18.02.2024 19:06:54.821 RelationalEventId.ConnectionCreated[20006] (Microsoft.EntityFrameworkCore.Database.Connection) 
+      Created DbConnection. (19ms).
+dbug: 18.02.2024 19:06:54.822 RelationalEventId.ConnectionOpening[20000] (Microsoft.EntityFrameworkCore.Database.Connection) 
+      Opening connection to database 'musicStores' on server '(localdb)\MSSQLLocalDB'.
+dbug: 18.02.2024 19:06:55.719 RelationalEventId.ConnectionError[20004] (Microsoft.EntityFrameworkCore.Database.Connection) 
+      An error occurred using the connection to database 'musicStores' on server '(localdb)\MSSQLLocalDB'.
+dbug: 18.02.2024 19:06:55.742 CoreEventId.ShadowPropertyCreated[10600] (Microsoft.EntityFrameworkCore.Model.Validation) 
+      The property 'Store.AlbumId' was created in shadow state because there are no eligible CLR members with a matching name.
+warn: 18.02.2024 19:06:55.744 SqlServerEventId.DecimalTypeDefaultWarning[30000] (Microsoft.EntityFrameworkCore.Model.Validation) 
+      No store type was specified for the decimal property 'Price' on entity type 'ProductAlbum'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values in 'OnModelCreating' using 'HasColumnType', specify precision and scale using 'HasPrecision', or configure a value converter using 'HasConversion'.
+dbug: 18.02.2024 19:06:55.754 RelationalEventId.ConnectionCreating[20005] (Microsoft.EntityFrameworkCore.Database.Connection) 
+      Creating DbConnection.
+dbug: 18.02.2024 19:06:55.754 RelationalEventId.ConnectionCreated[20006] (Microsoft.EntityFrameworkCore.Database.Connection) 
+      Created DbConnection. (0ms).
+dbug: 18.02.2024 19:06:55.755 RelationalEventId.ConnectionOpening[20000] (Microsoft.EntityFrameworkCore.Database.Connection) 
+      Opening connection to database 'master' on server '(localdb)\MSSQLLocalDB'.
+dbug: 18.02.2024 19:06:55.763 RelationalEventId.ConnectionOpened[20001] (Microsoft.EntityFrameworkCore.Database.Connection) 
+      Opened connection to database 'master' on server '(localdb)\MSSQLLocalDB'.
+dbug: 18.02.2024 19:06:55.765 RelationalEventId.CommandCreating[20103] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Creating DbCommand for 'ExecuteNonQuery'.
+dbug: 18.02.2024 19:06:55.768 RelationalEventId.CommandCreated[20104] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Created DbCommand for 'ExecuteNonQuery' (2ms).
+dbug: 18.02.2024 19:06:55.769 RelationalEventId.CommandInitialized[20106] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Initialized DbCommand for 'ExecuteNonQuery' (4ms).
+dbug: 18.02.2024 19:06:55.771 RelationalEventId.CommandExecuting[20100] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Executing DbCommand [Parameters=[], CommandType='Text', CommandTimeout='60']
+      CREATE DATABASE [musicStores];
+info: 18.02.2024 19:06:55.886 RelationalEventId.CommandExecuted[20101] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Executed DbCommand (114ms) [Parameters=[], CommandType='Text', CommandTimeout='60']
+      CREATE DATABASE [musicStores];
+dbug: 18.02.2024 19:06:55.886 RelationalEventId.CommandCreating[20103] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Creating DbCommand for 'ExecuteNonQuery'.
+dbug: 18.02.2024 19:06:55.886 RelationalEventId.CommandCreated[20104] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Created DbCommand for 'ExecuteNonQuery' (0ms).
+dbug: 18.02.2024 19:06:55.886 RelationalEventId.CommandInitialized[20106] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Initialized DbCommand for 'ExecuteNonQuery' (0ms).
+dbug: 18.02.2024 19:06:55.886 RelationalEventId.CommandExecuting[20100] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Executing DbCommand [Parameters=[], CommandType='Text', CommandTimeout='60']
+      IF SERVERPROPERTY('EngineEdition') <> 5
+      BEGIN
+          ALTER DATABASE [musicStores] SET READ_COMMITTED_SNAPSHOT ON;
+      END;
+info: 18.02.2024 19:06:55.930 RelationalEventId.CommandExecuted[20101] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Executed DbCommand (43ms) [Parameters=[], CommandType='Text', CommandTimeout='60']
+      IF SERVERPROPERTY('EngineEdition') <> 5
+      BEGIN
+          ALTER DATABASE [musicStores] SET READ_COMMITTED_SNAPSHOT ON;
+      END;
+dbug: 18.02.2024 19:06:55.930 RelationalEventId.ConnectionClosing[20002] (Microsoft.EntityFrameworkCore.Database.Connection) 
+      Closing connection to database 'master' on server '(localdb)\MSSQLLocalDB'.
+dbug: 18.02.2024 19:06:55.934 RelationalEventId.ConnectionClosed[20003] (Microsoft.EntityFrameworkCore.Database.Connection) 
+      Closed connection to database 'master' on server '(localdb)\MSSQLLocalDB' (2ms).
+dbug: 18.02.2024 19:06:55.935 RelationalEventId.ConnectionDisposing[20007] (Microsoft.EntityFrameworkCore.Database.Connection) 
+      Disposing connection to database 'master' on server '(localdb)\MSSQLLocalDB'.
+dbug: 18.02.2024 19:06:55.935 RelationalEventId.ConnectionDisposed[20008] (Microsoft.EntityFrameworkCore.Database.Connection) 
+      Disposed connection to database '' on server '' (0ms).
+dbug: 18.02.2024 19:06:55.935 RelationalEventId.ConnectionOpening[20000] (Microsoft.EntityFrameworkCore.Database.Connection) 
+      Opening connection to database 'musicStores' on server '(localdb)\MSSQLLocalDB'.
+dbug: 18.02.2024 19:06:55.937 RelationalEventId.ConnectionOpened[20001] (Microsoft.EntityFrameworkCore.Database.Connection) 
+      Opened connection to database 'musicStores' on server '(localdb)\MSSQLLocalDB'.
+dbug: 18.02.2024 19:06:55.938 RelationalEventId.CommandCreating[20103] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Creating DbCommand for 'ExecuteNonQuery'.
+dbug: 18.02.2024 19:06:55.938 RelationalEventId.CommandCreated[20104] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Created DbCommand for 'ExecuteNonQuery' (0ms).
+dbug: 18.02.2024 19:06:55.938 RelationalEventId.CommandInitialized[20106] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Initialized DbCommand for 'ExecuteNonQuery' (0ms).
+dbug: 18.02.2024 19:06:55.938 RelationalEventId.CommandExecuting[20100] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Executing DbCommand [Parameters=[], CommandType='Text', CommandTimeout='30']
+      SELECT 1
+info: 18.02.2024 19:06:55.941 RelationalEventId.CommandExecuted[20101] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Executed DbCommand (4ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      SELECT 1
+dbug: 18.02.2024 19:06:55.941 RelationalEventId.ConnectionClosing[20002] (Microsoft.EntityFrameworkCore.Database.Connection) 
+      Closing connection to database 'musicStores' on server '(localdb)\MSSQLLocalDB'.
+dbug: 18.02.2024 19:06:55.941 RelationalEventId.ConnectionClosed[20003] (Microsoft.EntityFrameworkCore.Database.Connection) 
+      Closed connection to database 'musicStores' on server '(localdb)\MSSQLLocalDB' (0ms).
+dbug: 18.02.2024 19:06:55.978 RelationalEventId.ConnectionOpening[20000] (Microsoft.EntityFrameworkCore.Database.Connection) 
+      Opening connection to database 'musicStores' on server '(localdb)\MSSQLLocalDB'.
+dbug: 18.02.2024 19:06:55.978 RelationalEventId.ConnectionOpened[20001] (Microsoft.EntityFrameworkCore.Database.Connection) 
+      Opened connection to database 'musicStores' on server '(localdb)\MSSQLLocalDB'.
+dbug: 18.02.2024 19:06:55.979 RelationalEventId.TransactionStarting[20209] (Microsoft.EntityFrameworkCore.Database.Transaction) 
+      Beginning transaction with isolation level 'Unspecified'.
+dbug: 18.02.2024 19:06:55.982 RelationalEventId.TransactionStarted[20200] (Microsoft.EntityFrameworkCore.Database.Transaction) 
+      Began transaction with isolation level 'ReadCommitted'.
+dbug: 18.02.2024 19:06:55.982 RelationalEventId.CommandCreating[20103] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Creating DbCommand for 'ExecuteNonQuery'.
+dbug: 18.02.2024 19:06:55.982 RelationalEventId.CommandCreated[20104] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Created DbCommand for 'ExecuteNonQuery' (0ms).
+dbug: 18.02.2024 19:06:55.983 RelationalEventId.CommandInitialized[20106] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Initialized DbCommand for 'ExecuteNonQuery' (0ms).
+dbug: 18.02.2024 19:06:55.983 RelationalEventId.CommandExecuting[20100] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Executing DbCommand [Parameters=[], CommandType='Text', CommandTimeout='30']
+      CREATE TABLE [Albums] (
+          [Id] int NOT NULL IDENTITY,
+          [Name] nvarchar(max) NOT NULL,
+          [ListenerTypeId] int NOT NULL,
+          [CompanyId] int NOT NULL,
+          [CityId] int NOT NULL,
+          [Duration] int NOT NULL,
+          [ReleaseDate] datetime2 NOT NULL,
+          [SongsCount] int NOT NULL,
+          CONSTRAINT [PK_Albums] PRIMARY KEY ([Id])
+      );
+info: 18.02.2024 19:06:55.986 RelationalEventId.CommandExecuted[20101] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Executed DbCommand (3ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      CREATE TABLE [Albums] (
+          [Id] int NOT NULL IDENTITY,
+          [Name] nvarchar(max) NOT NULL,
+          [ListenerTypeId] int NOT NULL,
+          [CompanyId] int NOT NULL,
+          [CityId] int NOT NULL,
+          [Duration] int NOT NULL,
+          [ReleaseDate] datetime2 NOT NULL,
+          [SongsCount] int NOT NULL,
+          CONSTRAINT [PK_Albums] PRIMARY KEY ([Id])
+      );
+dbug: 18.02.2024 19:06:55.986 RelationalEventId.CommandCreating[20103] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Creating DbCommand for 'ExecuteNonQuery'.
+dbug: 18.02.2024 19:06:55.986 RelationalEventId.CommandCreated[20104] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Created DbCommand for 'ExecuteNonQuery' (0ms).
+dbug: 18.02.2024 19:06:55.986 RelationalEventId.CommandInitialized[20106] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Initialized DbCommand for 'ExecuteNonQuery' (0ms).
+dbug: 18.02.2024 19:06:55.986 RelationalEventId.CommandExecuting[20100] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Executing DbCommand [Parameters=[], CommandType='Text', CommandTimeout='30']
+      CREATE TABLE [Cities] (
+          [Id] int NOT NULL IDENTITY,
+          [Name] nvarchar(max) NOT NULL,
+          CONSTRAINT [PK_Cities] PRIMARY KEY ([Id])
+      );
+info: 18.02.2024 19:06:55.987 RelationalEventId.CommandExecuted[20101] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Executed DbCommand (1ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      CREATE TABLE [Cities] (
+          [Id] int NOT NULL IDENTITY,
+          [Name] nvarchar(max) NOT NULL,
+          CONSTRAINT [PK_Cities] PRIMARY KEY ([Id])
+      );
+dbug: 18.02.2024 19:06:55.987 RelationalEventId.CommandCreating[20103] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Creating DbCommand for 'ExecuteNonQuery'.
+dbug: 18.02.2024 19:06:55.987 RelationalEventId.CommandCreated[20104] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Created DbCommand for 'ExecuteNonQuery' (0ms).
+dbug: 18.02.2024 19:06:55.987 RelationalEventId.CommandInitialized[20106] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Initialized DbCommand for 'ExecuteNonQuery' (0ms).
+dbug: 18.02.2024 19:06:55.987 RelationalEventId.CommandExecuting[20100] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Executing DbCommand [Parameters=[], CommandType='Text', CommandTimeout='30']
+      CREATE TABLE [Companies] (
+          [Id] int NOT NULL IDENTITY,
+          [PhoneNumber] nvarchar(max) NOT NULL,
+          [Name] nvarchar(max) NOT NULL,
+          [CityId] int NOT NULL,
+          CONSTRAINT [PK_Companies] PRIMARY KEY ([Id])
+      );
+info: 18.02.2024 19:06:55.987 RelationalEventId.CommandExecuted[20101] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Executed DbCommand (1ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      CREATE TABLE [Companies] (
+          [Id] int NOT NULL IDENTITY,
+          [PhoneNumber] nvarchar(max) NOT NULL,
+          [Name] nvarchar(max) NOT NULL,
+          [CityId] int NOT NULL,
+          CONSTRAINT [PK_Companies] PRIMARY KEY ([Id])
+      );
+dbug: 18.02.2024 19:06:55.987 RelationalEventId.CommandCreating[20103] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Creating DbCommand for 'ExecuteNonQuery'.
+dbug: 18.02.2024 19:06:55.987 RelationalEventId.CommandCreated[20104] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Created DbCommand for 'ExecuteNonQuery' (0ms).
+dbug: 18.02.2024 19:06:55.987 RelationalEventId.CommandInitialized[20106] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Initialized DbCommand for 'ExecuteNonQuery' (0ms).
+dbug: 18.02.2024 19:06:55.987 RelationalEventId.CommandExecuting[20100] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Executing DbCommand [Parameters=[], CommandType='Text', CommandTimeout='30']
+      CREATE TABLE [Districts] (
+          [Id] int NOT NULL IDENTITY,
+          [CityId] int NOT NULL,
+          [Name] nvarchar(max) NOT NULL,
+          CONSTRAINT [PK_Districts] PRIMARY KEY ([Id])
+      );
+info: 18.02.2024 19:06:55.988 RelationalEventId.CommandExecuted[20101] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Executed DbCommand (1ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      CREATE TABLE [Districts] (
+          [Id] int NOT NULL IDENTITY,
+          [CityId] int NOT NULL,
+          [Name] nvarchar(max) NOT NULL,
+          CONSTRAINT [PK_Districts] PRIMARY KEY ([Id])
+      );
+dbug: 18.02.2024 19:06:55.988 RelationalEventId.CommandCreating[20103] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Creating DbCommand for 'ExecuteNonQuery'.
+dbug: 18.02.2024 19:06:55.988 RelationalEventId.CommandCreated[20104] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Created DbCommand for 'ExecuteNonQuery' (0ms).
+dbug: 18.02.2024 19:06:55.988 RelationalEventId.CommandInitialized[20106] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Initialized DbCommand for 'ExecuteNonQuery' (0ms).
+dbug: 18.02.2024 19:06:55.988 RelationalEventId.CommandExecuting[20100] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Executing DbCommand [Parameters=[], CommandType='Text', CommandTimeout='30']
+      CREATE TABLE [ListenerTypes] (
+          [Id] int NOT NULL IDENTITY,
+          [Name] nvarchar(max) NOT NULL,
+          CONSTRAINT [PK_ListenerTypes] PRIMARY KEY ([Id])
+      );
+info: 18.02.2024 19:06:55.989 RelationalEventId.CommandExecuted[20101] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Executed DbCommand (1ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      CREATE TABLE [ListenerTypes] (
+          [Id] int NOT NULL IDENTITY,
+          [Name] nvarchar(max) NOT NULL,
+          CONSTRAINT [PK_ListenerTypes] PRIMARY KEY ([Id])
+      );
+dbug: 18.02.2024 19:06:55.989 RelationalEventId.CommandCreating[20103] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Creating DbCommand for 'ExecuteNonQuery'.
+dbug: 18.02.2024 19:06:55.989 RelationalEventId.CommandCreated[20104] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Created DbCommand for 'ExecuteNonQuery' (0ms).
+dbug: 18.02.2024 19:06:55.989 RelationalEventId.CommandInitialized[20106] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Initialized DbCommand for 'ExecuteNonQuery' (0ms).
+dbug: 18.02.2024 19:06:55.989 RelationalEventId.CommandExecuting[20100] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Executing DbCommand [Parameters=[], CommandType='Text', CommandTimeout='30']
+      CREATE TABLE [OwnershipTypes] (
+          [Id] int NOT NULL IDENTITY,
+          [Name] nvarchar(max) NOT NULL,
+          CONSTRAINT [PK_OwnershipTypes] PRIMARY KEY ([Id])
+      );
+info: 18.02.2024 19:06:55.989 RelationalEventId.CommandExecuted[20101] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Executed DbCommand (0ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      CREATE TABLE [OwnershipTypes] (
+          [Id] int NOT NULL IDENTITY,
+          [Name] nvarchar(max) NOT NULL,
+          CONSTRAINT [PK_OwnershipTypes] PRIMARY KEY ([Id])
+      );
+dbug: 18.02.2024 19:06:55.989 RelationalEventId.CommandCreating[20103] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Creating DbCommand for 'ExecuteNonQuery'.
+dbug: 18.02.2024 19:06:55.989 RelationalEventId.CommandCreated[20104] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Created DbCommand for 'ExecuteNonQuery' (0ms).
+dbug: 18.02.2024 19:06:55.989 RelationalEventId.CommandInitialized[20106] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Initialized DbCommand for 'ExecuteNonQuery' (0ms).
+dbug: 18.02.2024 19:06:55.989 RelationalEventId.CommandExecuting[20100] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Executing DbCommand [Parameters=[], CommandType='Text', CommandTimeout='30']
+      CREATE TABLE [Cassettes] (
+          [Id] int NOT NULL IDENTITY,
+          [AlbumId] int NOT NULL,
+          [Name] nvarchar(max) NOT NULL,
+          [Duration] int NOT NULL,
+          CONSTRAINT [PK_Cassettes] PRIMARY KEY ([Id]),
+          CONSTRAINT [FK_Cassettes_Albums_AlbumId] FOREIGN KEY ([AlbumId]) REFERENCES [Albums] ([Id]) ON DELETE CASCADE
+      );
+info: 18.02.2024 19:06:55.990 RelationalEventId.CommandExecuted[20101] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Executed DbCommand (1ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      CREATE TABLE [Cassettes] (
+          [Id] int NOT NULL IDENTITY,
+          [AlbumId] int NOT NULL,
+          [Name] nvarchar(max) NOT NULL,
+          [Duration] int NOT NULL,
+          CONSTRAINT [PK_Cassettes] PRIMARY KEY ([Id]),
+          CONSTRAINT [FK_Cassettes_Albums_AlbumId] FOREIGN KEY ([AlbumId]) REFERENCES [Albums] ([Id]) ON DELETE CASCADE
+      );
+dbug: 18.02.2024 19:06:55.990 RelationalEventId.CommandCreating[20103] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Creating DbCommand for 'ExecuteNonQuery'.
+dbug: 18.02.2024 19:06:55.990 RelationalEventId.CommandCreated[20104] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Created DbCommand for 'ExecuteNonQuery' (0ms).
+dbug: 18.02.2024 19:06:55.990 RelationalEventId.CommandInitialized[20106] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Initialized DbCommand for 'ExecuteNonQuery' (0ms).
+dbug: 18.02.2024 19:06:55.990 RelationalEventId.CommandExecuting[20100] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Executing DbCommand [Parameters=[], CommandType='Text', CommandTimeout='30']
+      CREATE TABLE [Stores] (
+          [Id] int NOT NULL IDENTITY,
+          [OwnershipTypeId] int NOT NULL,
+          [PhoneNumber] nvarchar(max) NOT NULL,
+          [Name] nvarchar(max) NOT NULL,
+          [YearOpened] datetime2 NOT NULL,
+          [AlbumId] int NULL,
+          CONSTRAINT [PK_Stores] PRIMARY KEY ([Id]),
+          CONSTRAINT [FK_Stores_Albums_AlbumId] FOREIGN KEY ([AlbumId]) REFERENCES [Albums] ([Id])
+      );
+info: 18.02.2024 19:06:55.991 RelationalEventId.CommandExecuted[20101] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Executed DbCommand (1ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      CREATE TABLE [Stores] (
+          [Id] int NOT NULL IDENTITY,
+          [OwnershipTypeId] int NOT NULL,
+          [PhoneNumber] nvarchar(max) NOT NULL,
+          [Name] nvarchar(max) NOT NULL,
+          [YearOpened] datetime2 NOT NULL,
+          [AlbumId] int NULL,
+          CONSTRAINT [PK_Stores] PRIMARY KEY ([Id]),
+          CONSTRAINT [FK_Stores_Albums_AlbumId] FOREIGN KEY ([AlbumId]) REFERENCES [Albums] ([Id])
+      );
+dbug: 18.02.2024 19:06:55.991 RelationalEventId.CommandCreating[20103] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Creating DbCommand for 'ExecuteNonQuery'.
+dbug: 18.02.2024 19:06:55.991 RelationalEventId.CommandCreated[20104] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Created DbCommand for 'ExecuteNonQuery' (0ms).
+dbug: 18.02.2024 19:06:55.991 RelationalEventId.CommandInitialized[20106] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Initialized DbCommand for 'ExecuteNonQuery' (0ms).
+dbug: 18.02.2024 19:06:55.991 RelationalEventId.CommandExecuting[20100] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Executing DbCommand [Parameters=[], CommandType='Text', CommandTimeout='30']
+      CREATE TABLE [ProductAlbums] (
+          [Id] int NOT NULL IDENTITY,
+          [StoreId] int NOT NULL,
+          [AlbumId] int NOT NULL,
+          [DateReceived] datetime2 NOT NULL,
+          [Quantity] int NOT NULL,
+          [Price] decimal(18,2) NOT NULL,
+          CONSTRAINT [PK_ProductAlbums] PRIMARY KEY ([Id]),
+          CONSTRAINT [FK_ProductAlbums_Albums_AlbumId] FOREIGN KEY ([AlbumId]) REFERENCES [Albums] ([Id]) ON DELETE CASCADE,
+          CONSTRAINT [FK_ProductAlbums_Stores_StoreId] FOREIGN KEY ([StoreId]) REFERENCES [Stores] ([Id]) ON DELETE CASCADE
+      );
+info: 18.02.2024 19:06:55.992 RelationalEventId.CommandExecuted[20101] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Executed DbCommand (1ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      CREATE TABLE [ProductAlbums] (
+          [Id] int NOT NULL IDENTITY,
+          [StoreId] int NOT NULL,
+          [AlbumId] int NOT NULL,
+          [DateReceived] datetime2 NOT NULL,
+          [Quantity] int NOT NULL,
+          [Price] decimal(18,2) NOT NULL,
+          CONSTRAINT [PK_ProductAlbums] PRIMARY KEY ([Id]),
+          CONSTRAINT [FK_ProductAlbums_Albums_AlbumId] FOREIGN KEY ([AlbumId]) REFERENCES [Albums] ([Id]) ON DELETE CASCADE,
+          CONSTRAINT [FK_ProductAlbums_Stores_StoreId] FOREIGN KEY ([StoreId]) REFERENCES [Stores] ([Id]) ON DELETE CASCADE
+      );
+dbug: 18.02.2024 19:06:55.992 RelationalEventId.CommandCreating[20103] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Creating DbCommand for 'ExecuteNonQuery'.
+dbug: 18.02.2024 19:06:55.992 RelationalEventId.CommandCreated[20104] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Created DbCommand for 'ExecuteNonQuery' (0ms).
+dbug: 18.02.2024 19:06:55.992 RelationalEventId.CommandInitialized[20106] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Initialized DbCommand for 'ExecuteNonQuery' (0ms).
+dbug: 18.02.2024 19:06:55.992 RelationalEventId.CommandExecuting[20100] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Executing DbCommand [Parameters=[], CommandType='Text', CommandTimeout='30']
+      CREATE INDEX [IX_Cassettes_AlbumId] ON [Cassettes] ([AlbumId]);
+info: 18.02.2024 19:06:55.992 RelationalEventId.CommandExecuted[20101] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Executed DbCommand (0ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      CREATE INDEX [IX_Cassettes_AlbumId] ON [Cassettes] ([AlbumId]);
+dbug: 18.02.2024 19:06:55.992 RelationalEventId.CommandCreating[20103] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Creating DbCommand for 'ExecuteNonQuery'.
+dbug: 18.02.2024 19:06:55.992 RelationalEventId.CommandCreated[20104] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Created DbCommand for 'ExecuteNonQuery' (0ms).
+dbug: 18.02.2024 19:06:55.992 RelationalEventId.CommandInitialized[20106] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Initialized DbCommand for 'ExecuteNonQuery' (0ms).
+dbug: 18.02.2024 19:06:55.992 RelationalEventId.CommandExecuting[20100] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Executing DbCommand [Parameters=[], CommandType='Text', CommandTimeout='30']
+      CREATE INDEX [IX_ProductAlbums_AlbumId] ON [ProductAlbums] ([AlbumId]);
+info: 18.02.2024 19:06:55.992 RelationalEventId.CommandExecuted[20101] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Executed DbCommand (0ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      CREATE INDEX [IX_ProductAlbums_AlbumId] ON [ProductAlbums] ([AlbumId]);
+dbug: 18.02.2024 19:06:55.992 RelationalEventId.CommandCreating[20103] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Creating DbCommand for 'ExecuteNonQuery'.
+dbug: 18.02.2024 19:06:55.992 RelationalEventId.CommandCreated[20104] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Created DbCommand for 'ExecuteNonQuery' (0ms).
+dbug: 18.02.2024 19:06:55.992 RelationalEventId.CommandInitialized[20106] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Initialized DbCommand for 'ExecuteNonQuery' (0ms).
+dbug: 18.02.2024 19:06:55.992 RelationalEventId.CommandExecuting[20100] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Executing DbCommand [Parameters=[], CommandType='Text', CommandTimeout='30']
+      CREATE INDEX [IX_ProductAlbums_StoreId] ON [ProductAlbums] ([StoreId]);
+info: 18.02.2024 19:06:55.993 RelationalEventId.CommandExecuted[20101] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Executed DbCommand (0ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      CREATE INDEX [IX_ProductAlbums_StoreId] ON [ProductAlbums] ([StoreId]);
+dbug: 18.02.2024 19:06:55.993 RelationalEventId.CommandCreating[20103] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Creating DbCommand for 'ExecuteNonQuery'.
+dbug: 18.02.2024 19:06:55.993 RelationalEventId.CommandCreated[20104] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Created DbCommand for 'ExecuteNonQuery' (0ms).
+dbug: 18.02.2024 19:06:55.993 RelationalEventId.CommandInitialized[20106] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Initialized DbCommand for 'ExecuteNonQuery' (0ms).
+dbug: 18.02.2024 19:06:55.993 RelationalEventId.CommandExecuting[20100] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Executing DbCommand [Parameters=[], CommandType='Text', CommandTimeout='30']
+      CREATE INDEX [IX_Stores_AlbumId] ON [Stores] ([AlbumId]);
+info: 18.02.2024 19:06:55.993 RelationalEventId.CommandExecuted[20101] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Executed DbCommand (0ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      CREATE INDEX [IX_Stores_AlbumId] ON [Stores] ([AlbumId]);
+dbug: 18.02.2024 19:06:55.994 RelationalEventId.TransactionCommitting[20210] (Microsoft.EntityFrameworkCore.Database.Transaction) 
+      Committing transaction.
+dbug: 18.02.2024 19:06:55.995 RelationalEventId.TransactionCommitted[20202] (Microsoft.EntityFrameworkCore.Database.Transaction) 
+      Committed transaction.
+dbug: 18.02.2024 19:06:55.996 RelationalEventId.TransactionDisposed[20204] (Microsoft.EntityFrameworkCore.Database.Transaction) 
+      Disposing transaction.
+dbug: 18.02.2024 19:06:55.996 RelationalEventId.ConnectionClosing[20002] (Microsoft.EntityFrameworkCore.Database.Connection) 
+      Closing connection to database 'musicStores' on server '(localdb)\MSSQLLocalDB'.
+dbug: 18.02.2024 19:06:55.996 RelationalEventId.ConnectionClosed[20003] (Microsoft.EntityFrameworkCore.Database.Connection) 
+      Closed connection to database 'musicStores' on server '(localdb)\MSSQLLocalDB' (0ms).
+dbug: 18.02.2024 19:06:56.261 CoreEventId.ContextDisposed[10407] (Microsoft.EntityFrameworkCore.Infrastructure) 
+      'MusicStoreDbContext' disposed.
+dbug: 18.02.2024 19:06:56.262 RelationalEventId.ConnectionDisposing[20007] (Microsoft.EntityFrameworkCore.Database.Connection) 
+      Disposing connection to database 'musicStores' on server '(localdb)\MSSQLLocalDB'.
+dbug: 18.02.2024 19:06:56.263 RelationalEventId.ConnectionDisposed[20008] (Microsoft.EntityFrameworkCore.Database.Connection) 
+      Disposed connection to database '' on server '' (0ms).
+dbug: 18.02.2024 19:07:20.714 CoreEventId.ShadowPropertyCreated[10600] (Microsoft.EntityFrameworkCore.Model.Validation) 
+      The property 'Store.AlbumId' was created in shadow state because there are no eligible CLR members with a matching name.
+warn: 18.02.2024 19:07:20.729 SqlServerEventId.DecimalTypeDefaultWarning[30000] (Microsoft.EntityFrameworkCore.Model.Validation) 
+      No store type was specified for the decimal property 'Price' on entity type 'ProductAlbum'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values in 'OnModelCreating' using 'HasColumnType', specify precision and scale using 'HasPrecision', or configure a value converter using 'HasConversion'.
+dbug: 18.02.2024 19:07:20.784 CoreEventId.ContextInitialized[10403] (Microsoft.EntityFrameworkCore.Infrastructure) 
+      Entity Framework Core 8.0.2 initialized 'MusicStoreDbContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer:8.0.2' with options: None
+dbug: 18.02.2024 19:07:20.790 RelationalEventId.ConnectionCreating[20005] (Microsoft.EntityFrameworkCore.Database.Connection) 
+      Creating DbConnection.
+dbug: 18.02.2024 19:07:20.807 RelationalEventId.ConnectionCreated[20006] (Microsoft.EntityFrameworkCore.Database.Connection) 
+      Created DbConnection. (16ms).
+dbug: 18.02.2024 19:07:20.808 RelationalEventId.ConnectionOpening[20000] (Microsoft.EntityFrameworkCore.Database.Connection) 
+      Opening connection to database 'musicStores' on server '(localdb)\MSSQLLocalDB'.
+dbug: 18.02.2024 19:07:20.927 RelationalEventId.ConnectionOpened[20001] (Microsoft.EntityFrameworkCore.Database.Connection) 
+      Opened connection to database 'musicStores' on server '(localdb)\MSSQLLocalDB'.
+dbug: 18.02.2024 19:07:20.929 RelationalEventId.CommandCreating[20103] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Creating DbCommand for 'ExecuteNonQuery'.
+dbug: 18.02.2024 19:07:20.932 RelationalEventId.CommandCreated[20104] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Created DbCommand for 'ExecuteNonQuery' (1ms).
+dbug: 18.02.2024 19:07:20.932 RelationalEventId.CommandInitialized[20106] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Initialized DbCommand for 'ExecuteNonQuery' (3ms).
+dbug: 18.02.2024 19:07:20.935 RelationalEventId.CommandExecuting[20100] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Executing DbCommand [Parameters=[], CommandType='Text', CommandTimeout='30']
+      SELECT 1
+info: 18.02.2024 19:07:20.946 RelationalEventId.CommandExecuted[20101] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Executed DbCommand (10ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      SELECT 1
+dbug: 18.02.2024 19:07:20.947 RelationalEventId.ConnectionClosing[20002] (Microsoft.EntityFrameworkCore.Database.Connection) 
+      Closing connection to database 'musicStores' on server '(localdb)\MSSQLLocalDB'.
+dbug: 18.02.2024 19:07:20.950 RelationalEventId.ConnectionClosed[20003] (Microsoft.EntityFrameworkCore.Database.Connection) 
+      Closed connection to database 'musicStores' on server '(localdb)\MSSQLLocalDB' (2ms).
+dbug: 18.02.2024 19:07:20.950 RelationalEventId.CommandCreating[20103] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Creating DbCommand for 'ExecuteScalar'.
+dbug: 18.02.2024 19:07:20.950 RelationalEventId.CommandCreated[20104] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Created DbCommand for 'ExecuteScalar' (0ms).
+dbug: 18.02.2024 19:07:20.950 RelationalEventId.CommandInitialized[20106] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Initialized DbCommand for 'ExecuteScalar' (0ms).
+dbug: 18.02.2024 19:07:20.950 RelationalEventId.ConnectionOpening[20000] (Microsoft.EntityFrameworkCore.Database.Connection) 
+      Opening connection to database 'musicStores' on server '(localdb)\MSSQLLocalDB'.
+dbug: 18.02.2024 19:07:20.951 RelationalEventId.ConnectionOpened[20001] (Microsoft.EntityFrameworkCore.Database.Connection) 
+      Opened connection to database 'musicStores' on server '(localdb)\MSSQLLocalDB'.
+dbug: 18.02.2024 19:07:20.951 RelationalEventId.CommandExecuting[20100] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Executing DbCommand [Parameters=[], CommandType='Text', CommandTimeout='30']
+      
+      IF EXISTS
+          (SELECT *
+           FROM [sys].[objects] o
+           WHERE [o].[type] = 'U'
+           AND [o].[is_ms_shipped] = 0
+           AND NOT EXISTS (SELECT *
+               FROM [sys].[extended_properties] AS [ep]
+               WHERE [ep].[major_id] = [o].[object_id]
+                   AND [ep].[minor_id] = 0
+                   AND [ep].[class] = 1
+                   AND [ep].[name] = N'microsoft_database_tools_support'
+          )
+      )
+      SELECT 1 ELSE SELECT 0
+info: 18.02.2024 19:07:20.976 RelationalEventId.CommandExecuted[20101] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Executed DbCommand (25ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      
+      IF EXISTS
+          (SELECT *
+           FROM [sys].[objects] o
+           WHERE [o].[type] = 'U'
+           AND [o].[is_ms_shipped] = 0
+           AND NOT EXISTS (SELECT *
+               FROM [sys].[extended_properties] AS [ep]
+               WHERE [ep].[major_id] = [o].[object_id]
+                   AND [ep].[minor_id] = 0
+                   AND [ep].[class] = 1
+                   AND [ep].[name] = N'microsoft_database_tools_support'
+          )
+      )
+      SELECT 1 ELSE SELECT 0
+dbug: 18.02.2024 19:07:20.976 RelationalEventId.ConnectionClosing[20002] (Microsoft.EntityFrameworkCore.Database.Connection) 
+      Closing connection to database 'musicStores' on server '(localdb)\MSSQLLocalDB'.
+dbug: 18.02.2024 19:07:20.976 RelationalEventId.ConnectionClosed[20003] (Microsoft.EntityFrameworkCore.Database.Connection) 
+      Closed connection to database 'musicStores' on server '(localdb)\MSSQLLocalDB' (0ms).
+dbug: 18.02.2024 19:07:20.983 RelationalEventId.MigrateUsingConnection[20400] (Microsoft.EntityFrameworkCore.Migrations) 
+      Migrating using database 'musicStores' on server '(localdb)\MSSQLLocalDB'.
+dbug: 18.02.2024 19:07:20.983 RelationalEventId.ConnectionOpening[20000] (Microsoft.EntityFrameworkCore.Database.Connection) 
+      Opening connection to database 'musicStores' on server '(localdb)\MSSQLLocalDB'.
+dbug: 18.02.2024 19:07:20.983 RelationalEventId.ConnectionOpened[20001] (Microsoft.EntityFrameworkCore.Database.Connection) 
+      Opened connection to database 'musicStores' on server '(localdb)\MSSQLLocalDB'.
+dbug: 18.02.2024 19:07:20.983 RelationalEventId.CommandCreating[20103] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Creating DbCommand for 'ExecuteNonQuery'.
+dbug: 18.02.2024 19:07:20.984 RelationalEventId.CommandCreated[20104] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Created DbCommand for 'ExecuteNonQuery' (0ms).
+dbug: 18.02.2024 19:07:20.984 RelationalEventId.CommandInitialized[20106] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Initialized DbCommand for 'ExecuteNonQuery' (1ms).
+dbug: 18.02.2024 19:07:20.985 RelationalEventId.CommandExecuting[20100] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Executing DbCommand [Parameters=[], CommandType='Text', CommandTimeout='30']
+      SELECT 1
+info: 18.02.2024 19:07:20.986 RelationalEventId.CommandExecuted[20101] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Executed DbCommand (1ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      SELECT 1
+dbug: 18.02.2024 19:07:20.986 RelationalEventId.ConnectionClosing[20002] (Microsoft.EntityFrameworkCore.Database.Connection) 
+      Closing connection to database 'musicStores' on server '(localdb)\MSSQLLocalDB'.
+dbug: 18.02.2024 19:07:20.986 RelationalEventId.ConnectionClosed[20003] (Microsoft.EntityFrameworkCore.Database.Connection) 
+      Closed connection to database 'musicStores' on server '(localdb)\MSSQLLocalDB' (0ms).
+dbug: 18.02.2024 19:07:20.987 RelationalEventId.CommandCreating[20103] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Creating DbCommand for 'ExecuteScalar'.
+dbug: 18.02.2024 19:07:20.987 RelationalEventId.CommandCreated[20104] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Created DbCommand for 'ExecuteScalar' (0ms).
+dbug: 18.02.2024 19:07:20.987 RelationalEventId.CommandInitialized[20106] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Initialized DbCommand for 'ExecuteScalar' (0ms).
+dbug: 18.02.2024 19:07:20.987 RelationalEventId.ConnectionOpening[20000] (Microsoft.EntityFrameworkCore.Database.Connection) 
+      Opening connection to database 'musicStores' on server '(localdb)\MSSQLLocalDB'.
+dbug: 18.02.2024 19:07:20.987 RelationalEventId.ConnectionOpened[20001] (Microsoft.EntityFrameworkCore.Database.Connection) 
+      Opened connection to database 'musicStores' on server '(localdb)\MSSQLLocalDB'.
+dbug: 18.02.2024 19:07:20.987 RelationalEventId.CommandExecuting[20100] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Executing DbCommand [Parameters=[], CommandType='Text', CommandTimeout='30']
+      SELECT OBJECT_ID(N'[__EFMigrationsHistory]');
+info: 18.02.2024 19:07:20.988 RelationalEventId.CommandExecuted[20101] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Executed DbCommand (1ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      SELECT OBJECT_ID(N'[__EFMigrationsHistory]');
+dbug: 18.02.2024 19:07:20.988 RelationalEventId.ConnectionClosing[20002] (Microsoft.EntityFrameworkCore.Database.Connection) 
+      Closing connection to database 'musicStores' on server '(localdb)\MSSQLLocalDB'.
+dbug: 18.02.2024 19:07:20.988 RelationalEventId.ConnectionClosed[20003] (Microsoft.EntityFrameworkCore.Database.Connection) 
+      Closed connection to database 'musicStores' on server '(localdb)\MSSQLLocalDB' (0ms).
+dbug: 18.02.2024 19:07:20.988 RelationalEventId.ConnectionOpening[20000] (Microsoft.EntityFrameworkCore.Database.Connection) 
+      Opening connection to database 'musicStores' on server '(localdb)\MSSQLLocalDB'.
+dbug: 18.02.2024 19:07:20.988 RelationalEventId.ConnectionOpened[20001] (Microsoft.EntityFrameworkCore.Database.Connection) 
+      Opened connection to database 'musicStores' on server '(localdb)\MSSQLLocalDB'.
+dbug: 18.02.2024 19:07:20.988 RelationalEventId.CommandCreating[20103] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Creating DbCommand for 'ExecuteNonQuery'.
+dbug: 18.02.2024 19:07:20.988 RelationalEventId.CommandCreated[20104] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Created DbCommand for 'ExecuteNonQuery' (0ms).
+dbug: 18.02.2024 19:07:20.988 RelationalEventId.CommandInitialized[20106] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Initialized DbCommand for 'ExecuteNonQuery' (0ms).
+dbug: 18.02.2024 19:07:20.988 RelationalEventId.CommandExecuting[20100] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Executing DbCommand [Parameters=[], CommandType='Text', CommandTimeout='30']
+      SELECT 1
+info: 18.02.2024 19:07:20.988 RelationalEventId.CommandExecuted[20101] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Executed DbCommand (0ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      SELECT 1
+dbug: 18.02.2024 19:07:20.988 RelationalEventId.ConnectionClosing[20002] (Microsoft.EntityFrameworkCore.Database.Connection) 
+      Closing connection to database 'musicStores' on server '(localdb)\MSSQLLocalDB'.
+dbug: 18.02.2024 19:07:20.988 RelationalEventId.ConnectionClosed[20003] (Microsoft.EntityFrameworkCore.Database.Connection) 
+      Closed connection to database 'musicStores' on server '(localdb)\MSSQLLocalDB' (0ms).
+dbug: 18.02.2024 19:07:21.026 RelationalEventId.CommandCreating[20103] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Creating DbCommand for 'ExecuteNonQuery'.
+dbug: 18.02.2024 19:07:21.026 RelationalEventId.CommandCreated[20104] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Created DbCommand for 'ExecuteNonQuery' (0ms).
+dbug: 18.02.2024 19:07:21.026 RelationalEventId.CommandInitialized[20106] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Initialized DbCommand for 'ExecuteNonQuery' (0ms).
+dbug: 18.02.2024 19:07:21.026 RelationalEventId.ConnectionOpening[20000] (Microsoft.EntityFrameworkCore.Database.Connection) 
+      Opening connection to database 'musicStores' on server '(localdb)\MSSQLLocalDB'.
+dbug: 18.02.2024 19:07:21.026 RelationalEventId.ConnectionOpened[20001] (Microsoft.EntityFrameworkCore.Database.Connection) 
+      Opened connection to database 'musicStores' on server '(localdb)\MSSQLLocalDB'.
+dbug: 18.02.2024 19:07:21.026 RelationalEventId.CommandExecuting[20100] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Executing DbCommand [Parameters=[], CommandType='Text', CommandTimeout='30']
+      CREATE TABLE [__EFMigrationsHistory] (
+          [MigrationId] nvarchar(150) NOT NULL,
+          [ProductVersion] nvarchar(32) NOT NULL,
+          CONSTRAINT [PK___EFMigrationsHistory] PRIMARY KEY ([MigrationId])
+      );
+info: 18.02.2024 19:07:21.028 RelationalEventId.CommandExecuted[20101] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Executed DbCommand (2ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      CREATE TABLE [__EFMigrationsHistory] (
+          [MigrationId] nvarchar(150) NOT NULL,
+          [ProductVersion] nvarchar(32) NOT NULL,
+          CONSTRAINT [PK___EFMigrationsHistory] PRIMARY KEY ([MigrationId])
+      );
+dbug: 18.02.2024 19:07:21.028 RelationalEventId.ConnectionClosing[20002] (Microsoft.EntityFrameworkCore.Database.Connection) 
+      Closing connection to database 'musicStores' on server '(localdb)\MSSQLLocalDB'.
+dbug: 18.02.2024 19:07:21.028 RelationalEventId.ConnectionClosed[20003] (Microsoft.EntityFrameworkCore.Database.Connection) 
+      Closed connection to database 'musicStores' on server '(localdb)\MSSQLLocalDB' (0ms).
+dbug: 18.02.2024 19:07:21.028 RelationalEventId.ConnectionOpening[20000] (Microsoft.EntityFrameworkCore.Database.Connection) 
+      Opening connection to database 'musicStores' on server '(localdb)\MSSQLLocalDB'.
+dbug: 18.02.2024 19:07:21.028 RelationalEventId.ConnectionOpened[20001] (Microsoft.EntityFrameworkCore.Database.Connection) 
+      Opened connection to database 'musicStores' on server '(localdb)\MSSQLLocalDB'.
+dbug: 18.02.2024 19:07:21.028 RelationalEventId.CommandCreating[20103] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Creating DbCommand for 'ExecuteNonQuery'.
+dbug: 18.02.2024 19:07:21.028 RelationalEventId.CommandCreated[20104] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Created DbCommand for 'ExecuteNonQuery' (0ms).
+dbug: 18.02.2024 19:07:21.028 RelationalEventId.CommandInitialized[20106] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Initialized DbCommand for 'ExecuteNonQuery' (0ms).
+dbug: 18.02.2024 19:07:21.028 RelationalEventId.CommandExecuting[20100] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Executing DbCommand [Parameters=[], CommandType='Text', CommandTimeout='30']
+      SELECT 1
+info: 18.02.2024 19:07:21.028 RelationalEventId.CommandExecuted[20101] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Executed DbCommand (0ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      SELECT 1
+dbug: 18.02.2024 19:07:21.028 RelationalEventId.ConnectionClosing[20002] (Microsoft.EntityFrameworkCore.Database.Connection) 
+      Closing connection to database 'musicStores' on server '(localdb)\MSSQLLocalDB'.
+dbug: 18.02.2024 19:07:21.028 RelationalEventId.ConnectionClosed[20003] (Microsoft.EntityFrameworkCore.Database.Connection) 
+      Closed connection to database 'musicStores' on server '(localdb)\MSSQLLocalDB' (0ms).
+dbug: 18.02.2024 19:07:21.028 RelationalEventId.CommandCreating[20103] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Creating DbCommand for 'ExecuteScalar'.
+dbug: 18.02.2024 19:07:21.028 RelationalEventId.CommandCreated[20104] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Created DbCommand for 'ExecuteScalar' (0ms).
+dbug: 18.02.2024 19:07:21.028 RelationalEventId.CommandInitialized[20106] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Initialized DbCommand for 'ExecuteScalar' (0ms).
+dbug: 18.02.2024 19:07:21.028 RelationalEventId.ConnectionOpening[20000] (Microsoft.EntityFrameworkCore.Database.Connection) 
+      Opening connection to database 'musicStores' on server '(localdb)\MSSQLLocalDB'.
+dbug: 18.02.2024 19:07:21.028 RelationalEventId.ConnectionOpened[20001] (Microsoft.EntityFrameworkCore.Database.Connection) 
+      Opened connection to database 'musicStores' on server '(localdb)\MSSQLLocalDB'.
+dbug: 18.02.2024 19:07:21.028 RelationalEventId.CommandExecuting[20100] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Executing DbCommand [Parameters=[], CommandType='Text', CommandTimeout='30']
+      SELECT OBJECT_ID(N'[__EFMigrationsHistory]');
+info: 18.02.2024 19:07:21.028 RelationalEventId.CommandExecuted[20101] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Executed DbCommand (0ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      SELECT OBJECT_ID(N'[__EFMigrationsHistory]');
+dbug: 18.02.2024 19:07:21.028 RelationalEventId.ConnectionClosing[20002] (Microsoft.EntityFrameworkCore.Database.Connection) 
+      Closing connection to database 'musicStores' on server '(localdb)\MSSQLLocalDB'.
+dbug: 18.02.2024 19:07:21.028 RelationalEventId.ConnectionClosed[20003] (Microsoft.EntityFrameworkCore.Database.Connection) 
+      Closed connection to database 'musicStores' on server '(localdb)\MSSQLLocalDB' (0ms).
+dbug: 18.02.2024 19:07:21.029 RelationalEventId.ConnectionOpening[20000] (Microsoft.EntityFrameworkCore.Database.Connection) 
+      Opening connection to database 'musicStores' on server '(localdb)\MSSQLLocalDB'.
+dbug: 18.02.2024 19:07:21.029 RelationalEventId.ConnectionOpened[20001] (Microsoft.EntityFrameworkCore.Database.Connection) 
+      Opened connection to database 'musicStores' on server '(localdb)\MSSQLLocalDB'.
+dbug: 18.02.2024 19:07:21.029 RelationalEventId.CommandCreating[20103] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Creating DbCommand for 'ExecuteReader'.
+dbug: 18.02.2024 19:07:21.029 RelationalEventId.CommandCreated[20104] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Created DbCommand for 'ExecuteReader' (0ms).
+dbug: 18.02.2024 19:07:21.029 RelationalEventId.CommandInitialized[20106] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Initialized DbCommand for 'ExecuteReader' (0ms).
+dbug: 18.02.2024 19:07:21.029 RelationalEventId.CommandExecuting[20100] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Executing DbCommand [Parameters=[], CommandType='Text', CommandTimeout='30']
+      SELECT [MigrationId], [ProductVersion]
+      FROM [__EFMigrationsHistory]
+      ORDER BY [MigrationId];
+info: 18.02.2024 19:07:21.030 RelationalEventId.CommandExecuted[20101] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Executed DbCommand (1ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      SELECT [MigrationId], [ProductVersion]
+      FROM [__EFMigrationsHistory]
+      ORDER BY [MigrationId];
+dbug: 18.02.2024 19:07:21.031 RelationalEventId.DataReaderClosing[20301] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Closing data reader to 'musicStores' on server '(localdb)\MSSQLLocalDB'.
+dbug: 18.02.2024 19:07:21.032 RelationalEventId.DataReaderDisposing[20300] (Microsoft.EntityFrameworkCore.Database.Command) 
+      A data reader for 'musicStores' on server '(localdb)\MSSQLLocalDB' is being disposed after spending 1ms reading results.
+dbug: 18.02.2024 19:07:21.032 RelationalEventId.ConnectionClosing[20002] (Microsoft.EntityFrameworkCore.Database.Connection) 
+      Closing connection to database 'musicStores' on server '(localdb)\MSSQLLocalDB'.
+dbug: 18.02.2024 19:07:21.032 RelationalEventId.ConnectionClosed[20003] (Microsoft.EntityFrameworkCore.Database.Connection) 
+      Closed connection to database 'musicStores' on server '(localdb)\MSSQLLocalDB' (0ms).
+info: 18.02.2024 19:07:21.037 RelationalEventId.MigrationApplying[20402] (Microsoft.EntityFrameworkCore.Migrations) 
+      Applying migration '20240218160656_InitialCreate'.
+dbug: 18.02.2024 19:07:21.058 RelationalEventId.ConnectionOpening[20000] (Microsoft.EntityFrameworkCore.Database.Connection) 
+      Opening connection to database 'musicStores' on server '(localdb)\MSSQLLocalDB'.
+dbug: 18.02.2024 19:07:21.058 RelationalEventId.ConnectionOpened[20001] (Microsoft.EntityFrameworkCore.Database.Connection) 
+      Opened connection to database 'musicStores' on server '(localdb)\MSSQLLocalDB'.
+dbug: 18.02.2024 19:07:21.059 RelationalEventId.TransactionStarting[20209] (Microsoft.EntityFrameworkCore.Database.Transaction) 
+      Beginning transaction with isolation level 'Unspecified'.
+dbug: 18.02.2024 19:07:21.062 RelationalEventId.TransactionStarted[20200] (Microsoft.EntityFrameworkCore.Database.Transaction) 
+      Began transaction with isolation level 'ReadCommitted'.
+dbug: 18.02.2024 19:07:21.062 RelationalEventId.CommandCreating[20103] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Creating DbCommand for 'ExecuteNonQuery'.
+dbug: 18.02.2024 19:07:21.062 RelationalEventId.CommandCreated[20104] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Created DbCommand for 'ExecuteNonQuery' (0ms).
+dbug: 18.02.2024 19:07:21.063 RelationalEventId.CommandInitialized[20106] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Initialized DbCommand for 'ExecuteNonQuery' (0ms).
+dbug: 18.02.2024 19:07:21.063 RelationalEventId.CommandExecuting[20100] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Executing DbCommand [Parameters=[], CommandType='Text', CommandTimeout='30']
+      CREATE TABLE [Albums] (
+          [Id] int NOT NULL IDENTITY,
+          [Name] nvarchar(max) NOT NULL,
+          [ListenerTypeId] int NOT NULL,
+          [CompanyId] int NOT NULL,
+          [CityId] int NOT NULL,
+          [Duration] int NOT NULL,
+          [ReleaseDate] datetime2 NOT NULL,
+          [SongsCount] int NOT NULL,
+          CONSTRAINT [PK_Albums] PRIMARY KEY ([Id])
+      );
+fail: 18.02.2024 19:07:21.065 RelationalEventId.CommandError[20102] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Failed executing DbCommand (2ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      CREATE TABLE [Albums] (
+          [Id] int NOT NULL IDENTITY,
+          [Name] nvarchar(max) NOT NULL,
+          [ListenerTypeId] int NOT NULL,
+          [CompanyId] int NOT NULL,
+          [CityId] int NOT NULL,
+          [Duration] int NOT NULL,
+          [ReleaseDate] datetime2 NOT NULL,
+          [SongsCount] int NOT NULL,
+          CONSTRAINT [PK_Albums] PRIMARY KEY ([Id])
+      );
+dbug: 18.02.2024 19:07:21.066 RelationalEventId.TransactionDisposed[20204] (Microsoft.EntityFrameworkCore.Database.Transaction) 
+      Disposing transaction.
+dbug: 18.02.2024 19:07:21.066 RelationalEventId.ConnectionClosing[20002] (Microsoft.EntityFrameworkCore.Database.Connection) 
+      Closing connection to database 'musicStores' on server '(localdb)\MSSQLLocalDB'.
+dbug: 18.02.2024 19:07:21.066 RelationalEventId.ConnectionClosed[20003] (Microsoft.EntityFrameworkCore.Database.Connection) 
+      Closed connection to database 'musicStores' on server '(localdb)\MSSQLLocalDB' (0ms).
+dbug: 18.02.2024 19:07:21.067 CoreEventId.ContextDisposed[10407] (Microsoft.EntityFrameworkCore.Infrastructure) 
+      'MusicStoreDbContext' disposed.
+dbug: 18.02.2024 19:07:21.068 RelationalEventId.ConnectionDisposing[20007] (Microsoft.EntityFrameworkCore.Database.Connection) 
+      Disposing connection to database 'musicStores' on server '(localdb)\MSSQLLocalDB'.
+dbug: 18.02.2024 19:07:21.068 RelationalEventId.ConnectionDisposed[20008] (Microsoft.EntityFrameworkCore.Database.Connection) 
+      Disposed connection to database '' on server '' (0ms).
+dbug: 18.02.2024 19:14:44.004 CoreEventId.ShadowPropertyCreated[10600] (Microsoft.EntityFrameworkCore.Model.Validation) 
+      The property 'Store.AlbumId' was created in shadow state because there are no eligible CLR members with a matching name.
+warn: 18.02.2024 19:14:44.018 SqlServerEventId.DecimalTypeDefaultWarning[30000] (Microsoft.EntityFrameworkCore.Model.Validation) 
+      No store type was specified for the decimal property 'Price' on entity type 'ProductAlbum'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values in 'OnModelCreating' using 'HasColumnType', specify precision and scale using 'HasPrecision', or configure a value converter using 'HasConversion'.
+dbug: 18.02.2024 19:14:44.074 CoreEventId.ContextInitialized[10403] (Microsoft.EntityFrameworkCore.Infrastructure) 
+      Entity Framework Core 8.0.2 initialized 'MusicStoreDbContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer:8.0.2' with options: None
+dbug: 18.02.2024 19:14:44.079 RelationalEventId.ConnectionCreating[20005] (Microsoft.EntityFrameworkCore.Database.Connection) 
+      Creating DbConnection.
+dbug: 18.02.2024 19:14:44.096 RelationalEventId.ConnectionCreated[20006] (Microsoft.EntityFrameworkCore.Database.Connection) 
+      Created DbConnection. (16ms).
+dbug: 18.02.2024 19:14:44.097 RelationalEventId.ConnectionOpening[20000] (Microsoft.EntityFrameworkCore.Database.Connection) 
+      Opening connection to database 'musicStores' on server '(localdb)\MSSQLLocalDB'.
+dbug: 18.02.2024 19:14:44.185 RelationalEventId.ConnectionOpened[20001] (Microsoft.EntityFrameworkCore.Database.Connection) 
+      Opened connection to database 'musicStores' on server '(localdb)\MSSQLLocalDB'.
+dbug: 18.02.2024 19:14:44.187 RelationalEventId.CommandCreating[20103] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Creating DbCommand for 'ExecuteNonQuery'.
+dbug: 18.02.2024 19:14:44.189 RelationalEventId.CommandCreated[20104] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Created DbCommand for 'ExecuteNonQuery' (1ms).
+dbug: 18.02.2024 19:14:44.190 RelationalEventId.CommandInitialized[20106] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Initialized DbCommand for 'ExecuteNonQuery' (3ms).
+dbug: 18.02.2024 19:14:44.193 RelationalEventId.CommandExecuting[20100] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Executing DbCommand [Parameters=[], CommandType='Text', CommandTimeout='30']
+      SELECT 1
+info: 18.02.2024 19:14:44.203 RelationalEventId.CommandExecuted[20101] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Executed DbCommand (10ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      SELECT 1
+dbug: 18.02.2024 19:14:44.204 RelationalEventId.ConnectionClosing[20002] (Microsoft.EntityFrameworkCore.Database.Connection) 
+      Closing connection to database 'musicStores' on server '(localdb)\MSSQLLocalDB'.
+dbug: 18.02.2024 19:14:44.207 RelationalEventId.ConnectionClosed[20003] (Microsoft.EntityFrameworkCore.Database.Connection) 
+      Closed connection to database 'musicStores' on server '(localdb)\MSSQLLocalDB' (2ms).
+dbug: 18.02.2024 19:14:44.208 RelationalEventId.CommandCreating[20103] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Creating DbCommand for 'ExecuteScalar'.
+dbug: 18.02.2024 19:14:44.208 RelationalEventId.CommandCreated[20104] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Created DbCommand for 'ExecuteScalar' (0ms).
+dbug: 18.02.2024 19:14:44.208 RelationalEventId.CommandInitialized[20106] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Initialized DbCommand for 'ExecuteScalar' (0ms).
+dbug: 18.02.2024 19:14:44.208 RelationalEventId.ConnectionOpening[20000] (Microsoft.EntityFrameworkCore.Database.Connection) 
+      Opening connection to database 'musicStores' on server '(localdb)\MSSQLLocalDB'.
+dbug: 18.02.2024 19:14:44.208 RelationalEventId.ConnectionOpened[20001] (Microsoft.EntityFrameworkCore.Database.Connection) 
+      Opened connection to database 'musicStores' on server '(localdb)\MSSQLLocalDB'.
+dbug: 18.02.2024 19:14:44.209 RelationalEventId.CommandExecuting[20100] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Executing DbCommand [Parameters=[], CommandType='Text', CommandTimeout='30']
+      
+      IF EXISTS
+          (SELECT *
+           FROM [sys].[objects] o
+           WHERE [o].[type] = 'U'
+           AND [o].[is_ms_shipped] = 0
+           AND NOT EXISTS (SELECT *
+               FROM [sys].[extended_properties] AS [ep]
+               WHERE [ep].[major_id] = [o].[object_id]
+                   AND [ep].[minor_id] = 0
+                   AND [ep].[class] = 1
+                   AND [ep].[name] = N'microsoft_database_tools_support'
+          )
+      )
+      SELECT 1 ELSE SELECT 0
+info: 18.02.2024 19:14:44.219 RelationalEventId.CommandExecuted[20101] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Executed DbCommand (11ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      
+      IF EXISTS
+          (SELECT *
+           FROM [sys].[objects] o
+           WHERE [o].[type] = 'U'
+           AND [o].[is_ms_shipped] = 0
+           AND NOT EXISTS (SELECT *
+               FROM [sys].[extended_properties] AS [ep]
+               WHERE [ep].[major_id] = [o].[object_id]
+                   AND [ep].[minor_id] = 0
+                   AND [ep].[class] = 1
+                   AND [ep].[name] = N'microsoft_database_tools_support'
+          )
+      )
+      SELECT 1 ELSE SELECT 0
+dbug: 18.02.2024 19:14:44.220 RelationalEventId.ConnectionClosing[20002] (Microsoft.EntityFrameworkCore.Database.Connection) 
+      Closing connection to database 'musicStores' on server '(localdb)\MSSQLLocalDB'.
+dbug: 18.02.2024 19:14:44.220 RelationalEventId.ConnectionClosed[20003] (Microsoft.EntityFrameworkCore.Database.Connection) 
+      Closed connection to database 'musicStores' on server '(localdb)\MSSQLLocalDB' (0ms).
+dbug: 18.02.2024 19:14:44.226 RelationalEventId.MigrateUsingConnection[20400] (Microsoft.EntityFrameworkCore.Migrations) 
+      Migrating using database 'musicStores' on server '(localdb)\MSSQLLocalDB'.
+dbug: 18.02.2024 19:14:44.227 RelationalEventId.ConnectionOpening[20000] (Microsoft.EntityFrameworkCore.Database.Connection) 
+      Opening connection to database 'musicStores' on server '(localdb)\MSSQLLocalDB'.
+dbug: 18.02.2024 19:14:44.227 RelationalEventId.ConnectionOpened[20001] (Microsoft.EntityFrameworkCore.Database.Connection) 
+      Opened connection to database 'musicStores' on server '(localdb)\MSSQLLocalDB'.
+dbug: 18.02.2024 19:14:44.227 RelationalEventId.CommandCreating[20103] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Creating DbCommand for 'ExecuteNonQuery'.
+dbug: 18.02.2024 19:14:44.228 RelationalEventId.CommandCreated[20104] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Created DbCommand for 'ExecuteNonQuery' (0ms).
+dbug: 18.02.2024 19:14:44.228 RelationalEventId.CommandInitialized[20106] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Initialized DbCommand for 'ExecuteNonQuery' (1ms).
+dbug: 18.02.2024 19:14:44.228 RelationalEventId.CommandExecuting[20100] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Executing DbCommand [Parameters=[], CommandType='Text', CommandTimeout='30']
+      SELECT 1
+info: 18.02.2024 19:14:44.229 RelationalEventId.CommandExecuted[20101] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Executed DbCommand (1ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      SELECT 1
+dbug: 18.02.2024 19:14:44.229 RelationalEventId.ConnectionClosing[20002] (Microsoft.EntityFrameworkCore.Database.Connection) 
+      Closing connection to database 'musicStores' on server '(localdb)\MSSQLLocalDB'.
+dbug: 18.02.2024 19:14:44.230 RelationalEventId.ConnectionClosed[20003] (Microsoft.EntityFrameworkCore.Database.Connection) 
+      Closed connection to database 'musicStores' on server '(localdb)\MSSQLLocalDB' (0ms).
+dbug: 18.02.2024 19:14:44.231 RelationalEventId.CommandCreating[20103] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Creating DbCommand for 'ExecuteScalar'.
+dbug: 18.02.2024 19:14:44.231 RelationalEventId.CommandCreated[20104] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Created DbCommand for 'ExecuteScalar' (0ms).
+dbug: 18.02.2024 19:14:44.231 RelationalEventId.CommandInitialized[20106] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Initialized DbCommand for 'ExecuteScalar' (0ms).
+dbug: 18.02.2024 19:14:44.231 RelationalEventId.ConnectionOpening[20000] (Microsoft.EntityFrameworkCore.Database.Connection) 
+      Opening connection to database 'musicStores' on server '(localdb)\MSSQLLocalDB'.
+dbug: 18.02.2024 19:14:44.231 RelationalEventId.ConnectionOpened[20001] (Microsoft.EntityFrameworkCore.Database.Connection) 
+      Opened connection to database 'musicStores' on server '(localdb)\MSSQLLocalDB'.
+dbug: 18.02.2024 19:14:44.231 RelationalEventId.CommandExecuting[20100] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Executing DbCommand [Parameters=[], CommandType='Text', CommandTimeout='30']
+      SELECT OBJECT_ID(N'[__EFMigrationsHistory]');
+info: 18.02.2024 19:14:44.231 RelationalEventId.CommandExecuted[20101] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Executed DbCommand (0ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      SELECT OBJECT_ID(N'[__EFMigrationsHistory]');
+dbug: 18.02.2024 19:14:44.231 RelationalEventId.ConnectionClosing[20002] (Microsoft.EntityFrameworkCore.Database.Connection) 
+      Closing connection to database 'musicStores' on server '(localdb)\MSSQLLocalDB'.
+dbug: 18.02.2024 19:14:44.231 RelationalEventId.ConnectionClosed[20003] (Microsoft.EntityFrameworkCore.Database.Connection) 
+      Closed connection to database 'musicStores' on server '(localdb)\MSSQLLocalDB' (0ms).
+dbug: 18.02.2024 19:14:44.232 RelationalEventId.ConnectionOpening[20000] (Microsoft.EntityFrameworkCore.Database.Connection) 
+      Opening connection to database 'musicStores' on server '(localdb)\MSSQLLocalDB'.
+dbug: 18.02.2024 19:14:44.232 RelationalEventId.ConnectionOpened[20001] (Microsoft.EntityFrameworkCore.Database.Connection) 
+      Opened connection to database 'musicStores' on server '(localdb)\MSSQLLocalDB'.
+dbug: 18.02.2024 19:14:44.232 RelationalEventId.CommandCreating[20103] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Creating DbCommand for 'ExecuteNonQuery'.
+dbug: 18.02.2024 19:14:44.232 RelationalEventId.CommandCreated[20104] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Created DbCommand for 'ExecuteNonQuery' (0ms).
+dbug: 18.02.2024 19:14:44.232 RelationalEventId.CommandInitialized[20106] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Initialized DbCommand for 'ExecuteNonQuery' (0ms).
+dbug: 18.02.2024 19:14:44.232 RelationalEventId.CommandExecuting[20100] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Executing DbCommand [Parameters=[], CommandType='Text', CommandTimeout='30']
+      SELECT 1
+info: 18.02.2024 19:14:44.232 RelationalEventId.CommandExecuted[20101] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Executed DbCommand (0ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      SELECT 1
+dbug: 18.02.2024 19:14:44.232 RelationalEventId.ConnectionClosing[20002] (Microsoft.EntityFrameworkCore.Database.Connection) 
+      Closing connection to database 'musicStores' on server '(localdb)\MSSQLLocalDB'.
+dbug: 18.02.2024 19:14:44.232 RelationalEventId.ConnectionClosed[20003] (Microsoft.EntityFrameworkCore.Database.Connection) 
+      Closed connection to database 'musicStores' on server '(localdb)\MSSQLLocalDB' (0ms).
+dbug: 18.02.2024 19:14:44.232 RelationalEventId.CommandCreating[20103] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Creating DbCommand for 'ExecuteScalar'.
+dbug: 18.02.2024 19:14:44.232 RelationalEventId.CommandCreated[20104] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Created DbCommand for 'ExecuteScalar' (0ms).
+dbug: 18.02.2024 19:14:44.232 RelationalEventId.CommandInitialized[20106] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Initialized DbCommand for 'ExecuteScalar' (0ms).
+dbug: 18.02.2024 19:14:44.232 RelationalEventId.ConnectionOpening[20000] (Microsoft.EntityFrameworkCore.Database.Connection) 
+      Opening connection to database 'musicStores' on server '(localdb)\MSSQLLocalDB'.
+dbug: 18.02.2024 19:14:44.232 RelationalEventId.ConnectionOpened[20001] (Microsoft.EntityFrameworkCore.Database.Connection) 
+      Opened connection to database 'musicStores' on server '(localdb)\MSSQLLocalDB'.
+dbug: 18.02.2024 19:14:44.232 RelationalEventId.CommandExecuting[20100] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Executing DbCommand [Parameters=[], CommandType='Text', CommandTimeout='30']
+      SELECT OBJECT_ID(N'[__EFMigrationsHistory]');
+info: 18.02.2024 19:14:44.232 RelationalEventId.CommandExecuted[20101] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Executed DbCommand (0ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      SELECT OBJECT_ID(N'[__EFMigrationsHistory]');
+dbug: 18.02.2024 19:14:44.232 RelationalEventId.ConnectionClosing[20002] (Microsoft.EntityFrameworkCore.Database.Connection) 
+      Closing connection to database 'musicStores' on server '(localdb)\MSSQLLocalDB'.
+dbug: 18.02.2024 19:14:44.232 RelationalEventId.ConnectionClosed[20003] (Microsoft.EntityFrameworkCore.Database.Connection) 
+      Closed connection to database 'musicStores' on server '(localdb)\MSSQLLocalDB' (0ms).
+dbug: 18.02.2024 19:14:44.242 RelationalEventId.ConnectionOpening[20000] (Microsoft.EntityFrameworkCore.Database.Connection) 
+      Opening connection to database 'musicStores' on server '(localdb)\MSSQLLocalDB'.
+dbug: 18.02.2024 19:14:44.242 RelationalEventId.ConnectionOpened[20001] (Microsoft.EntityFrameworkCore.Database.Connection) 
+      Opened connection to database 'musicStores' on server '(localdb)\MSSQLLocalDB'.
+dbug: 18.02.2024 19:14:44.242 RelationalEventId.CommandCreating[20103] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Creating DbCommand for 'ExecuteReader'.
+dbug: 18.02.2024 19:14:44.242 RelationalEventId.CommandCreated[20104] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Created DbCommand for 'ExecuteReader' (0ms).
+dbug: 18.02.2024 19:14:44.242 RelationalEventId.CommandInitialized[20106] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Initialized DbCommand for 'ExecuteReader' (0ms).
+dbug: 18.02.2024 19:14:44.242 RelationalEventId.CommandExecuting[20100] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Executing DbCommand [Parameters=[], CommandType='Text', CommandTimeout='30']
+      SELECT [MigrationId], [ProductVersion]
+      FROM [__EFMigrationsHistory]
+      ORDER BY [MigrationId];
+info: 18.02.2024 19:14:44.243 RelationalEventId.CommandExecuted[20101] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Executed DbCommand (1ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      SELECT [MigrationId], [ProductVersion]
+      FROM [__EFMigrationsHistory]
+      ORDER BY [MigrationId];
+dbug: 18.02.2024 19:14:44.244 RelationalEventId.DataReaderClosing[20301] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Closing data reader to 'musicStores' on server '(localdb)\MSSQLLocalDB'.
+dbug: 18.02.2024 19:14:44.244 RelationalEventId.DataReaderDisposing[20300] (Microsoft.EntityFrameworkCore.Database.Command) 
+      A data reader for 'musicStores' on server '(localdb)\MSSQLLocalDB' is being disposed after spending 0ms reading results.
+dbug: 18.02.2024 19:14:44.244 RelationalEventId.ConnectionClosing[20002] (Microsoft.EntityFrameworkCore.Database.Connection) 
+      Closing connection to database 'musicStores' on server '(localdb)\MSSQLLocalDB'.
+dbug: 18.02.2024 19:14:44.244 RelationalEventId.ConnectionClosed[20003] (Microsoft.EntityFrameworkCore.Database.Connection) 
+      Closed connection to database 'musicStores' on server '(localdb)\MSSQLLocalDB' (0ms).
+info: 18.02.2024 19:14:44.249 RelationalEventId.MigrationApplying[20402] (Microsoft.EntityFrameworkCore.Migrations) 
+      Applying migration '20240218160656_InitialCreate'.
+dbug: 18.02.2024 19:14:44.278 RelationalEventId.ConnectionOpening[20000] (Microsoft.EntityFrameworkCore.Database.Connection) 
+      Opening connection to database 'musicStores' on server '(localdb)\MSSQLLocalDB'.
+dbug: 18.02.2024 19:14:44.278 RelationalEventId.ConnectionOpened[20001] (Microsoft.EntityFrameworkCore.Database.Connection) 
+      Opened connection to database 'musicStores' on server '(localdb)\MSSQLLocalDB'.
+dbug: 18.02.2024 19:14:44.279 RelationalEventId.TransactionStarting[20209] (Microsoft.EntityFrameworkCore.Database.Transaction) 
+      Beginning transaction with isolation level 'Unspecified'.
+dbug: 18.02.2024 19:14:44.282 RelationalEventId.TransactionStarted[20200] (Microsoft.EntityFrameworkCore.Database.Transaction) 
+      Began transaction with isolation level 'ReadCommitted'.
+dbug: 18.02.2024 19:14:44.282 RelationalEventId.CommandCreating[20103] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Creating DbCommand for 'ExecuteNonQuery'.
+dbug: 18.02.2024 19:14:44.282 RelationalEventId.CommandCreated[20104] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Created DbCommand for 'ExecuteNonQuery' (0ms).
+dbug: 18.02.2024 19:14:44.283 RelationalEventId.CommandInitialized[20106] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Initialized DbCommand for 'ExecuteNonQuery' (0ms).
+dbug: 18.02.2024 19:14:44.283 RelationalEventId.CommandExecuting[20100] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Executing DbCommand [Parameters=[], CommandType='Text', CommandTimeout='30']
+      CREATE TABLE [Albums] (
+          [Id] int NOT NULL IDENTITY,
+          [Name] nvarchar(max) NOT NULL,
+          [ListenerTypeId] int NOT NULL,
+          [CompanyId] int NOT NULL,
+          [CityId] int NOT NULL,
+          [Duration] int NOT NULL,
+          [ReleaseDate] datetime2 NOT NULL,
+          [SongsCount] int NOT NULL,
+          CONSTRAINT [PK_Albums] PRIMARY KEY ([Id])
+      );
+fail: 18.02.2024 19:14:44.285 RelationalEventId.CommandError[20102] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Failed executing DbCommand (2ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      CREATE TABLE [Albums] (
+          [Id] int NOT NULL IDENTITY,
+          [Name] nvarchar(max) NOT NULL,
+          [ListenerTypeId] int NOT NULL,
+          [CompanyId] int NOT NULL,
+          [CityId] int NOT NULL,
+          [Duration] int NOT NULL,
+          [ReleaseDate] datetime2 NOT NULL,
+          [SongsCount] int NOT NULL,
+          CONSTRAINT [PK_Albums] PRIMARY KEY ([Id])
+      );
+dbug: 18.02.2024 19:14:44.286 RelationalEventId.TransactionDisposed[20204] (Microsoft.EntityFrameworkCore.Database.Transaction) 
+      Disposing transaction.
+dbug: 18.02.2024 19:14:44.287 RelationalEventId.ConnectionClosing[20002] (Microsoft.EntityFrameworkCore.Database.Connection) 
+      Closing connection to database 'musicStores' on server '(localdb)\MSSQLLocalDB'.
+dbug: 18.02.2024 19:14:44.287 RelationalEventId.ConnectionClosed[20003] (Microsoft.EntityFrameworkCore.Database.Connection) 
+      Closed connection to database 'musicStores' on server '(localdb)\MSSQLLocalDB' (0ms).
+dbug: 18.02.2024 19:14:44.287 CoreEventId.ContextDisposed[10407] (Microsoft.EntityFrameworkCore.Infrastructure) 
+      'MusicStoreDbContext' disposed.
+dbug: 18.02.2024 19:14:44.288 RelationalEventId.ConnectionDisposing[20007] (Microsoft.EntityFrameworkCore.Database.Connection) 
+      Disposing connection to database 'musicStores' on server '(localdb)\MSSQLLocalDB'.
+dbug: 18.02.2024 19:14:44.289 RelationalEventId.ConnectionDisposed[20008] (Microsoft.EntityFrameworkCore.Database.Connection) 
+      Disposed connection to database '' on server '' (0ms).
+dbug: 18.02.2024 19:15:37.328 CoreEventId.ShadowPropertyCreated[10600] (Microsoft.EntityFrameworkCore.Model.Validation) 
+      The property 'Store.AlbumId' was created in shadow state because there are no eligible CLR members with a matching name.
+warn: 18.02.2024 19:15:37.343 SqlServerEventId.DecimalTypeDefaultWarning[30000] (Microsoft.EntityFrameworkCore.Model.Validation) 
+      No store type was specified for the decimal property 'Price' on entity type 'ProductAlbum'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values in 'OnModelCreating' using 'HasColumnType', specify precision and scale using 'HasPrecision', or configure a value converter using 'HasConversion'.
+dbug: 18.02.2024 19:15:37.399 CoreEventId.ContextInitialized[10403] (Microsoft.EntityFrameworkCore.Infrastructure) 
+      Entity Framework Core 8.0.2 initialized 'MusicStoreDbContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer:8.0.2' with options: None
+dbug: 18.02.2024 19:15:37.404 RelationalEventId.ConnectionCreating[20005] (Microsoft.EntityFrameworkCore.Database.Connection) 
+      Creating DbConnection.
+dbug: 18.02.2024 19:15:37.421 RelationalEventId.ConnectionCreated[20006] (Microsoft.EntityFrameworkCore.Database.Connection) 
+      Created DbConnection. (16ms).
+dbug: 18.02.2024 19:15:37.422 RelationalEventId.ConnectionOpening[20000] (Microsoft.EntityFrameworkCore.Database.Connection) 
+      Opening connection to database 'musicStores' on server '(localdb)\MSSQLLocalDB'.
+dbug: 18.02.2024 19:15:37.507 RelationalEventId.ConnectionError[20004] (Microsoft.EntityFrameworkCore.Database.Connection) 
+      An error occurred using the connection to database 'musicStores' on server '(localdb)\MSSQLLocalDB'.
+dbug: 18.02.2024 19:15:37.529 CoreEventId.ShadowPropertyCreated[10600] (Microsoft.EntityFrameworkCore.Model.Validation) 
+      The property 'Store.AlbumId' was created in shadow state because there are no eligible CLR members with a matching name.
+warn: 18.02.2024 19:15:37.530 SqlServerEventId.DecimalTypeDefaultWarning[30000] (Microsoft.EntityFrameworkCore.Model.Validation) 
+      No store type was specified for the decimal property 'Price' on entity type 'ProductAlbum'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values in 'OnModelCreating' using 'HasColumnType', specify precision and scale using 'HasPrecision', or configure a value converter using 'HasConversion'.
+dbug: 18.02.2024 19:15:37.541 RelationalEventId.ConnectionCreating[20005] (Microsoft.EntityFrameworkCore.Database.Connection) 
+      Creating DbConnection.
+dbug: 18.02.2024 19:15:37.541 RelationalEventId.ConnectionCreated[20006] (Microsoft.EntityFrameworkCore.Database.Connection) 
+      Created DbConnection. (0ms).
+dbug: 18.02.2024 19:15:37.541 RelationalEventId.ConnectionOpening[20000] (Microsoft.EntityFrameworkCore.Database.Connection) 
+      Opening connection to database 'master' on server '(localdb)\MSSQLLocalDB'.
+dbug: 18.02.2024 19:15:37.548 RelationalEventId.ConnectionOpened[20001] (Microsoft.EntityFrameworkCore.Database.Connection) 
+      Opened connection to database 'master' on server '(localdb)\MSSQLLocalDB'.
+dbug: 18.02.2024 19:15:37.550 RelationalEventId.CommandCreating[20103] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Creating DbCommand for 'ExecuteNonQuery'.
+dbug: 18.02.2024 19:15:37.553 RelationalEventId.CommandCreated[20104] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Created DbCommand for 'ExecuteNonQuery' (1ms).
+dbug: 18.02.2024 19:15:37.554 RelationalEventId.CommandInitialized[20106] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Initialized DbCommand for 'ExecuteNonQuery' (3ms).
+dbug: 18.02.2024 19:15:37.556 RelationalEventId.CommandExecuting[20100] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Executing DbCommand [Parameters=[], CommandType='Text', CommandTimeout='60']
+      CREATE DATABASE [musicStores];
+info: 18.02.2024 19:15:37.684 RelationalEventId.CommandExecuted[20101] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Executed DbCommand (127ms) [Parameters=[], CommandType='Text', CommandTimeout='60']
+      CREATE DATABASE [musicStores];
+dbug: 18.02.2024 19:15:37.684 RelationalEventId.CommandCreating[20103] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Creating DbCommand for 'ExecuteNonQuery'.
+dbug: 18.02.2024 19:15:37.684 RelationalEventId.CommandCreated[20104] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Created DbCommand for 'ExecuteNonQuery' (0ms).
+dbug: 18.02.2024 19:15:37.684 RelationalEventId.CommandInitialized[20106] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Initialized DbCommand for 'ExecuteNonQuery' (0ms).
+dbug: 18.02.2024 19:15:37.684 RelationalEventId.CommandExecuting[20100] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Executing DbCommand [Parameters=[], CommandType='Text', CommandTimeout='60']
+      IF SERVERPROPERTY('EngineEdition') <> 5
+      BEGIN
+          ALTER DATABASE [musicStores] SET READ_COMMITTED_SNAPSHOT ON;
+      END;
+info: 18.02.2024 19:15:37.711 RelationalEventId.CommandExecuted[20101] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Executed DbCommand (27ms) [Parameters=[], CommandType='Text', CommandTimeout='60']
+      IF SERVERPROPERTY('EngineEdition') <> 5
+      BEGIN
+          ALTER DATABASE [musicStores] SET READ_COMMITTED_SNAPSHOT ON;
+      END;
+dbug: 18.02.2024 19:15:37.712 RelationalEventId.ConnectionClosing[20002] (Microsoft.EntityFrameworkCore.Database.Connection) 
+      Closing connection to database 'master' on server '(localdb)\MSSQLLocalDB'.
+dbug: 18.02.2024 19:15:37.715 RelationalEventId.ConnectionClosed[20003] (Microsoft.EntityFrameworkCore.Database.Connection) 
+      Closed connection to database 'master' on server '(localdb)\MSSQLLocalDB' (2ms).
+dbug: 18.02.2024 19:15:37.716 RelationalEventId.ConnectionDisposing[20007] (Microsoft.EntityFrameworkCore.Database.Connection) 
+      Disposing connection to database 'master' on server '(localdb)\MSSQLLocalDB'.
+dbug: 18.02.2024 19:15:37.716 RelationalEventId.ConnectionDisposed[20008] (Microsoft.EntityFrameworkCore.Database.Connection) 
+      Disposed connection to database '' on server '' (0ms).
+dbug: 18.02.2024 19:15:37.716 RelationalEventId.ConnectionOpening[20000] (Microsoft.EntityFrameworkCore.Database.Connection) 
+      Opening connection to database 'musicStores' on server '(localdb)\MSSQLLocalDB'.
+dbug: 18.02.2024 19:15:37.719 RelationalEventId.ConnectionOpened[20001] (Microsoft.EntityFrameworkCore.Database.Connection) 
+      Opened connection to database 'musicStores' on server '(localdb)\MSSQLLocalDB'.
+dbug: 18.02.2024 19:15:37.719 RelationalEventId.CommandCreating[20103] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Creating DbCommand for 'ExecuteNonQuery'.
+dbug: 18.02.2024 19:15:37.719 RelationalEventId.CommandCreated[20104] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Created DbCommand for 'ExecuteNonQuery' (0ms).
+dbug: 18.02.2024 19:15:37.719 RelationalEventId.CommandInitialized[20106] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Initialized DbCommand for 'ExecuteNonQuery' (0ms).
+dbug: 18.02.2024 19:15:37.719 RelationalEventId.CommandExecuting[20100] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Executing DbCommand [Parameters=[], CommandType='Text', CommandTimeout='30']
+      SELECT 1
+info: 18.02.2024 19:15:37.722 RelationalEventId.CommandExecuted[20101] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Executed DbCommand (3ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      SELECT 1
+dbug: 18.02.2024 19:15:37.722 RelationalEventId.ConnectionClosing[20002] (Microsoft.EntityFrameworkCore.Database.Connection) 
+      Closing connection to database 'musicStores' on server '(localdb)\MSSQLLocalDB'.
+dbug: 18.02.2024 19:15:37.722 RelationalEventId.ConnectionClosed[20003] (Microsoft.EntityFrameworkCore.Database.Connection) 
+      Closed connection to database 'musicStores' on server '(localdb)\MSSQLLocalDB' (0ms).
+dbug: 18.02.2024 19:15:37.757 RelationalEventId.ConnectionOpening[20000] (Microsoft.EntityFrameworkCore.Database.Connection) 
+      Opening connection to database 'musicStores' on server '(localdb)\MSSQLLocalDB'.
+dbug: 18.02.2024 19:15:37.758 RelationalEventId.ConnectionOpened[20001] (Microsoft.EntityFrameworkCore.Database.Connection) 
+      Opened connection to database 'musicStores' on server '(localdb)\MSSQLLocalDB'.
+dbug: 18.02.2024 19:15:37.759 RelationalEventId.TransactionStarting[20209] (Microsoft.EntityFrameworkCore.Database.Transaction) 
+      Beginning transaction with isolation level 'Unspecified'.
+dbug: 18.02.2024 19:15:37.761 RelationalEventId.TransactionStarted[20200] (Microsoft.EntityFrameworkCore.Database.Transaction) 
+      Began transaction with isolation level 'ReadCommitted'.
+dbug: 18.02.2024 19:15:37.762 RelationalEventId.CommandCreating[20103] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Creating DbCommand for 'ExecuteNonQuery'.
+dbug: 18.02.2024 19:15:37.762 RelationalEventId.CommandCreated[20104] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Created DbCommand for 'ExecuteNonQuery' (0ms).
+dbug: 18.02.2024 19:15:37.762 RelationalEventId.CommandInitialized[20106] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Initialized DbCommand for 'ExecuteNonQuery' (0ms).
+dbug: 18.02.2024 19:15:37.762 RelationalEventId.CommandExecuting[20100] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Executing DbCommand [Parameters=[], CommandType='Text', CommandTimeout='30']
+      CREATE TABLE [Cities] (
+          [Id] int NOT NULL IDENTITY,
+          [Name] nvarchar(max) NOT NULL,
+          CONSTRAINT [PK_Cities] PRIMARY KEY ([Id])
+      );
+info: 18.02.2024 19:15:37.765 RelationalEventId.CommandExecuted[20101] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Executed DbCommand (3ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      CREATE TABLE [Cities] (
+          [Id] int NOT NULL IDENTITY,
+          [Name] nvarchar(max) NOT NULL,
+          CONSTRAINT [PK_Cities] PRIMARY KEY ([Id])
+      );
+dbug: 18.02.2024 19:15:37.765 RelationalEventId.CommandCreating[20103] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Creating DbCommand for 'ExecuteNonQuery'.
+dbug: 18.02.2024 19:15:37.765 RelationalEventId.CommandCreated[20104] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Created DbCommand for 'ExecuteNonQuery' (0ms).
+dbug: 18.02.2024 19:15:37.765 RelationalEventId.CommandInitialized[20106] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Initialized DbCommand for 'ExecuteNonQuery' (0ms).
+dbug: 18.02.2024 19:15:37.765 RelationalEventId.CommandExecuting[20100] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Executing DbCommand [Parameters=[], CommandType='Text', CommandTimeout='30']
+      CREATE TABLE [ListenerTypes] (
+          [Id] int NOT NULL IDENTITY,
+          [Name] nvarchar(max) NOT NULL,
+          CONSTRAINT [PK_ListenerTypes] PRIMARY KEY ([Id])
+      );
+info: 18.02.2024 19:15:37.766 RelationalEventId.CommandExecuted[20101] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Executed DbCommand (1ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      CREATE TABLE [ListenerTypes] (
+          [Id] int NOT NULL IDENTITY,
+          [Name] nvarchar(max) NOT NULL,
+          CONSTRAINT [PK_ListenerTypes] PRIMARY KEY ([Id])
+      );
+dbug: 18.02.2024 19:15:37.766 RelationalEventId.CommandCreating[20103] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Creating DbCommand for 'ExecuteNonQuery'.
+dbug: 18.02.2024 19:15:37.766 RelationalEventId.CommandCreated[20104] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Created DbCommand for 'ExecuteNonQuery' (0ms).
+dbug: 18.02.2024 19:15:37.766 RelationalEventId.CommandInitialized[20106] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Initialized DbCommand for 'ExecuteNonQuery' (0ms).
+dbug: 18.02.2024 19:15:37.766 RelationalEventId.CommandExecuting[20100] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Executing DbCommand [Parameters=[], CommandType='Text', CommandTimeout='30']
+      CREATE TABLE [OwnershipTypes] (
+          [Id] int NOT NULL IDENTITY,
+          [Name] nvarchar(max) NOT NULL,
+          CONSTRAINT [PK_OwnershipTypes] PRIMARY KEY ([Id])
+      );
+info: 18.02.2024 19:15:37.766 RelationalEventId.CommandExecuted[20101] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Executed DbCommand (0ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      CREATE TABLE [OwnershipTypes] (
+          [Id] int NOT NULL IDENTITY,
+          [Name] nvarchar(max) NOT NULL,
+          CONSTRAINT [PK_OwnershipTypes] PRIMARY KEY ([Id])
+      );
+dbug: 18.02.2024 19:15:37.766 RelationalEventId.CommandCreating[20103] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Creating DbCommand for 'ExecuteNonQuery'.
+dbug: 18.02.2024 19:15:37.766 RelationalEventId.CommandCreated[20104] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Created DbCommand for 'ExecuteNonQuery' (0ms).
+dbug: 18.02.2024 19:15:37.766 RelationalEventId.CommandInitialized[20106] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Initialized DbCommand for 'ExecuteNonQuery' (0ms).
+dbug: 18.02.2024 19:15:37.766 RelationalEventId.CommandExecuting[20100] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Executing DbCommand [Parameters=[], CommandType='Text', CommandTimeout='30']
+      CREATE TABLE [Companies] (
+          [Id] int NOT NULL IDENTITY,
+          [PhoneNumber] nvarchar(max) NOT NULL,
+          [Name] nvarchar(max) NOT NULL,
+          [CityId] int NOT NULL,
+          CONSTRAINT [PK_Companies] PRIMARY KEY ([Id]),
+          CONSTRAINT [FK_Companies_Cities_CityId] FOREIGN KEY ([CityId]) REFERENCES [Cities] ([Id]) ON DELETE CASCADE
+      );
+info: 18.02.2024 19:15:37.767 RelationalEventId.CommandExecuted[20101] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Executed DbCommand (1ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      CREATE TABLE [Companies] (
+          [Id] int NOT NULL IDENTITY,
+          [PhoneNumber] nvarchar(max) NOT NULL,
+          [Name] nvarchar(max) NOT NULL,
+          [CityId] int NOT NULL,
+          CONSTRAINT [PK_Companies] PRIMARY KEY ([Id]),
+          CONSTRAINT [FK_Companies_Cities_CityId] FOREIGN KEY ([CityId]) REFERENCES [Cities] ([Id]) ON DELETE CASCADE
+      );
+dbug: 18.02.2024 19:15:37.767 RelationalEventId.CommandCreating[20103] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Creating DbCommand for 'ExecuteNonQuery'.
+dbug: 18.02.2024 19:15:37.767 RelationalEventId.CommandCreated[20104] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Created DbCommand for 'ExecuteNonQuery' (0ms).
+dbug: 18.02.2024 19:15:37.767 RelationalEventId.CommandInitialized[20106] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Initialized DbCommand for 'ExecuteNonQuery' (0ms).
+dbug: 18.02.2024 19:15:37.767 RelationalEventId.CommandExecuting[20100] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Executing DbCommand [Parameters=[], CommandType='Text', CommandTimeout='30']
+      CREATE TABLE [Districts] (
+          [Id] int NOT NULL IDENTITY,
+          [CityId] int NOT NULL,
+          [Name] nvarchar(max) NOT NULL,
+          CONSTRAINT [PK_Districts] PRIMARY KEY ([Id]),
+          CONSTRAINT [FK_Districts_Cities_CityId] FOREIGN KEY ([CityId]) REFERENCES [Cities] ([Id]) ON DELETE CASCADE
+      );
+info: 18.02.2024 19:15:37.768 RelationalEventId.CommandExecuted[20101] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Executed DbCommand (1ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      CREATE TABLE [Districts] (
+          [Id] int NOT NULL IDENTITY,
+          [CityId] int NOT NULL,
+          [Name] nvarchar(max) NOT NULL,
+          CONSTRAINT [PK_Districts] PRIMARY KEY ([Id]),
+          CONSTRAINT [FK_Districts_Cities_CityId] FOREIGN KEY ([CityId]) REFERENCEdbug: 18.02.2024 19:17:57.017 CoreEventId.ShadowPropertyCreated[10600] (Microsoft.EntityFrameworkCore.Model.Validation) 
+      The property 'Store.AlbumId' was created in shadow state because there are no eligible CLR members with a matching name.
+warn: 18.02.2024 19:17:57.031 SqlServerEventId.DecimalTypeDefaultWarning[30000] (Microsoft.EntityFrameworkCore.Model.Validation) 
+      No store type was specified for the decimal property 'Price' on entity type 'ProductAlbum'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values in 'OnModelCreating' using 'HasColumnType', specify precision and scale using 'HasPrecision', or configure a value converter using 'HasConversion'.
+dbug: 18.02.2024 19:17:57.087 CoreEventId.ContextInitialized[10403] (Microsoft.EntityFrameworkCore.Infrastructure) 
+      Entity Framework Core 8.0.2 initialized 'MusicStoreDbContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer:8.0.2' with options: None
+dbug: 18.02.2024 19:17:57.092 RelationalEventId.ConnectionCreating[20005] (Microsoft.EntityFrameworkCore.Database.Connection) 
+      Creating DbConnection.
+dbug: 18.02.2024 19:17:57.109 RelationalEventId.ConnectionCreated[20006] (Microsoft.EntityFrameworkCore.Database.Connection) 
+      Created DbConnection. (16ms).
+dbug: 18.02.2024 19:17:57.110 RelationalEventId.ConnectionOpening[20000] (Microsoft.EntityFrameworkCore.Database.Connection) 
+      Opening connection to database 'musicStores' on server '(localdb)\MSSQLLocalDB'.
+dbug: 18.02.2024 19:17:57.232 RelationalEventId.ConnectionOpened[20001] (Microsoft.EntityFrameworkCore.Database.Connection) 
+      Opened connection to database 'musicStores' on server '(localdb)\MSSQLLocalDB'.
+dbug: 18.02.2024 19:17:57.234 RelationalEventId.CommandCreating[20103] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Creating DbCommand for 'ExecuteNonQuery'.
+dbug: 18.02.2024 19:17:57.236 RelationalEventId.CommandCreated[20104] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Created DbCommand for 'ExecuteNonQuery' (1ms).
+dbug: 18.02.2024 19:17:57.237 RelationalEventId.CommandInitialized[20106] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Initialized DbCommand for 'ExecuteNonQuery' (3ms).
+dbug: 18.02.2024 19:17:57.239 RelationalEventId.CommandExecuting[20100] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Executing DbCommand [Parameters=[], CommandType='Text', CommandTimeout='30']
+      SELECT 1
+info: 18.02.2024 19:17:57.250 RelationalEventId.CommandExecuted[20101] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Executed DbCommand (10ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      SELECT 1
+dbug: 18.02.2024 19:17:57.251 RelationalEventId.ConnectionClosing[20002] (Microsoft.EntityFrameworkCore.Database.Connection) 
+      Closing connection to database 'musicStores' on server '(localdb)\MSSQLLocalDB'.
+dbug: 18.02.2024 19:17:57.254 RelationalEventId.ConnectionClosed[20003] (Microsoft.EntityFrameworkCore.Database.Connection) 
+      Closed connection to database 'musicStores' on server '(localdb)\MSSQLLocalDB' (2ms).
+dbug: 18.02.2024 19:17:57.255 RelationalEventId.CommandCreating[20103] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Creating DbCommand for 'ExecuteScalar'.
+dbug: 18.02.2024 19:17:57.255 RelationalEventId.CommandCreated[20104] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Created DbCommand for 'ExecuteScalar' (0ms).
+dbug: 18.02.2024 19:17:57.255 RelationalEventId.CommandInitialized[20106] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Initialized DbCommand for 'ExecuteScalar' (0ms).
+dbug: 18.02.2024 19:17:57.255 RelationalEventId.ConnectionOpening[20000] (Microsoft.EntityFrameworkCore.Database.Connection) 
+      Opening connection to database 'musicStores' on server '(localdb)\MSSQLLocalDB'.
+dbug: 18.02.2024 19:17:57.255 RelationalEventId.ConnectionOpened[20001] (Microsoft.EntityFrameworkCore.Database.Connection) 
+      Opened connection to database 'musicStores' on server '(localdb)\MSSQLLocalDB'.
+dbug: 18.02.2024 19:17:57.255 RelationalEventId.CommandExecuting[20100] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Executing DbCommand [Parameters=[], CommandType='Text', CommandTimeout='30']
+      
+      IF EXISTS
+          (SELECT *
+           FROM [sys].[objects] o
+           WHERE [o].[type] = 'U'
+           AND [o].[is_ms_shipped] = 0
+           AND NOT EXISTS (SELECT *
+               FROM [sys].[extended_properties] AS [ep]
+               WHERE [ep].[major_id] = [o].[object_id]
+                   AND [ep].[minor_id] = 0
+                   AND [ep].[class] = 1
+                   AND [ep].[name] = N'microsoft_database_tools_support'
+          )
+      )
+      SELECT 1 ELSE SELECT 0
+info: 18.02.2024 19:17:57.270 RelationalEventId.CommandExecuted[20101] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Executed DbCommand (15ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      
+      IF EXISTS
+          (SELECT *
+           FROM [sys].[objects] o
+           WHERE [o].[type] = 'U'
+           AND [o].[is_ms_shipped] = 0
+           AND NOT EXISTS (SELECT *
+               FROM [sys].[extended_properties] AS [ep]
+               WHERE [ep].[major_id] = [o].[object_id]
+                   AND [ep].[minor_id] = 0
+                   AND [ep].[class] = 1
+                   AND [ep].[name] = N'microsoft_database_tools_support'
+          )
+      )
+      SELECT 1 ELSE SELECT 0
+dbug: 18.02.2024 19:17:57.270 RelationalEventId.ConnectionClosing[20002] (Microsoft.EntityFrameworkCore.Database.Connection) 
+      Closing connection to database 'musicStores' on server '(localdb)\MSSQLLocalDB'.
+dbug: 18.02.2024 19:17:57.271 RelationalEventId.ConnectionClosed[20003] (Microsoft.EntityFrameworkCore.Database.Connection) 
+      Closed connection to database 'musicStores' on server '(localdb)\MSSQLLocalDB' (0ms).
+dbug: 18.02.2024 19:17:57.285 CoreEventId.ShadowPropertyCreated[10600] (Microsoft.EntityFrameworkCore.Model.Validation) 
+      The property 'Store.AlbumId' was created in shadow state because there are no eligible CLR members with a matching name.
+warn: 18.02.2024 19:17:57.287 SqlServerEventId.DecimalTypeDefaultWarning[30000] (Microsoft.EntityFrameworkCore.Model.Validation) 
+      No store type was specified for the decimal property 'Price' on entity type 'ProductAlbum'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values in 'OnModelCreating' using 'HasColumnType', specify precision and scale using 'HasPrecision', or configure a value converter using 'HasConversion'.
+dbug: 18.02.2024 19:17:57.331 RelationalEventId.ConnectionOpening[20000] (Microsoft.EntityFrameworkCore.Database.Connection) 
+      Opening connection to database 'musicStores' on server '(localdb)\MSSQLLocalDB'.
+dbug: 18.02.2024 19:17:57.331 RelationalEventId.ConnectionOpened[20001] (Microsoft.EntityFrameworkCore.Database.Connection) 
+      Opened connection to database 'musicStores' on server '(localdb)\MSSQLLocalDB'.
+dbug: 18.02.2024 19:17:57.332 RelationalEventId.TransactionStarting[20209] (Microsoft.EntityFrameworkCore.Database.Transaction) 
+      Beginning transaction with isolation level 'Unspecified'.
+dbug: 18.02.2024 19:17:57.335 RelationalEventId.TransactionStarted[20200] (Microsoft.EntityFrameworkCore.Database.Transaction) 
+      Began transaction with isolation level 'ReadCommitted'.
+dbug: 18.02.2024 19:17:57.335 RelationalEventId.CommandCreating[20103] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Creating DbCommand for 'ExecuteNonQuery'.
+dbug: 18.02.2024 19:17:57.335 RelationalEventId.CommandCreated[20104] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Created DbCommand for 'ExecuteNonQuery' (0ms).
+dbug: 18.02.2024 19:17:57.336 RelationalEventId.CommandInitialized[20106] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Initialized DbCommand for 'ExecuteNonQuery' (0ms).
+dbug: 18.02.2024 19:17:57.336 RelationalEventId.CommandExecuting[20100] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Executing DbCommand [Parameters=[], CommandType='Text', CommandTimeout='30']
+      CREATE TABLE [Cities] (
+          [Id] int NOT NULL IDENTITY,
+          [Name] nvarchar(max) NOT NULL,
+          CONSTRAINT [PK_Cities] PRIMARY KEY ([Id])
+      );
+info: 18.02.2024 19:17:57.338 RelationalEventId.CommandExecuted[20101] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Executed DbCommand (2ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      CREATE TABLE [Cities] (
+          [Id] int NOT NULL IDENTITY,
+          [Name] nvarchar(max) NOT NULL,
+          CONSTRAINT [PK_Cities] PRIMARY KEY ([Id])
+      );
+dbug: 18.02.2024 19:17:57.338 RelationalEventId.CommandCreating[20103] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Creating DbCommand for 'ExecuteNonQuery'.
+dbug: 18.02.2024 19:17:57.338 RelationalEventId.CommandCreated[20104] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Created DbCommand for 'ExecuteNonQuery' (0ms).
+dbug: 18.02.2024 19:17:57.338 RelationalEventId.CommandInitialized[20106] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Initialized DbCommand for 'ExecuteNonQuery' (0ms).
+dbug: 18.02.2024 19:17:57.338 RelationalEventId.CommandExecuting[20100] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Executing DbCommand [Parameters=[], CommandType='Text', CommandTimeout='30']
+      CREATE TABLE [ListenerTypes] (
+          [Id] int NOT NULL IDENTITY,
+          [Name] nvarchar(max) NOT NULL,
+          CONSTRAINT [PK_ListenerTypes] PRIMARY KEY ([Id])
+      );
+info: 18.02.2024 19:17:57.338 RelationalEventId.CommandExecuted[20101] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Executed DbCommand (1ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      CREATE TABLE [ListenerTypes] (
+          [Id] int NOT NULL IDENTITY,
+          [Name] nvarchar(max) NOT NULL,
+          CONSTRAINT [PK_ListenerTypes] PRIMARY KEY ([Id])
+      );
+dbug: 18.02.2024 19:17:57.338 RelationalEventId.CommandCreating[20103] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Creating DbCommand for 'ExecuteNonQuery'.
+dbug: 18.02.2024 19:17:57.338 RelationalEventId.CommandCreated[20104] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Created DbCommand for 'ExecuteNonQuery' (0ms).
+dbug: 18.02.2024 19:17:57.338 RelationalEventId.CommandInitialized[20106] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Initialized DbCommand for 'ExecuteNonQuery' (0ms).
+dbug: 18.02.2024 19:17:57.338 RelationalEventId.CommandExecuting[20100] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Executing DbCommand [Parameters=[], CommandType='Text', CommandTimeout='30']
+      CREATE TABLE [OwnershipTypes] (
+          [Id] int NOT NULL IDENTITY,
+          [Name] nvarchar(max) NOT NULL,
+          CONSTRAINT [PK_OwnershipTypes] PRIMARY KEY ([Id])
+      );
+info: 18.02.2024 19:17:57.339 RelationalEventId.CommandExecuted[20101] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Executed DbCommand (0ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      CREATE TABLE [OwnershipTypes] (
+          [Id] int NOT NULL IDENTITY,
+          [Name] nvarchar(max) NOT NULL,
+          CONSTRAINT [PK_OwnershipTypes] PRIMARY KEY ([Id])
+      );
+dbug: 18.02.2024 19:17:57.339 RelationalEventId.CommandCreating[20103] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Creating DbCommand for 'ExecuteNonQuery'.
+dbug: 18.02.2024 19:17:57.339 RelationalEventId.CommandCreated[20104] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Created DbCommand for 'ExecuteNonQuery' (0ms).
+dbug: 18.02.2024 19:17:57.339 RelationalEventId.CommandInitialized[20106] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Initialized DbCommand for 'ExecuteNonQuery' (0ms).
+dbug: 18.02.2024 19:17:57.339 RelationalEventId.CommandExecuting[20100] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Executing DbCommand [Parameters=[], CommandType='Text', CommandTimeout='30']
+      CREATE TABLE [Companies] (
+          [Id] int NOT NULL IDENTITY,
+          [PhoneNumber] nvarchar(max) NOT NULL,
+          [Name] nvarchar(max) NOT NULL,
+          [CityId] int NOT NULL,
+          CONSTRAINT [PK_Companies] PRIMARY KEY ([Id]),
+          CONSTRAINT [FK_Companies_Cities_CityId] FOREIGN KEY ([CityId]) REFERENCES [Cities] ([Id]) ON DELETE CASCADE
+      );
+info: 18.02.2024 19:17:57.340 RelationalEventId.CommandExecuted[20101] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Executed DbCommand (1ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      CREATE TABLE [Companies] (
+          [Id] int NOT NULL IDENTITY,
+          [PhoneNumber] nvarchar(max) NOT NULL,
+          [Name] nvarchar(max) NOT NULL,
+          [CityId] int NOT NULL,
+          CONSTRAINT [PK_Companies] PRIMARY KEY ([Id]),
+          CONSTRAINT [FK_Companies_Cities_CityId] FOREIGN KEY ([CityId]) REFERENCES [Cities] ([Id]) ON DELETE CASCADE
+      );
+dbug: 18.02.2024 19:17:57.340 RelationalEventId.CommandCreating[20103] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Creating DbCommand for 'ExecuteNonQuery'.
+dbug: 18.02.2024 19:17:57.340 RelationalEventId.CommandCreated[20104] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Created DbCommand for 'ExecuteNonQuery' (0ms).
+dbug: 18.02.2024 19:17:57.340 RelationalEventId.CommandInitialized[20106] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Initialized DbCommand for 'ExecuteNonQuery' (0ms).
+dbug: 18.02.2024 19:17:57.340 RelationalEventId.CommandExecuting[20100] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Executing DbCommand [Parameters=[], CommandType='Text', CommandTimeout='30']
+      CREATE TABLE [Districts] (
+          [Id] int NOT NULL IDENTITY,
+          [CityId] int NOT NULL,
+          [Name] nvarchar(max) NOT NULL,
+          CONSTRAINT [PK_Districts] PRIMARY KEY ([Id]),
+          CONSTRAINT [FK_Districts_Cities_CityId] FOREIGN KEY ([CityId]) REFERENCES [Cities] ([Id]) ON DELETE CASCADE
+      );
+info: 18.02.2024 19:17:57.340 RelationalEventId.CommandExecuted[20101] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Executed DbCommand (1ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      CREATE TABLE [Districts] (
+          [Id] int NOT NULL IDENTITY,
+          [CityId] int NOT NULL,
+          [Name] nvarchar(max) NOT NULL,
+          CONSTRAINT [PK_Districts] PRIMARY KEY ([Id]),
+          CONSTRAINT [FK_Districts_Cities_CityId] FOREIGN KEY ([CityId]) REFERENCES [Cities] ([Id]) ON DELETE CASCADE
+      );
+dbug: 18.02.2024 19:17:57.340 RelationalEventId.CommandCreating[20103] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Creating DbCommand for 'ExecuteNonQuery'.
+dbug: 18.02.2024 19:17:57.341 RelationalEventId.CommandCreated[20104] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Created DbCommand for 'ExecuteNonQuery' (0ms).
+dbug: 18.02.2024 19:17:57.341 RelationalEventId.CommandInitialized[20106] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Initialized DbCommand for 'ExecuteNonQuery' (0ms).
+dbug: 18.02.2024 19:17:57.341 RelationalEventId.CommandExecuting[20100] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Executing DbCommand [Parameters=[], CommandType='Text', CommandTimeout='30']
+      CREATE TABLE [Albums] (
+          [Id] int NOT NULL IDENTITY,
+          [Name] nvarchar(max) NOT NULL,
+          [ListenerTypeId] int NOT NULL,
+          [CompanyId] int NOT NULL,
+          [Duration] int NOT NULL,
+          [ReleaseDate] datetime2 NOT NULL,
+          [SongsCount] int NOT NULL,
+          CONSTRAINT [PK_Albums] PRIMARY KEY ([Id]),
+          CONSTRAINT [FK_Albums_Companies_CompanyId] FOREIGN KEY ([CompanyId]) REFERENCES [Companies] ([Id]) ON DELETE CASCADE,
+          CONSTRAINT [FK_Albums_ListenerTypes_ListenerTypeId] FOREIGN KEY ([ListenerTypeId]) REFERENCES [ListenerTypes] ([Id]) ON DELETE CASCADE
+      );
+info: 18.02.2024 19:17:57.341 RelationalEventId.CommandExecuted[20101] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Executed DbCommand (1ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      CREATE TABLE [Albums] (
+          [Id] int NOT NULL IDENTITY,
+          [Name] nvarchar(max) NOT NULL,
+          [ListenerTypeId] int NOT NULL,
+          [CompanyId] int NOT NULL,
+          [Duration] int NOT NULL,
+          [ReleaseDate] datetime2 NOT NULL,
+          [SongsCount] int NOT NULL,
+          CONSTRAINT [PK_Albums] PRIMARY KEY ([Id]),
+          CONSTRAINT [FK_Albums_Companies_CompanyId] FOREIGN KEY ([CompanyId]) REFERENCES [Companies] ([Id]) ON DELETE CASCADE,
+          CONSTRAINT [FK_Albums_ListenerTypes_ListenerTypeId] FOREIGN KEY ([ListenerTypeId]) REFERENCES [ListenerTypes] ([Id]) ON DELETE CASCADE
+      );
+dbug: 18.02.2024 19:17:57.341 RelationalEventId.CommandCreating[20103] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Creating DbCommand for 'ExecuteNonQuery'.
+dbug: 18.02.2024 19:17:57.341 RelationalEventId.CommandCreated[20104] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Created DbCommand for 'ExecuteNonQuery' (0ms).
+dbug: 18.02.2024 19:17:57.341 RelationalEventId.CommandInitialized[20106] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Initialized DbCommand for 'ExecuteNonQuery' (0ms).
+dbug: 18.02.2024 19:17:57.341 RelationalEventId.CommandExecuting[20100] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Executing DbCommand [Parameters=[], CommandType='Text', CommandTimeout='30']
+      CREATE TABLE [Cassettes] (
+          [Id] int NOT NULL IDENTITY,
+          [AlbumId] int NOT NULL,
+          [Name] nvarchar(max) NOT NULL,
+          [Duration] int NOT NULL,
+          CONSTRAINT [PK_Cassettes] PRIMARY KEY ([Id]),
+          CONSTRAINT [FK_Cassettes_Albums_AlbumId] FOREIGN KEY ([AlbumId]) REFERENCES [Albums] ([Id]) ON DELETE CASCADE
+      );
+info: 18.02.2024 19:17:57.342 RelationalEventId.CommandExecuted[20101] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Executed DbCommand (1ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      CREATE TABLE [Cassettes] (
+          [Id] int NOT NULL IDENTITY,
+          [AlbumId] int NOT NULL,
+          [Name] nvarchar(max) NOT NULL,
+          [Duration] int NOT NULL,
+          CONSTRAINT [PK_Cassettes] PRIMARY KEY ([Id]),
+          CONSTRAINT [FK_Cassettes_Albums_AlbumId] FOREIGN KEY ([AlbumId]) REFERENCES [Albums] ([Id]) ON DELETE CASCADE
+      );
+dbug: 18.02.2024 19:17:57.342 RelationalEventId.CommandCreating[20103] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Creating DbCommand for 'ExecuteNonQuery'.
+dbug: 18.02.2024 19:17:57.342 RelationalEventId.CommandCreated[20104] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Created DbCommand for 'ExecuteNonQuery' (0ms).
+dbug: 18.02.2024 19:17:57.342 RelationalEventId.CommandInitialized[20106] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Initialized DbCommand for 'ExecuteNonQuery' (0ms).
+dbug: 18.02.2024 19:17:57.342 RelationalEventId.CommandExecuting[20100] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Executing DbCommand [Parameters=[], CommandType='Text', CommandTimeout='30']
+      CREATE TABLE [Stores] (
+          [Id] int NOT NULL IDENTITY,
+          [OwnershipTypeId] int NOT NULL,
+          [PhoneNumber] nvarchar(max) NOT NULL,
+          [Name] nvarchar(max) NOT NULL,
+          [YearOpened] datetime2 NOT NULL,
+          [AlbumId] int NULL,
+          CONSTRAINT [PK_Stores] PRIMARY KEY ([Id]),
+          CONSTRAINT [FK_Stores_Albums_AlbumId] FOREIGN KEY ([AlbumId]) REFERENCES [Albums] ([Id]),
+          CONSTRAINT [FK_Stores_OwnershipTypes_OwnershipTypeId] FOREIGN KEY ([OwnershipTypeId]) REFERENCES [OwnershipTypes] ([Id]) ON DELETE CASCADE
+      );
+info: 18.02.2024 19:17:57.343 RelationalEventId.CommandExecuted[20101] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Executed DbCommand (1ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      CREATE TABLE [Stores] (
+          [Id] int NOT NULL IDENTITY,
+          [OwnershipTypeId] int NOT NULL,
+          [PhoneNumber] nvarchar(max) NOT NULL,
+          [Name] nvarchar(max) NOT NULL,
+          [YearOpened] datetime2 NOT NULL,
+          [AlbumId] int NULL,
+          CONSTRAINT [PK_Stores] PRIMARY KEY ([Id]),
+          CONSTRAINT [FK_Stores_Albums_AlbumId] FOREIGN KEY ([AlbumId]) REFERENCES [Albums] ([Id]),
+          CONSTRAINT [FK_Stores_OwnershipTypes_OwnershipTypeId] FOREIGN KEY ([OwnershipTypeId]) REFERENCES [OwnershipTypes] ([Id]) ON DELETE CASCADE
+      );
+dbug: 18.02.2024 19:17:57.343 RelationalEventId.CommandCreating[20103] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Creating DbCommand for 'ExecuteNonQuery'.
+dbug: 18.02.2024 19:17:57.343 RelationalEventId.CommandCreated[20104] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Created DbCommand for 'ExecuteNonQuery' (0ms).
+dbug: 18.02.2024 19:17:57.343 RelationalEventId.CommandInitialized[20106] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Initialized DbCommand for 'ExecuteNonQuery' (0ms).
+dbug: 18.02.2024 19:17:57.343 RelationalEventId.CommandExecuting[20100] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Executing DbCommand [Parameters=[], CommandType='Text', CommandTimeout='30']
+      CREATE TABLE [ProductAlbums] (
+          [Id] int NOT NULL IDENTITY,
+          [StoreId] int NOT NULL,
+          [AlbumId] int NOT NULL,
+          [DateReceived] datetime2 NOT NULL,
+          [Quantity] int NOT NULL,
+          [Price] decimal(18,2) NOT NULL,
+          CONSTRAINT [PK_ProductAlbums] PRIMARY KEY ([Id]),
+          CONSTRAINT [FK_ProductAlbums_Albums_AlbumId] FOREIGN KEY ([AlbumId]) REFERENCES [Albums] ([Id]) ON DELETE CASCADE,
+          CONSTRAINT [FK_ProductAlbums_Stores_StoreId] FOREIGN KEY ([StoreId]) REFERENCES [Stores] ([Id]) ON DELETE CASCADE
+      );
+info: 18.02.2024 19:17:57.344 RelationalEventId.CommandExecuted[20101] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Executed DbCommand (1ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      CREATE TABLE [ProductAlbums] (
+          [Id] int NOT NULL IDENTITY,
+          [StoreId] int NOT NULL,
+          [AlbumId] int NOT NULL,
+          [DateReceived] datetime2 NOT NULL,
+          [Quantity] int NOT NULL,
+          [Price] decimal(18,2) NOT NULL,
+          CONSTRAINT [PK_ProductAlbums] PRIMARY KEY ([Id]),
+          CONSTRAINT [FK_ProductAlbums_Albums_AlbumId] FOREIGN KEY ([AlbumId]) REFERENCES [Albums] ([Id]) ON DELETE CASCADE,
+          CONSTRAINT [FK_ProductAlbums_Stores_StoreId] FOREIGN KEY ([StoreId]) REFERENCES [Stores] ([Id]) ON DELETE CASCADE
+      );
+dbug: 18.02.2024 19:17:57.344 RelationalEventId.CommandCreating[20103] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Creating DbCommand for 'ExecuteNonQuery'.
+dbug: 18.02.2024 19:17:57.344 RelationalEventId.CommandCreated[20104] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Created DbCommand for 'ExecuteNonQuery' (0ms).
+dbug: 18.02.2024 19:17:57.344 RelationalEventId.CommandInitialized[20106] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Initialized DbCommand for 'ExecuteNonQuery' (0ms).
+dbug: 18.02.2024 19:17:57.344 RelationalEventId.CommandExecuting[20100] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Executing DbCommand [Parameters=[], CommandType='Text', CommandTimeout='30']
+      CREATE INDEX [IX_Albums_CompanyId] ON [Albums] ([CompanyId]);
+info: 18.02.2024 19:17:57.344 RelationalEventId.CommandExecuted[20101] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Executed DbCommand (0ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      CREATE INDEX [IX_Albums_CompanyId] ON [Albums] ([CompanyId]);
+dbug: 18.02.2024 19:17:57.344 RelationalEventId.CommandCreating[20103] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Creating DbCommand for 'ExecuteNonQuery'.
+dbug: 18.02.2024 19:17:57.344 RelationalEventId.CommandCreated[20104] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Created DbCommand for 'ExecuteNonQuery' (0ms).
+dbug: 18.02.2024 19:17:57.344 RelationalEventId.CommandInitialized[20106] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Initialized DbCommand for 'ExecuteNonQuery' (0ms).
+dbug: 18.02.2024 19:17:57.344 RelationalEventId.CommandExecuting[20100] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Executing DbCommand [Parameters=[], CommandType='Text', CommandTimeout='30']
+      CREATE INDEX [IX_Albums_ListenerTypeId] ON [Albums] ([ListenerTypeId]);
+info: 18.02.2024 19:17:57.344 RelationalEventId.CommandExecuted[20101] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Executed DbCommand (0ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      CREATE INDEX [IX_Albums_ListenerTypeId] ON [Albums] ([ListenerTypeId]);
+dbug: 18.02.2024 19:17:57.344 RelationalEventId.CommandCreating[20103] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Creating DbCommand for 'ExecuteNonQuery'.
+dbug: 18.02.2024 19:17:57.344 RelationalEventId.CommandCreated[20104] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Created DbCommand for 'ExecuteNonQuery' (0ms).
+dbug: 18.02.2024 19:17:57.344 RelationalEventId.CommandInitialized[20106] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Initialized DbCommand for 'ExecuteNonQuery' (0ms).
+dbug: 18.02.2024 19:17:57.344 RelationalEventId.CommandExecuting[20100] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Executing DbCommand [Parameters=[], CommandType='Text', CommandTimeout='30']
+      CREATE INDEX [IX_Cassettes_AlbumId] ON [Cassettes] ([AlbumId]);
+info: 18.02.2024 19:17:57.345 RelationalEventId.CommandExecuted[20101] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Executed DbCommand (0ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      CREATE INDEX [IX_Cassettes_AlbumId] ON [Cassettes] ([AlbumId]);
+dbug: 18.02.2024 19:17:57.345 RelationalEventId.CommandCreating[20103] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Creating DbCommand for 'ExecuteNonQuery'.
+dbug: 18.02.2024 19:17:57.345 RelationalEventId.CommandCreated[20104] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Created DbCommand for 'ExecuteNonQuery' (0ms).
+dbug: 18.02.2024 19:17:57.345 RelationalEventId.CommandInitialized[20106] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Initialized DbCommand for 'ExecuteNonQuery' (0ms).
+dbug: 18.02.2024 19:17:57.345 RelationalEventId.CommandExecuting[20100] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Executing DbCommand [Parameters=[], CommandType='Text', CommandTimeout='30']
+      CREATE INDEX [IX_Companies_CityId] ON [Companies] ([CityId]);
+info: 18.02.2024 19:17:57.345 RelationalEventId.CommandExecuted[20101] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Executed DbCommand (0ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      CREATE INDEX [IX_Companies_CityId] ON [Companies] ([CityId]);
+dbug: 18.02.2024 19:17:57.345 RelationalEventId.CommandCreating[20103] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Creating DbCommand for 'ExecuteNonQuery'.
+dbug: 18.02.2024 19:17:57.345 RelationalEventId.CommandCreated[20104] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Created DbCommand for 'ExecuteNonQuery' (0ms).
+dbug: 18.02.2024 19:17:57.345 RelationalEventId.CommandInitialized[20106] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Initialized DbCommand for 'ExecuteNonQuery' (0ms).
+dbug: 18.02.2024 19:17:57.345 RelationalEventId.CommandExecuting[20100] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Executing DbCommand [Parameters=[], CommandType='Text', CommandTimeout='30']
+      CREATE INDEX [IX_Districts_CityId] ON [Districts] ([CityId]);
+info: 18.02.2024 19:17:57.345 RelationalEventId.CommandExecuted[20101] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Executed DbCommand (0ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      CREATE INDEX [IX_Districts_CityId] ON [Districts] ([CityId]);
+dbug: 18.02.2024 19:17:57.345 RelationalEventId.CommandCreating[20103] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Creating DbCommand for 'ExecuteNonQuery'.
+dbug: 18.02.2024 19:17:57.345 RelationalEventId.CommandCreated[20104] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Created DbCommand for 'ExecuteNonQuery' (0ms).
+dbug: 18.02.2024 19:17:57.345 RelationalEventId.CommandInitialized[20106] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Initialized DbCommand for 'ExecuteNonQuery' (0ms).
+dbug: 18.02.2024 19:17:57.345 RelationalEventId.CommandExecuting[20100] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Executing DbCommand [Parameters=[], CommandType='Text', CommandTimeout='30']
+      CREATE INDEX [IX_ProductAlbums_AlbumId] ON [ProductAlbums] ([AlbumId]);
+info: 18.02.2024 19:17:57.346 RelationalEventId.CommandExecuted[20101] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Executed DbCommand (0ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      CREATE INDEX [IX_ProductAlbums_AlbumId] ON [ProductAlbums] ([AlbumId]);
+dbug: 18.02.2024 19:17:57.346 RelationalEventId.CommandCreating[20103] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Creating DbCommand for 'ExecuteNonQuery'.
+dbug: 18.02.2024 19:17:57.346 RelationalEventId.CommandCreated[20104] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Created DbCommand for 'ExecuteNonQuery' (0ms).
+dbug: 18.02.2024 19:17:57.346 RelationalEventId.CommandInitialized[20106] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Initialized DbCommand for 'ExecuteNonQuery' (0ms).
+dbug: 18.02.2024 19:17:57.346 RelationalEventId.CommandExecuting[20100] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Executing DbCommand [Parameters=[], CommandType='Text', CommandTimeout='30']
+      CREATE INDEX [IX_ProductAlbums_StoreId] ON [ProductAlbums] ([StoreId]);
+info: 18.02.2024 19:17:57.346 RelationalEventId.CommandExecuted[20101] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Executed DbCommand (0ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      CREATE INDEX [IX_ProductAlbums_StoreId] ON [ProductAlbums] ([StoreId]);
+dbug: 18.02.2024 19:17:57.346 RelationalEventId.CommandCreating[20103] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Creating DbCommand for 'ExecuteNonQuery'.
+dbug: 18.02.2024 19:17:57.346 RelationalEventId.CommandCreated[20104] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Created DbCommand for 'ExecuteNonQuery' (0ms).
+dbug: 18.02.2024 19:17:57.346 RelationalEventId.CommandInitialized[20106] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Initialized DbCommand for 'ExecuteNonQuery' (0ms).
+dbug: 18.02.2024 19:17:57.346 RelationalEventId.CommandExecuting[20100] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Executing DbCommand [Parameters=[], CommandType='Text', CommandTimeout='30']
+      CREATE INDEX [IX_Stores_AlbumId] ON [Stores] ([AlbumId]);
+info: 18.02.2024 19:17:57.346 RelationalEventId.CommandExecuted[20101] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Executed DbCommand (0ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      CREATE INDEX [IX_Stores_AlbumId] ON [Stores] ([AlbumId]);
+dbug: 18.02.2024 19:17:57.346 RelationalEventId.CommandCreating[20103] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Creating DbCommand for 'ExecuteNonQuery'.
+dbug: 18.02.2024 19:17:57.346 RelationalEventId.CommandCreated[20104] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Created DbCommand for 'ExecuteNonQuery' (0ms).
+dbug: 18.02.2024 19:17:57.346 RelationalEventId.CommandInitialized[20106] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Initialized DbCommand for 'ExecuteNonQuery' (0ms).
+dbug: 18.02.2024 19:17:57.346 RelationalEventId.CommandExecuting[20100] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Executing DbCommand [Parameters=[], CommandType='Text', CommandTimeout='30']
+      CREATE INDEX [IX_Stores_OwnershipTypeId] ON [Stores] ([OwnershipTypeId]);
+info: 18.02.2024 19:17:57.347 RelationalEventId.CommandExecuted[20101] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Executed DbCommand (0ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      CREATE INDEX [IX_Stores_OwnershipTypeId] ON [Stores] ([OwnershipTypeId]);
+dbug: 18.02.2024 19:17:57.347 RelationalEventId.TransactionCommitting[20210] (Microsoft.EntityFrameworkCore.Database.Transaction) 
+      Committing transaction.
+dbug: 18.02.2024 19:17:57.349 RelationalEventId.TransactionCommitted[20202] (Microsoft.EntityFrameworkCore.Database.Transaction) 
+      Committed transaction.
+dbug: 18.02.2024 19:17:57.349 RelationalEventId.TransactionDisposed[20204] (Microsoft.EntityFrameworkCore.Database.Transaction) 
+      Disposing transaction.
+dbug: 18.02.2024 19:17:57.349 RelationalEventId.ConnectionClosing[20002] (Microsoft.EntityFrameworkCore.Database.Connection) 
+      Closing connection to database 'musicStores' on server '(localdb)\MSSQLLocalDB'.
+dbug: 18.02.2024 19:17:57.349 RelationalEventId.ConnectionClosed[20003] (Microsoft.EntityFrameworkCore.Database.Connection) 
+      Closed connection to database 'musicStores' on server '(localdb)\MSSQLLocalDB' (0ms).
+dbug: 18.02.2024 19:17:57.599 CoreEventId.ContextDisposed[10407] (Microsoft.EntityFrameworkCore.Infrastructure) 
+      'MusicStoreDbContext' disposed.
+dbug: 18.02.2024 19:17:57.601 RelationalEventId.ConnectionDisposing[20007] (Microsoft.EntityFrameworkCore.Database.Connection) 
+      Disposing connection to database 'musicStores' on server '(localdb)\MSSQLLocalDB'.
+dbug: 18.02.2024 19:17:57.602 RelationalEventId.ConnectionDisposed[20008] (Microsoft.EntityFrameworkCore.Database.Connection) 
+      Disposed connection to database '' on server '' (1ms).
+dbug: 18.02.2024 19:18:02.591 CoreEventId.ShadowPropertyCreated[10600] (Microsoft.EntityFrameworkCore.Model.Validation) 
+      The property 'Store.AlbumId' was created in shadow state because there are no eligible CLR members with a matching name.
+warn: 18.02.2024 19:18:02.606 SqlServerEventId.DecimalTypeDefaultWarning[30000] (Microsoft.EntityFrameworkCore.Model.Validation) 
+      No store type was specified for the decimal property 'Price' on entity type 'ProductAlbum'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values in 'OnModelCreating' using 'HasColumnType', specify precision and scale using 'HasPrecision', or configure a value converter using 'HasConversion'.
+dbug: 18.02.2024 19:18:02.663 CoreEventId.ContextInitialized[10403] (Microsoft.EntityFrameworkCore.Infrastructure) 
+      Entity Framework Core 8.0.2 initialized 'MusicStoreDbContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer:8.0.2' with options: None
+dbug: 18.02.2024 19:18:02.668 RelationalEventId.ConnectionCreating[20005] (Microsoft.EntityFrameworkCore.Database.Connection) 
+      Creating DbConnection.
+dbug: 18.02.2024 19:18:02.685 RelationalEventId.ConnectionCreated[20006] (Microsoft.EntityFrameworkCore.Database.Connection) 
+      Created DbConnection. (16ms).
+dbug: 18.02.2024 19:18:02.686 RelationalEventId.ConnectionOpening[20000] (Microsoft.EntityFrameworkCore.Database.Connection) 
+      Opening connection to database 'musicStores' on server '(localdb)\MSSQLLocalDB'.
+dbug: 18.02.2024 19:18:02.799 RelationalEventId.ConnectionOpened[20001] (Microsoft.EntityFrameworkCore.Database.Connection) 
+      Opened connection to database 'musicStores' on server '(localdb)\MSSQLLocalDB'.
+dbug: 18.02.2024 19:18:02.801 RelationalEventId.CommandCreating[20103] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Creating DbCommand for 'ExecuteNonQuery'.
+dbug: 18.02.2024 19:18:02.803 RelationalEventId.CommandCreated[20104] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Created DbCommand for 'ExecuteNonQuery' (1ms).
+dbug: 18.02.2024 19:18:02.804 RelationalEventId.CommandInitialized[20106] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Initialized DbCommand for 'ExecuteNonQuery' (3ms).
+dbug: 18.02.2024 19:18:02.806 RelationalEventId.CommandExecuting[20100] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Executing DbCommand [Parameters=[], CommandType='Text', CommandTimeout='30']
+      SELECT 1
+info: 18.02.2024 19:18:02.817 RelationalEventId.CommandExecuted[20101] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Executed DbCommand (10ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      SELECT 1
+dbug: 18.02.2024 19:18:02.818 RelationalEventId.ConnectionClosing[20002] (Microsoft.EntityFrameworkCore.Database.Connection) 
+      Closing connection to database 'musicStores' on server '(localdb)\MSSQLLocalDB'.
+dbug: 18.02.2024 19:18:02.821 RelationalEventId.ConnectionClosed[20003] (Microsoft.EntityFrameworkCore.Database.Connection) 
+      Closed connection to database 'musicStores' on server '(localdb)\MSSQLLocalDB' (2ms).
+dbug: 18.02.2024 19:18:02.822 RelationalEventId.CommandCreating[20103] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Creating DbCommand for 'ExecuteScalar'.
+dbug: 18.02.2024 19:18:02.822 RelationalEventId.CommandCreated[20104] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Created DbCommand for 'ExecuteScalar' (0ms).
+dbug: 18.02.2024 19:18:02.822 RelationalEventId.CommandInitialized[20106] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Initialized DbCommand for 'ExecuteScalar' (0ms).
+dbug: 18.02.2024 19:18:02.822 RelationalEventId.ConnectionOpening[20000] (Microsoft.EntityFrameworkCore.Database.Connection) 
+      Opening connection to database 'musicStores' on server '(localdb)\MSSQLLocalDB'.
+dbug: 18.02.2024 19:18:02.823 RelationalEventId.ConnectionOpened[20001] (Microsoft.EntityFrameworkCore.Database.Connection) 
+      Opened connection to database 'musicStores' on server '(localdb)\MSSQLLocalDB'.
+dbug: 18.02.2024 19:18:02.823 RelationalEventId.CommandExecuting[20100] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Executing DbCommand [Parameters=[], CommandType='Text', CommandTimeout='30']
+      
+      IF EXISTS
+          (SELECT *
+           FROM [sys].[objects] o
+           WHERE [o].[type] = 'U'
+           AND [o].[is_ms_shipped] = 0
+           AND NOT EXISTS (SELECT *
+               FROM [sys].[extended_properties] AS [ep]
+               WHERE [ep].[major_id] = [o].[object_id]
+                   AND [ep].[minor_id] = 0
+                   AND [ep].[class] = 1
+                   AND [ep].[name] = N'microsoft_database_tools_support'
+          )
+      )
+      SELECT 1 ELSE SELECT 0
+info: 18.02.2024 19:18:02.836 RelationalEventId.CommandExecuted[20101] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Executed DbCommand (13ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      
+      IF EXISTS
+          (SELECT *
+           FROM [sys].[objects] o
+           WHERE [o].[type] = 'U'
+           AND [o].[is_ms_shipped] = 0
+           AND NOT EXISTS (SELECT *
+               FROM [sys].[extended_properties] AS [ep]
+               WHERE [ep].[major_id] = [o].[object_id]
+                   AND [ep].[minor_id] = 0
+                   AND [ep].[class] = 1
+                   AND [ep].[name] = N'microsoft_database_tools_support'
+          )
+      )
+      SELECT 1 ELSE SELECT 0
+dbug: 18.02.2024 19:18:02.836 RelationalEventId.ConnectionClosing[20002] (Microsoft.EntityFrameworkCore.Database.Connection) 
+      Closing connection to database 'musicStores' on server '(localdb)\MSSQLLocalDB'.
+dbug: 18.02.2024 19:18:02.837 RelationalEventId.ConnectionClosed[20003] (Microsoft.EntityFrameworkCore.Database.Connection) 
+      Closed connection to database 'musicStores' on server '(localdb)\MSSQLLocalDB' (0ms).
+dbug: 18.02.2024 19:18:02.843 RelationalEventId.MigrateUsingConnection[20400] (Microsoft.EntityFrameworkCore.Migrations) 
+      Migrating using database 'musicStores' on server '(localdb)\MSSQLLocalDB'.
+dbug: 18.02.2024 19:18:02.843 RelationalEventId.ConnectionOpening[20000] (Microsoft.EntityFrameworkCore.Database.Connection) 
+      Opening connection to database 'musicStores' on server '(localdb)\MSSQLLocalDB'.
+dbug: 18.02.2024 19:18:02.843 RelationalEventId.ConnectionOpened[20001] (Microsoft.EntityFrameworkCore.Database.Connection) 
+      Opened connection to database 'musicStores' on server '(localdb)\MSSQLLocalDB'.
+dbug: 18.02.2024 19:18:02.844 RelationalEventId.CommandCreating[20103] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Creating DbCommand for 'ExecuteNonQuery'.
+dbug: 18.02.2024 19:18:02.845 RelationalEventId.CommandCreated[20104] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Created DbCommand for 'ExecuteNonQuery' (0ms).
+dbug: 18.02.2024 19:18:02.845 RelationalEventId.CommandInitialized[20106] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Initialized DbCommand for 'ExecuteNonQuery' (1ms).
+dbug: 18.02.2024 19:18:02.845 RelationalEventId.CommandExecuting[20100] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Executing DbCommand [Parameters=[], CommandType='Text', CommandTimeout='30']
+      SELECT 1
+info: 18.02.2024 19:18:02.846 RelationalEventId.CommandExecuted[20101] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Executed DbCommand (1ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      SELECT 1
+dbug: 18.02.2024 19:18:02.846 RelationalEventId.ConnectionClosing[20002] (Microsoft.EntityFrameworkCore.Database.Connection) 
+      Closing connection to database 'musicStores' on server '(localdb)\MSSQLLocalDB'.
+dbug: 18.02.2024 19:18:02.847 RelationalEventId.ConnectionClosed[20003] (Microsoft.EntityFrameworkCore.Database.Connection) 
+      Closed connection to database 'musicStores' on server '(localdb)\MSSQLLocalDB' (0ms).
+dbug: 18.02.2024 19:18:02.848 RelationalEventId.CommandCreating[20103] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Creating DbCommand for 'ExecuteScalar'.
+dbug: 18.02.2024 19:18:02.848 RelationalEventId.CommandCreated[20104] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Created DbCommand for 'ExecuteScalar' (0ms).
+dbug: 18.02.2024 19:18:02.848 RelationalEventId.CommandInitialized[20106] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Initialized DbCommand for 'ExecuteScalar' (0ms).
+dbug: 18.02.2024 19:18:02.848 RelationalEventId.ConnectionOpening[20000] (Microsoft.EntityFrameworkCore.Database.Connection) 
+      Opening connection to database 'musicStores' on server '(localdb)\MSSQLLocalDB'.
+dbug: 18.02.2024 19:18:02.848 RelationalEventId.ConnectionOpened[20001] (Microsoft.EntityFrameworkCore.Database.Connection) 
+      Opened connection to database 'musicStores' on server '(localdb)\MSSQLLocalDB'.
+dbug: 18.02.2024 19:18:02.848 RelationalEventId.CommandExecuting[20100] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Executing DbCommand [Parameters=[], CommandType='Text', CommandTimeout='30']
+      SELECT OBJECT_ID(N'[__EFMigrationsHistory]');
+info: 18.02.2024 19:18:02.848 RelationalEventId.CommandExecuted[20101] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Executed DbCommand (1ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      SELECT OBJECT_ID(N'[__EFMigrationsHistory]');
+dbug: 18.02.2024 19:18:02.848 RelationalEventId.ConnectionClosing[20002] (Microsoft.EntityFrameworkCore.Database.Connection) 
+      Closing connection to database 'musicStores' on server '(localdb)\MSSQLLocalDB'.
+dbug: 18.02.2024 19:18:02.849 RelationalEventId.ConnectionClosed[20003] (Microsoft.EntityFrameworkCore.Database.Connection) 
+      Closed connection to database 'musicStores' on server '(localdb)\MSSQLLocalDB' (0ms).
+dbug: 18.02.2024 19:18:02.849 RelationalEventId.ConnectionOpening[20000] (Microsoft.EntityFrameworkCore.Database.Connection) 
+      Opening connection to database 'musicStores' on server '(localdb)\MSSQLLocalDB'.
+dbug: 18.02.2024 19:18:02.849 RelationalEventId.ConnectionOpened[20001] (Microsoft.EntityFrameworkCore.Database.Connection) 
+      Opened connection to database 'musicStores' on server '(localdb)\MSSQLLocalDB'.
+dbug: 18.02.2024 19:18:02.849 RelationalEventId.CommandCreating[20103] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Creating DbCommand for 'ExecuteNonQuery'.
+dbug: 18.02.2024 19:18:02.849 RelationalEventId.CommandCreated[20104] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Created DbCommand for 'ExecuteNonQuery' (0ms).
+dbug: 18.02.2024 19:18:02.849 RelationalEventId.CommandInitialized[20106] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Initialized DbCommand for 'ExecuteNonQuery' (0ms).
+dbug: 18.02.2024 19:18:02.849 RelationalEventId.CommandExecuting[20100] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Executing DbCommand [Parameters=[], CommandType='Text', CommandTimeout='30']
+      SELECT 1
+info: 18.02.2024 19:18:02.849 RelationalEventId.CommandExecuted[20101] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Executed DbCommand (0ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      SELECT 1
+dbug: 18.02.2024 19:18:02.849 RelationalEventId.ConnectionClosing[20002] (Microsoft.EntityFrameworkCore.Database.Connection) 
+      Closing connection to database 'musicStores' on server '(localdb)\MSSQLLocalDB'.
+dbug: 18.02.2024 19:18:02.849 RelationalEventId.ConnectionClosed[20003] (Microsoft.EntityFrameworkCore.Database.Connection) 
+      Closed connection to database 'musicStores' on server '(localdb)\MSSQLLocalDB' (0ms).
+dbug: 18.02.2024 19:18:02.885 RelationalEventId.CommandCreating[20103] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Creating DbCommand for 'ExecuteNonQuery'.
+dbug: 18.02.2024 19:18:02.885 RelationalEventId.CommandCreated[20104] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Created DbCommand for 'ExecuteNonQuery' (0ms).
+dbug: 18.02.2024 19:18:02.885 RelationalEventId.CommandInitialized[20106] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Initialized DbCommand for 'ExecuteNonQuery' (0ms).
+dbug: 18.02.2024 19:18:02.885 RelationalEventId.ConnectionOpening[20000] (Microsoft.EntityFrameworkCore.Database.Connection) 
+      Opening connection to database 'musicStores' on server '(localdb)\MSSQLLocalDB'.
+dbug: 18.02.2024 19:18:02.886 RelationalEventId.ConnectionOpened[20001] (Microsoft.EntityFrameworkCore.Database.Connection) 
+      Opened connection to database 'musicStores' on server '(localdb)\MSSQLLocalDB'.
+dbug: 18.02.2024 19:18:02.886 RelationalEventId.CommandExecuting[20100] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Executing DbCommand [Parameters=[], CommandType='Text', CommandTimeout='30']
+      CREATE TABLE [__EFMigrationsHistory] (
+          [MigrationId] nvarchar(150) NOT NULL,
+          [ProductVersion] nvarchar(32) NOT NULL,
+          CONSTRAINT [PK___EFMigrationsHistory] PRIMARY KEY ([MigrationId])
+      );
+info: 18.02.2024 19:18:02.888 RelationalEventId.CommandExecuted[20101] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Executed DbCommand (2ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      CREATE TABLE [__EFMigrationsHistory] (
+          [MigrationId] nvarchar(150) NOT NULL,
+          [ProductVersion] nvarchar(32) NOT NULL,
+          CONSTRAINT [PK___EFMigrationsHistory] PRIMARY KEY ([MigrationId])
+      );
+dbug: 18.02.2024 19:18:02.888 RelationalEventId.ConnectionClosing[20002] (Microsoft.EntityFrameworkCore.Database.Connection) 
+      Closing connection to database 'musicStores' on server '(localdb)\MSSQLLocalDB'.
+dbug: 18.02.2024 19:18:02.888 RelationalEventId.ConnectionClosed[20003] (Microsoft.EntityFrameworkCore.Database.Connection) 
+      Closed connection to database 'musicStores' on server '(localdb)\MSSQLLocalDB' (0ms).
+dbug: 18.02.2024 19:18:02.888 RelationalEventId.ConnectionOpening[20000] (Microsoft.EntityFrameworkCore.Database.Connection) 
+      Opening connection to database 'musicStores' on server '(localdb)\MSSQLLocalDB'.
+dbug: 18.02.2024 19:18:02.888 RelationalEventId.ConnectionOpened[20001] (Microsoft.EntityFrameworkCore.Database.Connection) 
+      Opened connection to database 'musicStores' on server '(localdb)\MSSQLLocalDB'.
+dbug: 18.02.2024 19:18:02.888 RelationalEventId.CommandCreating[20103] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Creating DbCommand for 'ExecuteNonQuery'.
+dbug: 18.02.2024 19:18:02.888 RelationalEventId.CommandCreated[20104] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Created DbCommand for 'ExecuteNonQuery' (0ms).
+dbug: 18.02.2024 19:18:02.888 RelationalEventId.CommandInitialized[20106] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Initialized DbCommand for 'ExecuteNonQuery' (0ms).
+dbug: 18.02.2024 19:18:02.888 RelationalEventId.CommandExecuting[20100] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Executing DbCommand [Parameters=[], CommandType='Text', CommandTimeout='30']
+      SELECT 1
+info: 18.02.2024 19:18:02.888 RelationalEventId.CommandExecuted[20101] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Executed DbCommand (0ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      SELECT 1
+dbug: 18.02.2024 19:18:02.888 RelationalEventId.ConnectionClosing[20002] (Microsoft.EntityFrameworkCore.Database.Connection) 
+      Closing connection to database 'musicStores' on server '(localdb)\MSSQLLocalDB'.
+dbug: 18.02.2024 19:18:02.888 RelationalEventId.ConnectionClosed[20003] (Microsoft.EntityFrameworkCore.Database.Connection) 
+      Closed connection to database 'musicStores' on server '(localdb)\MSSQLLocalDB' (0ms).
+dbug: 18.02.2024 19:18:02.888 RelationalEventId.CommandCreating[20103] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Creating DbCommand for 'ExecuteScalar'.
+dbug: 18.02.2024 19:18:02.888 RelationalEventId.CommandCreated[20104] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Created DbCommand for 'ExecuteScalar' (0ms).
+dbug: 18.02.2024 19:18:02.888 RelationalEventId.CommandInitialized[20106] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Initialized DbCommand for 'ExecuteScalar' (0ms).
+dbug: 18.02.2024 19:18:02.888 RelationalEventId.ConnectionOpening[20000] (Microsoft.EntityFrameworkCore.Database.Connection) 
+      Opening connection to database 'musicStores' on server '(localdb)\MSSQLLocalDB'.
+dbug: 18.02.2024 19:18:02.888 RelationalEventId.ConnectionOpened[20001] (Microsoft.EntityFrameworkCore.Database.Connection) 
+      Opened connection to database 'musicStores' on server '(localdb)\MSSQLLocalDB'.
+dbug: 18.02.2024 19:18:02.888 RelationalEventId.CommandExecuting[20100] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Executing DbCommand [Parameters=[], CommandType='Text', CommandTimeout='30']
+      SELECT OBJECT_ID(N'[__EFMigrationsHistory]');
+info: 18.02.2024 19:18:02.889 RelationalEventId.CommandExecuted[20101] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Executed DbCommand (0ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      SELECT OBJECT_ID(N'[__EFMigrationsHistory]');
+dbug: 18.02.2024 19:18:02.889 RelationalEventId.ConnectionClosing[20002] (Microsoft.EntityFrameworkCore.Database.Connection) 
+      Closing connection to database 'musicStores' on server '(localdb)\MSSQLLocalDB'.
+dbug: 18.02.2024 19:18:02.889 RelationalEventId.ConnectionClosed[20003] (Microsoft.EntityFrameworkCore.Database.Connection) 
+      Closed connection to database 'musicStores' on server '(localdb)\MSSQLLocalDB' (0ms).
+dbug: 18.02.2024 19:18:02.889 RelationalEventId.ConnectionOpening[20000] (Microsoft.EntityFrameworkCore.Database.Connection) 
+      Opening connection to database 'musicStores' on server '(localdb)\MSSQLLocalDB'.
+dbug: 18.02.2024 19:18:02.889 RelationalEventId.ConnectionOpened[20001] (Microsoft.EntityFrameworkCore.Database.Connection) 
+      Opened connection to database 'musicStores' on server '(localdb)\MSSQLLocalDB'.
+dbug: 18.02.2024 19:18:02.889 RelationalEventId.CommandCreating[20103] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Creating DbCommand for 'ExecuteReader'.
+dbug: 18.02.2024 19:18:02.889 RelationalEventId.CommandCreated[20104] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Created DbCommand for 'ExecuteReader' (0ms).
+dbug: 18.02.2024 19:18:02.889 RelationalEventId.CommandInitialized[20106] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Initialized DbCommand for 'ExecuteReader' (0ms).
+dbug: 18.02.2024 19:18:02.890 RelationalEventId.CommandExecuting[20100] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Executing DbCommand [Parameters=[], CommandType='Text', CommandTimeout='30']
+      SELECT [MigrationId], [ProductVersion]
+      FROM [__EFMigrationsHistory]
+      ORDER BY [MigrationId];
+info: 18.02.2024 19:18:02.891 RelationalEventId.CommandExecuted[20101] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Executed DbCommand (1ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      SELECT [MigrationId], [ProductVersion]
+      FROM [__EFMigrationsHistory]
+      ORDER BY [MigrationId];
+dbug: 18.02.2024 19:18:02.892 RelationalEventId.DataReaderClosing[20301] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Closing data reader to 'musicStores' on server '(localdb)\MSSQLLocalDB'.
+dbug: 18.02.2024 19:18:02.892 RelationalEventId.DataReaderDisposing[20300] (Microsoft.EntityFrameworkCore.Database.Command) 
+      A data reader for 'musicStores' on server '(localdb)\MSSQLLocalDB' is being disposed after spending 1ms reading results.
+dbug: 18.02.2024 19:18:02.892 RelationalEventId.ConnectionClosing[20002] (Microsoft.EntityFrameworkCore.Database.Connection) 
+      Closing connection to database 'musicStores' on server '(localdb)\MSSQLLocalDB'.
+dbug: 18.02.2024 19:18:02.892 RelationalEventId.ConnectionClosed[20003] (Microsoft.EntityFrameworkCore.Database.Connection) 
+      Closed connection to database 'musicStores' on server '(localdb)\MSSQLLocalDB' (0ms).
+info: 18.02.2024 19:18:02.898 RelationalEventId.MigrationApplying[20402] (Microsoft.EntityFrameworkCore.Migrations) 
+      Applying migration '20240218161757_InitialCreate'.
+dbug: 18.02.2024 19:18:02.921 RelationalEventId.ConnectionOpening[20000] (Microsoft.EntityFrameworkCore.Database.Connection) 
+      Opening connection to database 'musicStores' on server '(localdb)\MSSQLLocalDB'.
+dbug: 18.02.2024 19:18:02.921 RelationalEventId.ConnectionOpened[20001] (Microsoft.EntityFrameworkCore.Database.Connection) 
+      Opened connection to database 'musicStores' on server '(localdb)\MSSQLLocalDB'.
+dbug: 18.02.2024 19:18:02.922 RelationalEventId.TransactionStarting[20209] (Microsoft.EntityFrameworkCore.Database.Transaction) 
+      Beginning transaction with isolation level 'Unspecified'.
+dbug: 18.02.2024 19:18:02.924 RelationalEventId.TransactionStarted[20200] (Microsoft.EntityFrameworkCore.Database.Transaction) 
+      Began transaction with isolation level 'ReadCommitted'.
+dbug: 18.02.2024 19:18:02.925 RelationalEventId.CommandCreating[20103] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Creating DbCommand for 'ExecuteNonQuery'.
+dbug: 18.02.2024 19:18:02.925 RelationalEventId.CommandCreated[20104] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Created DbCommand for 'ExecuteNonQuery' (0ms).
+dbug: 18.02.2024 19:18:02.925 RelationalEventId.CommandInitialized[20106] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Initialized DbCommand for 'ExecuteNonQuery' (0ms).
+dbug: 18.02.2024 19:18:02.925 RelationalEventId.CommandExecuting[20100] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Executing DbCommand [Parameters=[], CommandType='Text', CommandTimeout='30']
+      CREATE TABLE [Cities] (
+          [Id] int NOT NULL IDENTITY,
+          [Name] nvarchar(max) NOT NULL,
+          CONSTRAINT [PK_Cities] PRIMARY KEY ([Id])
+      );
+fail: 18.02.2024 19:18:02.927 RelationalEventId.CommandError[20102] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Failed executing DbCommand (1ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      CREATE TABLE [Cities] (
+          [Id] int NOT NULL IDENTITY,
+          [Name] nvarchar(max) NOT NULL,
+          CONSTRAINT [PK_Cities] PRIMARY KEY ([Id])
+      );
+dbug: 18.02.2024 19:18:02.928 RelationalEventId.TransactionDisposed[20204] (Microsoft.EntityFrameworkCore.Database.Transaction) 
+      Disposing transaction.
+dbug: 18.02.2024 19:18:02.928 RelationalEventId.ConnectionClosing[20002] (Microsoft.EntityFrameworkCore.Database.Connection) 
+      Closing connection to database 'musicStores' on server '(localdb)\MSSQLLocalDB'.
+dbug: 18.02.2024 19:18:02.929 RelationalEventId.ConnectionClosed[20003] (Microsoft.EntityFrameworkCore.Database.Connection) 
+      Closed connection to database 'musicStores' on server '(localdb)\MSSQLLocalDB' (0ms).
+dbug: 18.02.2024 19:18:02.929 CoreEventId.ContextDisposed[10407] (Microsoft.EntityFrameworkCore.Infrastructure) 
+      'MusicStoreDbContext' disposed.
+dbug: 18.02.2024 19:18:02.930 RelationalEventId.ConnectionDisposing[20007] (Microsoft.EntityFrameworkCore.Database.Connection) 
+      Disposing connection to database 'musicStores' on server '(localdb)\MSSQLLocalDB'.
+dbug: 18.02.2024 19:18:02.931 RelationalEventId.ConnectionDisposed[20008] (Microsoft.EntityFrameworkCore.Database.Connection) 
+      Disposed connection to database '' on server '' (0ms).
