@@ -17,12 +17,15 @@ namespace MusicStoreInfo.Domain.Entities
         public required string Name { get; set; }
         public int ListenerTypeId { get; set; }
         public int CompanyId { get; set; }  
+        public int GroupId { get; set; }
         public int Duration { get; set; }
         public DateTime ReleaseDate { get; set; }
         public int SongsCount { get; set; }
 
-        public virtual ICollection<Store> Stores { get; set; }    
+        [InverseProperty("Album")]
+        public virtual ICollection<StoreAlbumLink> Stores { get; set; }    
         public virtual ICollection<Cassette> Cassettes { get; set;}
+        public virtual Group Group { get; set; }
         public virtual ListenerType ListenerType { get; set; }
         public virtual Company Company { get; set; }
 
