@@ -8,13 +8,14 @@ using System.Threading.Tasks;
 
 namespace MusicStoreInfo.Domain.Entities
 {
-    //TODO: Возможное расширение - добавить Создателей(Группы)
+
     public class Cassette
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
         public int AlbumId { get; set; }
+        [MaxLength(50)]
         public required string Name { get; set; }
         public int Duration { get; set; }        
 

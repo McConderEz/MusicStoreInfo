@@ -17,6 +17,7 @@ namespace MusicStoreInfo.Domain.Entities
         public int DistrictId { get; set; }
         [RegularExpression(@"^\+\d{1,3}\d{10}$", ErrorMessage = "Несоответствие формату")]
         public required string PhoneNumber { get; set; }
+        [MaxLength(50)]
         public required string Name { get; set; }
         public DateTime YearOpened { get; set; }
 

@@ -14,6 +14,7 @@ namespace MusicStoreInfo.Domain.Entities
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
         public int CityId { get; set; }
+        [MaxLength(200)]
         public required string Name { get; set; }   
 
         public virtual City City { get; set; }

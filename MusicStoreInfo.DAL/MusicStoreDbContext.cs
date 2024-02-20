@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using MusicStoreInfo.DAL.EntitiesConfigurations;
 using MusicStoreInfo.Domain.Entities;
 using System;
 using System.Collections.Generic;
@@ -10,6 +11,10 @@ namespace MusicStoreInfo.DAL
 {
     public class MusicStoreDbContext: DbContext
     {
+        //TODO: Добавить индексы
+        //TODO: Добавить триггеры
+        //TODO: Добавить каскадное удаление
+
         private readonly StreamWriter _logStream = new StreamWriter("log.txt", true);
         private const string CONNECTION_STRING = "data source=(localdb)\\MSSQLLocalDB;Initial Catalog=musicStores;Integrated Security=True;";
         public MusicStoreDbContext()
@@ -39,6 +44,10 @@ namespace MusicStoreInfo.DAL
                 .WithMany(a => a.Stores)
                 .HasForeignKey(sal => sal.AlbumId)
                 .OnDelete(DeleteBehavior.Restrict);
+            modelBuilder.ApplyConfiguration(new AlbumConfiguration());
+            modelBuilder.ApplyConfiguration(new CassetteConfiguration());
+            modelBuilder.ApplyConfiguration(new StoreConfiguration());
+            modelBuilder.ApplyConfiguration(new MemberConfiguration());
         }
 
         public override void Dispose()
@@ -54,23 +63,23 @@ namespace MusicStoreInfo.DAL
         }
 
         #region Таблицы
-        public DbSet<Store> Stores { get; set; }
-        public DbSet<Album> Albums { get; set; }
-        public DbSet<Cassette> Cassettes { get; set; }
-        public DbSet<City> Cities { get; set; }
-        public DbSet<Company> Companies { get; set; }
-        public DbSet<District> Districts { get; set; }
-        public DbSet<ListenerType> ListenerTypes { get; set; }
-        public DbSet<OwnershipType> OwnershipTypes { get; set; }
-        public DbSet<StoreAlbumLink> StoreAlbumLink { get; set; }
-        public DbSet<Gender> Genders { get; set; }
-        public DbSet<Genre> Genres { get; set; }
-        public DbSet<Group> Groups { get; set; }
-        public DbSet<Member> Members { get; set; }
-        public DbSet<Specialization> Specializations { get; set; }
-        public DbSet<GroupGenreLink> GroupGenreLinks { get; set; }
-        public DbSet<MemberSpecializationLink> MemberSpecializationLinks { get; set; }
-        public DbSet<MemberGroupLink> MemberGroupLinks { get; set; }
+        public DbSet<Store> Stores { get; set; } = null!;
+        public DbSet<Album> Albums { get; set; } = null!;
+        public DbSet<Cassette> Cassettes { get; set; } = null!;
+        public DbSet<City> Cities { get; set; } = null!;
+        public DbSet<Company> Companies { get; set; } = null!;
+        public DbSet<District> Districts { get; set; } = null!;
+        public DbSet<ListenerType> ListenerTypes { get; set; } = null!;
+        public DbSet<OwnershipType> OwnershipTypes { get; set; } = null!;
+        public DbSet<StoreAlbumLink> StoreAlbumLink { get; set; } = null!;
+        public DbSet<Gender> Genders { get; set; } = null!;
+        public DbSet<Genre> Genres { get; set; } = null!;
+        public DbSet<Group> Groups { get; set; } = null!;
+        public DbSet<Member> Members { get; set; } = null!;
+        public DbSet<Specialization> Specializations { get; set; } = null!;
+        public DbSet<GroupGenreLink> GroupGenreLinks { get; set; } = null!;
+        public DbSet<MemberSpecializationLink> MemberSpecializationLinks { get; set; } = null!;
+        public DbSet<MemberGroupLink> MemberGroupLinks { get; set; } = null!;
         #endregion
     }
 }
