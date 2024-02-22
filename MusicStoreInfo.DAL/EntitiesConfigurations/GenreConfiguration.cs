@@ -9,15 +9,12 @@ using System.Threading.Tasks;
 
 namespace MusicStoreInfo.DAL.EntitiesConfigurations
 {
-    public class GroupConfiguration : IEntityTypeConfiguration<Group>
+    public class GenreConfiguration : IEntityTypeConfiguration<Genre>
     {
-        public void Configure(EntityTypeBuilder<Group> builder)
+        public void Configure(EntityTypeBuilder<Genre> builder)
         {
-            builder.HasMany(m => m.Members)
-                .WithMany(m => m.Groups)
-                .UsingEntity(j => j.ToTable("MemberGroupLink"));
-            builder.HasMany(g => g.Genres)
-                .WithMany(g => g.Groups)
+            builder.HasMany(g => g.Groups)
+                .WithMany(g => g.Genres)
                 .UsingEntity(j => j.ToTable("GroupGenreLink"));
         }
     }

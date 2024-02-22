@@ -15,8 +15,8 @@ namespace MusicStoreInfo.Domain.Entities
         public int Age { get; set; }
         public int GenderId { get; set;}        
         public virtual Gender Gender { get; set; }
-        public virtual ICollection<MemberGroupLink> Groups { get; set; }
-        public virtual ICollection<MemberSpecializationLink> Specializations { get; set; }
+        public virtual ICollection<Group> Groups { get; set; }
+        public virtual ICollection<Specialization> Specializations { get; set; }
 
     }
 }

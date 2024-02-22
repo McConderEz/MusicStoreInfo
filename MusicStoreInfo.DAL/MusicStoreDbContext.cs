@@ -14,11 +14,13 @@ namespace MusicStoreInfo.DAL
         //TODO: Добавить индексы
         //TODO: Добавить триггеры
         //TODO: Добавить каскадное удаление
+        //TODO: Удалить явно таблицы с связями, а прописать это в конфигураторах через Fluent API 
 
         private readonly StreamWriter _logStream = new StreamWriter("log.txt", true);
         private const string CONNECTION_STRING = "data source=(localdb)\\MSSQLLocalDB;Initial Catalog=musicStores;Integrated Security=True;";
         public MusicStoreDbContext()
         {
+            Database.EnsureDeleted();
             Database.EnsureCreated();
         }
 
@@ -30,24 +32,14 @@ namespace MusicStoreInfo.DAL
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<StoreAlbumLink>()
-                .HasKey(sal => sal.Id);
-
-            modelBuilder.Entity<StoreAlbumLink>()
-                .HasOne(sal => sal.Store)
-                .WithMany(s => s.Albums)
-                .HasForeignKey(sal => sal.StoreId)
-                .OnDelete(DeleteBehavior.Restrict);
-
-            modelBuilder.Entity<StoreAlbumLink>()
-                .HasOne(sal => sal.Album)
-                .WithMany(a => a.Stores)
-                .HasForeignKey(sal => sal.AlbumId)
-                .OnDelete(DeleteBehavior.Restrict);
             modelBuilder.ApplyConfiguration(new AlbumConfiguration());
-            modelBuilder.ApplyConfiguration(new CassetteConfiguration());
+            modelBuilder.ApplyConfiguration(new SongConfiguration());
             modelBuilder.ApplyConfiguration(new StoreConfiguration());
             modelBuilder.ApplyConfiguration(new MemberConfiguration());
+            modelBuilder.ApplyConfiguration(new GroupConfiguration());
+            modelBuilder.ApplyConfiguration(new GenreConfiguration());
+            modelBuilder.ApplyConfiguration(new SpecializationConfiguration());
+
         }
 
         public override void Dispose()
@@ -65,21 +57,19 @@ namespace MusicStoreInfo.DAL
         #region Таблицы
         public DbSet<Store> Stores { get; set; } = null!;
         public DbSet<Album> Albums { get; set; } = null!;
-        public DbSet<Cassette> Cassettes { get; set; } = null!;
+        public DbSet<Song> Songs { get; set; } = null!;
         public DbSet<City> Cities { get; set; } = null!;
         public DbSet<Company> Companies { get; set; } = null!;
         public DbSet<District> Districts { get; set; } = null!;
         public DbSet<ListenerType> ListenerTypes { get; set; } = null!;
         public DbSet<OwnershipType> OwnershipTypes { get; set; } = null!;
-        public DbSet<StoreAlbumLink> StoreAlbumLink { get; set; } = null!;
+        public DbSet<Product> Products { get; set; } = null!;
         public DbSet<Gender> Genders { get; set; } = null!;
         public DbSet<Genre> Genres { get; set; } = null!;
         public DbSet<Group> Groups { get; set; } = null!;
         public DbSet<Member> Members { get; set; } = null!;
         public DbSet<Specialization> Specializations { get; set; } = null!;
-        public DbSet<GroupGenreLink> GroupGenreLinks { get; set; } = null!;
-        public DbSet<MemberSpecializationLink> MemberSpecializationLinks { get; set; } = null!;
-        public DbSet<MemberGroupLink> MemberGroupLinks { get; set; } = null!;
+
         #endregion
     }
 }

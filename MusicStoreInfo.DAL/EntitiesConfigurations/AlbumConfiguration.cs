@@ -15,7 +15,33 @@ namespace MusicStoreInfo.DAL.EntitiesConfigurations
         {
             builder.ToTable<Album>(t => t.HasCheckConstraint("Duration", "Duration > 0"));
             builder.ToTable<Album>(t => t.HasCheckConstraint("SongsCount", "SongsCount > 0"));
-            builder.ToTable<Album>(t => t.HasCheckConstraint("DateTime", $"DateTime <= {DateTime.Now.Year}"));
+            //builder.ToTable<Album>(t => t.HasCheckConstraint("ReleaseDate", $"ReleaseDate <= {DateTime.Now.Year}"));
+
+            builder.HasMany(a => a.Stores)
+                .WithMany(s => s.Albums)
+                .UsingEntity<Product>(j => j.HasOne(t => t.Store)
+                                            .WithMany(t => t.Products)
+                                            .HasForeignKey(k => k.StoreId),
+                                      j => j.HasOne(t => t.Album)
+                                            .WithMany(t => t.Products)
+                                            .HasForeignKey(k => k.AlbumId)
+                                            .OnDelete(DeleteBehavior.Restrict),
+                                      j =>
+                                      {
+                                          j.Property(pt => pt.Price);
+                                          j.HasKey(t => new { t.StoreId, t.AlbumId });
+                                          j.ToTable("Product");
+
+                                          j.Property(pt => pt.Quantity);
+                                          j.HasKey(t => new { t.StoreId, t.AlbumId });
+                                          j.ToTable("Product");
+
+                                          j.Property(pt => pt.DateReceived);
+                                          j.HasKey(t => new { t.StoreId, t.AlbumId });
+                                          j.ToTable("Product");
+
+                                      });
+            
         }
     }
 }

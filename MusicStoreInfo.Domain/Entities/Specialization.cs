@@ -14,6 +14,6 @@ namespace MusicStoreInfo.Domain.Entities
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
         public required string Name { get; set; }
-        public virtual ICollection<MemberSpecializationLink> Members { get; set; }
+        public virtual ICollection<Member> Members { get; set; }
     }
 }

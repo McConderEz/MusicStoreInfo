@@ -23,9 +23,9 @@ namespace MusicStoreInfo.Domain.Entities
         public DateTime ReleaseDate { get; set; }
         public int SongsCount { get; set; }
 
-        [InverseProperty("Album")]
-        public virtual ICollection<StoreAlbumLink> Stores { get; set; }    
-        public virtual ICollection<Cassette> Cassettes { get; set;}
+        public virtual ICollection<Store> Stores { get; set; }
+        public virtual ICollection<Product> Products { get; set; }
+        public virtual ICollection<Song> Songs { get; set;}
         public virtual Group Group { get; set; }
         public virtual ListenerType ListenerType { get; set; }
         public virtual Company Company { get; set; }

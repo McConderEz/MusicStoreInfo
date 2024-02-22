@@ -13,7 +13,14 @@ namespace MusicStoreInfo.DAL.EntitiesConfigurations
     {
         public void Configure(EntityTypeBuilder<Member> builder)
         {
-            builder.ToTable<Member>(t => t.HasCheckConstraint("Age", "Age > 0 && Age < 120"));
+            builder.ToTable<Member>(t => t.HasCheckConstraint("Age", "Age > 0 AND Age < 120"));
+            builder.HasMany(s => s.Specializations)
+                .WithMany(m => m.Members)
+                .UsingEntity(j => j.ToTable("MemberSpecializationLink"));
+
+            builder.HasMany(g => g.Groups)
+                .WithMany(m => m.Members)
+                .UsingEntity(j => j.ToTable("MemberGroupLink"));
         }
     }
 }

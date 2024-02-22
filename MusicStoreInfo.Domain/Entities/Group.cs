@@ -16,7 +16,7 @@ namespace MusicStoreInfo.Domain.Entities
         [MaxLength(50)]
         public required string Name { get; set; }       
         
-        public virtual ICollection<GroupGenreLink> Genres { get; set; }
-        public virtual ICollection<MemberGroupLink> Members { get; set; }
+        public virtual ICollection<Genre> Genres { get; set; }
+        public virtual ICollection<Member> Members { get; set; }
     }
 }

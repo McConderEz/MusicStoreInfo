@@ -8,15 +8,17 @@ using System.Threading.Tasks;
 
 namespace MusicStoreInfo.Domain.Entities
 {
-    public class GroupGenreLink
+
+    public class Song
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
-        public int GroupId { get; set; } 
-        public int GenreId { get; set; }    
-        public virtual Group Group { get; set; }
-        public virtual Genre Genre { get; set; }
+        public int AlbumId { get; set; }
+        [MaxLength(50)]
+        public required string Name { get; set; }
+        public int Duration { get; set; }        
 
+        public virtual Album Album { get; set; }
     }
 }

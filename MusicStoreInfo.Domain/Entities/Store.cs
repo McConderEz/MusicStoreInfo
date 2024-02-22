@@ -21,8 +21,9 @@ namespace MusicStoreInfo.Domain.Entities
         public required string Name { get; set; }
         public DateTime YearOpened { get; set; }
 
-        [InverseProperty("Store")]
-        public virtual ICollection<StoreAlbumLink> Albums { get; set; }
+
+        public virtual ICollection<Album> Albums { get; set; }
+        public virtual ICollection<Product> Products { get; set; }
         public virtual OwnershipType OwnershipType { get; set; }
         public virtual District District { get; set; }
 
