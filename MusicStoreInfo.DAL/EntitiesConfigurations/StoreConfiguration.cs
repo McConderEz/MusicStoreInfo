@@ -13,7 +13,9 @@ namespace MusicStoreInfo.DAL.EntitiesConfigurations
     {
         public void Configure(EntityTypeBuilder<Store> builder)
         {
-            //builder.ToTable<Store>(t => t.HasCheckConstraint("YearOpened", $"YearOpened <= {DateTime.Now.Year}"));
+            builder.ToTable<Store>(t => t.HasCheckConstraint("YearOpened", $"YEAR(YearOpened) <= YEAR(GETDATE())"));
+            builder.HasIndex(t => t.Id);
+            
 
             builder.HasMany(a => a.Albums)
                 .WithMany(s => s.Stores)

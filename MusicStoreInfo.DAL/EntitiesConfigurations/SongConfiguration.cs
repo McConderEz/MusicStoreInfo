@@ -14,6 +14,7 @@ namespace MusicStoreInfo.DAL.EntitiesConfigurations
         public void Configure(EntityTypeBuilder<Song> builder)
         {
             builder.ToTable<Song>(t => t.HasCheckConstraint("Duration", "Duration > 0"));
+            builder.HasIndex(t => t.Id);
         }
     }
 }

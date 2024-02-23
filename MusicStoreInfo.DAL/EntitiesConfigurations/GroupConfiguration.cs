@@ -13,6 +13,7 @@ namespace MusicStoreInfo.DAL.EntitiesConfigurations
     {
         public void Configure(EntityTypeBuilder<Group> builder)
         {
+            builder.HasIndex(t => t.Id);
             builder.HasMany(m => m.Members)
                 .WithMany(m => m.Groups)
                 .UsingEntity(j => j.ToTable("MemberGroupLink"));

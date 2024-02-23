@@ -39,7 +39,7 @@ namespace MusicStoreInfo.DAL
             modelBuilder.ApplyConfiguration(new GroupConfiguration());
             modelBuilder.ApplyConfiguration(new GenreConfiguration());
             modelBuilder.ApplyConfiguration(new SpecializationConfiguration());
-
+            modelBuilder.ApplyConfiguration(new ProductConfiguration());
         }
 
         public override void Dispose()
