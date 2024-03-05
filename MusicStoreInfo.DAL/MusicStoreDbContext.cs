@@ -13,7 +13,8 @@ namespace MusicStoreInfo.DAL
     {
         private readonly StreamWriter _logStream = new StreamWriter("log.txt", true);
         private const string CONNECTION_STRING = "data source=(localdb)\\MSSQLLocalDB;Initial Catalog=musicStores;Integrated Security=True;";
-        public MusicStoreDbContext()
+        public MusicStoreDbContext(DbContextOptions<MusicStoreDbContext> options)
+            : base(options)
         {
             Database.EnsureDeleted();
             Database.EnsureCreated();
@@ -28,7 +29,7 @@ namespace MusicStoreInfo.DAL
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseSqlServer(CONNECTION_STRING);
-            optionsBuilder.LogTo(_logStream.WriteLine);
+            //optionsBuilder.LogTo(_logStream.WriteLine);
         }
 
 
