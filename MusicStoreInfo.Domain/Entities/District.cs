@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Identity.Client;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -18,5 +20,7 @@ namespace MusicStoreInfo.Domain.Entities
         public required string Name { get; set; }   
 
         public virtual City City { get; set; }
+        public virtual ICollection<Store> Stores { get; set; }
+        public virtual ICollection<Company> Companies { get; set; }
     }
 }

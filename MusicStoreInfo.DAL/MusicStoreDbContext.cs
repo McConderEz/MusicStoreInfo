@@ -11,11 +11,6 @@ namespace MusicStoreInfo.DAL
 {
     public class MusicStoreDbContext: DbContext
     {
-        //TODO: Добавить индексы
-        //TODO: Добавить триггеры
-        //TODO: Добавить каскадное удаление
-        //TODO: Удалить явно таблицы с связями, а прописать это в конфигураторах через Fluent API 
-
         private readonly StreamWriter _logStream = new StreamWriter("log.txt", true);
         private const string CONNECTION_STRING = "data source=(localdb)\\MSSQLLocalDB;Initial Catalog=musicStores;Integrated Security=True;";
         public MusicStoreDbContext()
@@ -24,23 +19,18 @@ namespace MusicStoreInfo.DAL
             Database.EnsureCreated();
         }
 
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+            modelBuilder.ApplyConfigurationsFromAssembly(typeof(MusicStoreDbContext).Assembly);
+        }
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseSqlServer(CONNECTION_STRING);
             optionsBuilder.LogTo(_logStream.WriteLine);
         }
 
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
-            modelBuilder.ApplyConfiguration(new AlbumConfiguration());
-            modelBuilder.ApplyConfiguration(new SongConfiguration());
-            modelBuilder.ApplyConfiguration(new StoreConfiguration());
-            modelBuilder.ApplyConfiguration(new MemberConfiguration());
-            modelBuilder.ApplyConfiguration(new GroupConfiguration());
-            modelBuilder.ApplyConfiguration(new GenreConfiguration());
-            modelBuilder.ApplyConfiguration(new SpecializationConfiguration());
-            modelBuilder.ApplyConfiguration(new ProductConfiguration());
-        }
 
         public override void Dispose()
         {
@@ -61,7 +51,7 @@ namespace MusicStoreInfo.DAL
         public DbSet<City> Cities { get; set; } = null!;
         public DbSet<Company> Companies { get; set; } = null!;
         public DbSet<District> Districts { get; set; } = null!;
-        public DbSet<ListenerType> ListenerTypes { get; set; } = null!;
+        public DbSet<OwnershipType> ListenerTypes { get; set; } = null!;
         public DbSet<OwnershipType> OwnershipTypes { get; set; } = null!;
         public DbSet<Product> Products { get; set; } = null!;
         public DbSet<Gender> Genders { get; set; } = null!;
@@ -69,7 +59,8 @@ namespace MusicStoreInfo.DAL
         public DbSet<Group> Groups { get; set; } = null!;
         public DbSet<Member> Members { get; set; } = null!;
         public DbSet<Specialization> Specializations { get; set; } = null!;
-
+        public DbSet<User> Users { get; set; } = null!;
+        public DbSet<Role> Roles { get; set; } = null!;
         #endregion
     }
 }

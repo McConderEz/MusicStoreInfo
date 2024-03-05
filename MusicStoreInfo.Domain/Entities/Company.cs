@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -18,9 +19,9 @@ namespace MusicStoreInfo.Domain.Entities
         public required string PhoneNumber { get; set; }
         [MaxLength(50)]
         public required string Name { get; set; }
-        public int CityId { get; set; }
+        public int DistrictId { get; set; }
 
-        public virtual City City { get; set; }
-        
+        public virtual District District { get; set; }
+        public virtual ICollection<Album> Albums { get; set; }
     }
 }

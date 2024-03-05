@@ -9,12 +9,13 @@ using System.Threading.Tasks;
 
 namespace MusicStoreInfo.DAL.EntitiesConfigurations
 {
-    public class CompanyConfiguration : IEntityTypeConfiguration<Company>
+    public class OwnershipTypeConfiguration : IEntityTypeConfiguration<OwnershipType>
     {
-        public void Configure(EntityTypeBuilder<Company> builder)
+        public void Configure(EntityTypeBuilder<OwnershipType> builder)
         {
-            builder.HasMany(t => t.Albums)
-                .WithOne(t => t.Company);                
+            builder.HasMany(t => t.Stores)
+                .WithOne(t => t.OwnershipType)
+                .OnDelete(DeleteBehavior.Cascade);
         }
     }
 }
