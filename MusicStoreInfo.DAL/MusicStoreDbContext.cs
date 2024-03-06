@@ -60,8 +60,8 @@ namespace MusicStoreInfo.DAL
         public DbSet<Group> Groups { get; set; } = null!;
         public DbSet<Member> Members { get; set; } = null!;
         public DbSet<Specialization> Specializations { get; set; } = null!;
-        public DbSet<User> Users { get; set; } = null!;
-        public DbSet<Role> Roles { get; set; } = null!;
+        //public DbSet<User> Users { get; set; } = null!;
+        //public DbSet<Role> Roles { get; set; } = null!;
         #endregion
     }
 }
