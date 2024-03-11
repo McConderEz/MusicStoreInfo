@@ -12,12 +12,17 @@ namespace MusicStoreInfo.DAL
     public class MusicStoreDbContext: DbContext
     {
         private readonly StreamWriter _logStream = new StreamWriter("log.txt", true);
-        private const string CONNECTION_STRING = "data source=(localdb)\\MSSQLLocalDB;Initial Catalog=musicStores;Integrated Security=True;";
+        public static string CONNECTION_STRING = "data source=(localdb)\\MSSQLLocalDB;Initial Catalog=musicStores;Integrated Security=True;";
         public MusicStoreDbContext(DbContextOptions<MusicStoreDbContext> options)
             : base(options)
         {
             Database.EnsureDeleted();
             Database.EnsureCreated();
+        }
+
+        public MusicStoreDbContext()
+        {
+
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -28,8 +33,10 @@ namespace MusicStoreInfo.DAL
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer(CONNECTION_STRING);
-            //optionsBuilder.LogTo(_logStream.WriteLine);
+            if (!optionsBuilder.IsConfigured)
+            {
+                optionsBuilder.UseSqlServer(CONNECTION_STRING);
+            }
         }
 
 
@@ -52,7 +59,7 @@ namespace MusicStoreInfo.DAL
         public DbSet<City> Cities { get; set; } = null!;
         public DbSet<Company> Companies { get; set; } = null!;
         public DbSet<District> Districts { get; set; } = null!;
-        public DbSet<OwnershipType> ListenerTypes { get; set; } = null!;
+        public DbSet<ListenerType> ListenerTypes { get; set; } = null!;
         public DbSet<OwnershipType> OwnershipTypes { get; set; } = null!;
         public DbSet<Product> Products { get; set; } = null!;
         public DbSet<Gender> Genders { get; set; } = null!;
@@ -60,8 +67,8 @@ namespace MusicStoreInfo.DAL
         public DbSet<Group> Groups { get; set; } = null!;
         public DbSet<Member> Members { get; set; } = null!;
         public DbSet<Specialization> Specializations { get; set; } = null!;
-        //public DbSet<User> Users { get; set; } = null!;
-        //public DbSet<Role> Roles { get; set; } = null!;
+        public DbSet<User> Users { get; set; } = null!;
+        public DbSet<Role> Roles { get; set; } = null!;
         #endregion
     }
 }

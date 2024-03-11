@@ -10,14 +10,14 @@ using System.Threading.Tasks;
 
 namespace MusicStoreInfo.Domain.Entities
 {
-    public class User : IdentityUser
+    public class User 
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
-        [MaxLength(25),MinLength(3)]
-        public required string Name { get; set; }
-        [MaxLength(25),MinLength(6)]
+        [MaxLength(25), MinLength(3)]
+        public required string Name { get; set; } = string.Empty;
+        [MaxLength(25), MinLength(6)]
         public string Password { get; set; }
 
         public int RoleId { get; set; }

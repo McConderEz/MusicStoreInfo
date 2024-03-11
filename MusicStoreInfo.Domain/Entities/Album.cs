@@ -25,7 +25,7 @@ namespace MusicStoreInfo.Domain.Entities
 
         public virtual ICollection<Store> Stores { get; set; }
         public virtual ICollection<Product> Products { get; set; }
-        public virtual ICollection<Song> Songs { get; set;}
+        public virtual ICollection<Song> Songs { get; set; }
         public virtual Group Group { get; set; }
         public virtual ListenerType ListenerType { get; set; }
         public virtual Company Company { get; set; }

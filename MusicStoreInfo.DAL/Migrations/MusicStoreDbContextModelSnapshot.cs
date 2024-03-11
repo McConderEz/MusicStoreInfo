@@ -22,6 +22,51 @@ namespace MusicStoreInfo.DAL.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
+            modelBuilder.Entity("GenreGroup", b =>
+                {
+                    b.Property<int>("GenresId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("GroupsId")
+                        .HasColumnType("int");
+
+                    b.HasKey("GenresId", "GroupsId");
+
+                    b.HasIndex("GroupsId");
+
+                    b.ToTable("GroupGenreLink", (string)null);
+                });
+
+            modelBuilder.Entity("GroupMember", b =>
+                {
+                    b.Property<int>("GroupsId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("MembersId")
+                        .HasColumnType("int");
+
+                    b.HasKey("GroupsId", "MembersId");
+
+                    b.HasIndex("MembersId");
+
+                    b.ToTable("MemberGroupLink", (string)null);
+                });
+
+            modelBuilder.Entity("MemberSpecialization", b =>
+                {
+                    b.Property<int>("MembersId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("SpecializationsId")
+                        .HasColumnType("int");
+
+                    b.HasKey("MembersId", "SpecializationsId");
+
+                    b.HasIndex("SpecializationsId");
+
+                    b.ToTable("MemberSpecializationLink", (string)null);
+                });
+
             modelBuilder.Entity("MusicStoreInfo.Domain.Entities.Album", b =>
                 {
                     b.Property<int>("Id")
@@ -44,7 +89,8 @@ namespace MusicStoreInfo.DAL.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<DateTime>("ReleaseDate")
                         .HasColumnType("datetime2");
@@ -60,32 +106,14 @@ namespace MusicStoreInfo.DAL.Migrations
 
                     b.HasIndex("ListenerTypeId");
 
-                    b.ToTable("Albums");
-                });
+                    b.ToTable("Albums", t =>
+                        {
+                            t.HasCheckConstraint("Duration", "Duration > 0");
 
-            modelBuilder.Entity("MusicStoreInfo.Domain.Entities.Cassette", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                            t.HasCheckConstraint("ReleaseDate", "YEAR(ReleaseDate) <= YEAR(GETDATE())");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("AlbumId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Duration")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("AlbumId");
-
-                    b.ToTable("Cassettes");
+                            t.HasCheckConstraint("SongsCount", "SongsCount > 0");
+                        });
                 });
 
             modelBuilder.Entity("MusicStoreInfo.Domain.Entities.City", b =>
@@ -98,7 +126,8 @@ namespace MusicStoreInfo.DAL.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.HasKey("Id");
 
@@ -113,12 +142,13 @@ namespace MusicStoreInfo.DAL.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("CityId")
+                    b.Property<int>("DistrictId")
                         .HasColumnType("int");
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<string>("PhoneNumber")
                         .IsRequired()
@@ -126,7 +156,7 @@ namespace MusicStoreInfo.DAL.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CityId");
+                    b.HasIndex("DistrictId");
 
                     b.ToTable("Companies");
                 });
@@ -144,7 +174,8 @@ namespace MusicStoreInfo.DAL.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
 
                     b.HasKey("Id");
 
@@ -197,34 +228,14 @@ namespace MusicStoreInfo.DAL.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("Id");
 
                     b.ToTable("Groups");
-                });
-
-            modelBuilder.Entity("MusicStoreInfo.Domain.Entities.GroupGenreLink", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("GenreId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("GroupId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("GenreId");
-
-                    b.HasIndex("GroupId");
-
-                    b.ToTable("GroupGenreLinks");
                 });
 
             modelBuilder.Entity("MusicStoreInfo.Domain.Entities.ListenerType", b =>
@@ -260,63 +271,24 @@ namespace MusicStoreInfo.DAL.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<string>("SecondName")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.HasKey("Id");
 
                     b.HasIndex("GenderId");
 
-                    b.ToTable("Members");
-                });
+                    b.HasIndex("Id");
 
-            modelBuilder.Entity("MusicStoreInfo.Domain.Entities.MemberGroupLink", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("GroupId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("MemberId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("GroupId");
-
-                    b.HasIndex("MemberId");
-
-                    b.ToTable("MemberGroupLinks");
-                });
-
-            modelBuilder.Entity("MusicStoreInfo.Domain.Entities.MemberSpecializationLink", b =>
-                {
-                    b.Property<int>("MemberSpecializationLinkId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("MemberSpecializationLinkId"));
-
-                    b.Property<int>("MemberId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("SpecializationId")
-                        .HasColumnType("int");
-
-                    b.HasKey("MemberSpecializationLinkId");
-
-                    b.HasIndex("MemberId");
-
-                    b.HasIndex("SpecializationId");
-
-                    b.ToTable("MemberSpecializationLinks");
+                    b.ToTable("Members", t =>
+                        {
+                            t.HasCheckConstraint("Age", "Age > 0 AND Age < 120");
+                        });
                 });
 
             modelBuilder.Entity("MusicStoreInfo.Domain.Entities.OwnershipType", b =>
@@ -334,6 +306,94 @@ namespace MusicStoreInfo.DAL.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("OwnershipTypes");
+                });
+
+            modelBuilder.Entity("MusicStoreInfo.Domain.Entities.Product", b =>
+                {
+                    b.Property<int>("StoreId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("AlbumId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("DateReceived")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<decimal>("Price")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<int>("Quantity")
+                        .HasColumnType("int");
+
+                    b.HasKey("StoreId", "AlbumId");
+
+                    b.HasIndex("AlbumId");
+
+                    b.HasIndex("Id");
+
+                    b.ToTable("Product", null, t =>
+                        {
+                            t.HasCheckConstraint("DateReceived", "DateReceived <= GETDATE()");
+
+                            t.HasCheckConstraint("Price", "Price > 0 AND Price <= 1000000");
+
+                            t.HasCheckConstraint("Quantity", "Quantity >= 0");
+                        });
+                });
+
+            modelBuilder.Entity("MusicStoreInfo.Domain.Entities.Role", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Roles");
+                });
+
+            modelBuilder.Entity("MusicStoreInfo.Domain.Entities.Song", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("AlbumId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Duration")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AlbumId");
+
+                    b.HasIndex("Id");
+
+                    b.ToTable("Songs", t =>
+                        {
+                            t.HasCheckConstraint("Duration", "Duration > 0")
+                                .HasName("Duration1");
+                        });
                 });
 
             modelBuilder.Entity("MusicStoreInfo.Domain.Entities.Specialization", b =>
@@ -366,7 +426,8 @@ namespace MusicStoreInfo.DAL.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<int>("OwnershipTypeId")
                         .HasColumnType("int");
@@ -382,12 +443,17 @@ namespace MusicStoreInfo.DAL.Migrations
 
                     b.HasIndex("DistrictId");
 
+                    b.HasIndex("Id");
+
                     b.HasIndex("OwnershipTypeId");
 
-                    b.ToTable("Stores");
+                    b.ToTable("Stores", t =>
+                        {
+                            t.HasCheckConstraint("YearOpened", "YEAR(YearOpened) <= YEAR(GETDATE())");
+                        });
                 });
 
-            modelBuilder.Entity("MusicStoreInfo.Domain.Entities.StoreAlbumLink", b =>
+            modelBuilder.Entity("MusicStoreInfo.Domain.Entities.User", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -395,34 +461,75 @@ namespace MusicStoreInfo.DAL.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("AlbumId")
-                        .HasColumnType("int");
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(25)
+                        .HasColumnType("nvarchar(25)");
 
-                    b.Property<DateTime>("DateReceived")
-                        .HasColumnType("datetime2");
+                    b.Property<string>("Password")
+                        .IsRequired()
+                        .HasMaxLength(25)
+                        .HasColumnType("nvarchar(25)");
 
-                    b.Property<decimal>("Price")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<int>("Quantity")
-                        .HasColumnType("int");
-
-                    b.Property<int>("StoreId")
+                    b.Property<int>("RoleId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("AlbumId");
+                    b.HasIndex("RoleId");
 
-                    b.HasIndex("StoreId");
+                    b.ToTable("Users");
+                });
 
-                    b.ToTable("StoreAlbumLink");
+            modelBuilder.Entity("GenreGroup", b =>
+                {
+                    b.HasOne("MusicStoreInfo.Domain.Entities.Genre", null)
+                        .WithMany()
+                        .HasForeignKey("GenresId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("MusicStoreInfo.Domain.Entities.Group", null)
+                        .WithMany()
+                        .HasForeignKey("GroupsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("GroupMember", b =>
+                {
+                    b.HasOne("MusicStoreInfo.Domain.Entities.Group", null)
+                        .WithMany()
+                        .HasForeignKey("GroupsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("MusicStoreInfo.Domain.Entities.Member", null)
+                        .WithMany()
+                        .HasForeignKey("MembersId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("MemberSpecialization", b =>
+                {
+                    b.HasOne("MusicStoreInfo.Domain.Entities.Member", null)
+                        .WithMany()
+                        .HasForeignKey("MembersId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("MusicStoreInfo.Domain.Entities.Specialization", null)
+                        .WithMany()
+                        .HasForeignKey("SpecializationsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("MusicStoreInfo.Domain.Entities.Album", b =>
                 {
                     b.HasOne("MusicStoreInfo.Domain.Entities.Company", "Company")
-                        .WithMany()
+                        .WithMany("Albums")
                         .HasForeignKey("CompanyId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -434,7 +541,7 @@ namespace MusicStoreInfo.DAL.Migrations
                         .IsRequired();
 
                     b.HasOne("MusicStoreInfo.Domain.Entities.ListenerType", "ListenerType")
-                        .WithMany()
+                        .WithMany("Albums")
                         .HasForeignKey("ListenerTypeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -446,32 +553,21 @@ namespace MusicStoreInfo.DAL.Migrations
                     b.Navigation("ListenerType");
                 });
 
-            modelBuilder.Entity("MusicStoreInfo.Domain.Entities.Cassette", b =>
-                {
-                    b.HasOne("MusicStoreInfo.Domain.Entities.Album", "Album")
-                        .WithMany("Cassettes")
-                        .HasForeignKey("AlbumId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Album");
-                });
-
             modelBuilder.Entity("MusicStoreInfo.Domain.Entities.Company", b =>
                 {
-                    b.HasOne("MusicStoreInfo.Domain.Entities.City", "City")
-                        .WithMany()
-                        .HasForeignKey("CityId")
+                    b.HasOne("MusicStoreInfo.Domain.Entities.District", "District")
+                        .WithMany("Companies")
+                        .HasForeignKey("DistrictId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("City");
+                    b.Navigation("District");
                 });
 
             modelBuilder.Entity("MusicStoreInfo.Domain.Entities.District", b =>
                 {
                     b.HasOne("MusicStoreInfo.Domain.Entities.City", "City")
-                        .WithMany()
+                        .WithMany("Districts")
                         .HasForeignKey("CityId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -479,29 +575,10 @@ namespace MusicStoreInfo.DAL.Migrations
                     b.Navigation("City");
                 });
 
-            modelBuilder.Entity("MusicStoreInfo.Domain.Entities.GroupGenreLink", b =>
-                {
-                    b.HasOne("MusicStoreInfo.Domain.Entities.Genre", "Genre")
-                        .WithMany("Groups")
-                        .HasForeignKey("GenreId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("MusicStoreInfo.Domain.Entities.Group", "Group")
-                        .WithMany("Genres")
-                        .HasForeignKey("GroupId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Genre");
-
-                    b.Navigation("Group");
-                });
-
             modelBuilder.Entity("MusicStoreInfo.Domain.Entities.Member", b =>
                 {
                     b.HasOne("MusicStoreInfo.Domain.Entities.Gender", "Gender")
-                        .WithMany()
+                        .WithMany("Members")
                         .HasForeignKey("GenderId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -509,73 +586,16 @@ namespace MusicStoreInfo.DAL.Migrations
                     b.Navigation("Gender");
                 });
 
-            modelBuilder.Entity("MusicStoreInfo.Domain.Entities.MemberGroupLink", b =>
-                {
-                    b.HasOne("MusicStoreInfo.Domain.Entities.Group", "Group")
-                        .WithMany("Members")
-                        .HasForeignKey("GroupId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("MusicStoreInfo.Domain.Entities.Member", "Member")
-                        .WithMany("Groups")
-                        .HasForeignKey("MemberId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Group");
-
-                    b.Navigation("Member");
-                });
-
-            modelBuilder.Entity("MusicStoreInfo.Domain.Entities.MemberSpecializationLink", b =>
-                {
-                    b.HasOne("MusicStoreInfo.Domain.Entities.Member", "Member")
-                        .WithMany("Specializations")
-                        .HasForeignKey("MemberId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("MusicStoreInfo.Domain.Entities.Specialization", "Specialization")
-                        .WithMany("Members")
-                        .HasForeignKey("SpecializationId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Member");
-
-                    b.Navigation("Specialization");
-                });
-
-            modelBuilder.Entity("MusicStoreInfo.Domain.Entities.Store", b =>
-                {
-                    b.HasOne("MusicStoreInfo.Domain.Entities.District", "District")
-                        .WithMany()
-                        .HasForeignKey("DistrictId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("MusicStoreInfo.Domain.Entities.OwnershipType", "OwnershipType")
-                        .WithMany()
-                        .HasForeignKey("OwnershipTypeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("District");
-
-                    b.Navigation("OwnershipType");
-                });
-
-            modelBuilder.Entity("MusicStoreInfo.Domain.Entities.StoreAlbumLink", b =>
+            modelBuilder.Entity("MusicStoreInfo.Domain.Entities.Product", b =>
                 {
                     b.HasOne("MusicStoreInfo.Domain.Entities.Album", "Album")
-                        .WithMany("Stores")
+                        .WithMany("Products")
                         .HasForeignKey("AlbumId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("MusicStoreInfo.Domain.Entities.Store", "Store")
-                        .WithMany("Albums")
+                        .WithMany("Products")
                         .HasForeignKey("StoreId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
@@ -585,40 +605,94 @@ namespace MusicStoreInfo.DAL.Migrations
                     b.Navigation("Store");
                 });
 
-            modelBuilder.Entity("MusicStoreInfo.Domain.Entities.Album", b =>
+            modelBuilder.Entity("MusicStoreInfo.Domain.Entities.Song", b =>
                 {
-                    b.Navigation("Cassettes");
+                    b.HasOne("MusicStoreInfo.Domain.Entities.Album", "Album")
+                        .WithMany("Songs")
+                        .HasForeignKey("AlbumId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
-                    b.Navigation("Stores");
-                });
-
-            modelBuilder.Entity("MusicStoreInfo.Domain.Entities.Genre", b =>
-                {
-                    b.Navigation("Groups");
-                });
-
-            modelBuilder.Entity("MusicStoreInfo.Domain.Entities.Group", b =>
-                {
-                    b.Navigation("Genres");
-
-                    b.Navigation("Members");
-                });
-
-            modelBuilder.Entity("MusicStoreInfo.Domain.Entities.Member", b =>
-                {
-                    b.Navigation("Groups");
-
-                    b.Navigation("Specializations");
-                });
-
-            modelBuilder.Entity("MusicStoreInfo.Domain.Entities.Specialization", b =>
-                {
-                    b.Navigation("Members");
+                    b.Navigation("Album");
                 });
 
             modelBuilder.Entity("MusicStoreInfo.Domain.Entities.Store", b =>
                 {
+                    b.HasOne("MusicStoreInfo.Domain.Entities.District", "District")
+                        .WithMany("Stores")
+                        .HasForeignKey("DistrictId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("MusicStoreInfo.Domain.Entities.OwnershipType", "OwnershipType")
+                        .WithMany("Stores")
+                        .HasForeignKey("OwnershipTypeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("District");
+
+                    b.Navigation("OwnershipType");
+                });
+
+            modelBuilder.Entity("MusicStoreInfo.Domain.Entities.User", b =>
+                {
+                    b.HasOne("MusicStoreInfo.Domain.Entities.Role", "Role")
+                        .WithMany("Users")
+                        .HasForeignKey("RoleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Role");
+                });
+
+            modelBuilder.Entity("MusicStoreInfo.Domain.Entities.Album", b =>
+                {
+                    b.Navigation("Products");
+
+                    b.Navigation("Songs");
+                });
+
+            modelBuilder.Entity("MusicStoreInfo.Domain.Entities.City", b =>
+                {
+                    b.Navigation("Districts");
+                });
+
+            modelBuilder.Entity("MusicStoreInfo.Domain.Entities.Company", b =>
+                {
                     b.Navigation("Albums");
+                });
+
+            modelBuilder.Entity("MusicStoreInfo.Domain.Entities.District", b =>
+                {
+                    b.Navigation("Companies");
+
+                    b.Navigation("Stores");
+                });
+
+            modelBuilder.Entity("MusicStoreInfo.Domain.Entities.Gender", b =>
+                {
+                    b.Navigation("Members");
+                });
+
+            modelBuilder.Entity("MusicStoreInfo.Domain.Entities.ListenerType", b =>
+                {
+                    b.Navigation("Albums");
+                });
+
+            modelBuilder.Entity("MusicStoreInfo.Domain.Entities.OwnershipType", b =>
+                {
+                    b.Navigation("Stores");
+                });
+
+            modelBuilder.Entity("MusicStoreInfo.Domain.Entities.Role", b =>
+                {
+                    b.Navigation("Users");
+                });
+
+            modelBuilder.Entity("MusicStoreInfo.Domain.Entities.Store", b =>
+                {
+                    b.Navigation("Products");
                 });
 #pragma warning restore 612, 618
         }
