@@ -8,56 +8,53 @@ using System.Threading.Tasks;
 
 namespace MusicStoreInfo.DAL.Repositories
 {
-    public class GroupRepository : IGroupRepository
+    public class SpecializationRepository : ISpecializationRepository
     {
         private readonly MusicStoreDbContext _dbContext;
 
-        public GroupRepository(MusicStoreDbContext dbContext)
+        public SpecializationRepository(MusicStoreDbContext dbContext)
         {
             _dbContext = dbContext;
         }
 
-        public async Task<List<Group>> Get()
+        public async Task<List<Specialization>> Get()
         {
-            return await _dbContext.Groups
+            return await _dbContext.Specializations
                 .AsNoTracking()
                 .OrderBy(a => a.Id)
-                .Include(a => a.Genres)
                 .Include(a => a.Members)
                 .ToListAsync();
         }
 
-        public async Task<Group?> GetById(int id)
+        public async Task<Specialization?> GetById(int id)
         {
-            return await _dbContext.Groups
+            return await _dbContext.Specializations
                 .AsNoTracking().FirstOrDefaultAsync(a => a.Id == id);
         }
 
-        public async Task Add(string name, byte[] image)
+        public async Task Add(string name)
         {
-            var group = new Group
+            var specialization = new Specialization
             {
-                Name = name,
-                Image = image
+                Name = name
             };
 
-            await _dbContext.AddAsync(group);
+            await _dbContext.AddAsync(specialization);
             await _dbContext.SaveChangesAsync();
         }
 
-        public async Task Update(int id, string name, byte[] image)
+        public async Task Update(int id, string name)
         {
-            await _dbContext.Groups
+            await _dbContext.Specializations
                 .Where(a => a.Id == id)
                 .ExecuteUpdateAsync(s => s
-                    .SetProperty(a => a.Name, name)
-                    .SetProperty(a => a.Image, image));
+                    .SetProperty(a => a.Name, name));
             await _dbContext.SaveChangesAsync();
         }
 
         public async Task Delete(int id)
         {
-            await _dbContext.Groups
+            await _dbContext.Specializations
                 .Where(a => a.Id == id)
                 .ExecuteDeleteAsync();
             await _dbContext.SaveChangesAsync();

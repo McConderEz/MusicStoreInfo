@@ -37,7 +37,7 @@ namespace MusicStoreInfo.DAL.Repositories
         }
 
         public async Task Add(int listenerTypeId, int companyId, int groupId,
-            string name, int duration, DateTime releaseDate, int songsCount)
+            string name, int duration, DateTime releaseDate, int songsCount, byte[] image)
         {
             var album = new Album
             {
@@ -47,7 +47,8 @@ namespace MusicStoreInfo.DAL.Repositories
                 Name = name,
                 Duration = duration,
                 ReleaseDate = releaseDate,
-                SongsCount = songsCount
+                SongsCount = songsCount,
+                Image = image
             };
 
             await _dbContext.AddAsync(album);
@@ -55,7 +56,7 @@ namespace MusicStoreInfo.DAL.Repositories
         }
 
         public async Task Update(int id, int listenerTypeId, int companyId, int groupId,
-            string name, int duration, DateTime releaseDate, int songsCount)
+            string name, int duration, DateTime releaseDate, int songsCount, byte[] image)
         {
             await _dbContext.Albums
                 .Where(a => a.Id == id)
@@ -66,7 +67,8 @@ namespace MusicStoreInfo.DAL.Repositories
                     .SetProperty(a => a.Name, name)
                     .SetProperty(a => a.Duration, duration)
                     .SetProperty(a => a.ReleaseDate, releaseDate)
-                    .SetProperty(a => a.SongsCount, songsCount));
+                    .SetProperty(a => a.SongsCount, songsCount)
+                    .SetProperty(a => a.Image, image));
             await _dbContext.SaveChangesAsync();
         }
 

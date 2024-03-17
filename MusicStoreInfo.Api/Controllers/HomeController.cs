@@ -1,8 +1,8 @@
 using Microsoft.AspNetCore.Mvc;
-using MusicStoreInfo.Web.Models;
+using MusicStoreInfo.Api.Models;
 using System.Diagnostics;
 
-namespace MusicStoreInfo.Web.Controllers
+namespace MusicStoreInfo.Api.Controllers
 {
     public class HomeController : Controller
     {

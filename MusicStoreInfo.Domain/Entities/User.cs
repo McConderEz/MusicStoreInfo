@@ -16,11 +16,11 @@ namespace MusicStoreInfo.Domain.Entities
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
         [MaxLength(25), MinLength(3)]
-        public required string Name { get; set; } = string.Empty;
+        public string Name { get; set; }
         [MaxLength(25), MinLength(6)]
         public string Password { get; set; }
 
         public int RoleId { get; set; }
-        public virtual Role Role { get; set; }
+        public virtual Role? Role { get; set; }
     }
 }

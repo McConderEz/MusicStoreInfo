@@ -8,56 +8,54 @@ using System.Threading.Tasks;
 
 namespace MusicStoreInfo.DAL.Repositories
 {
-    public class GroupRepository : IGroupRepository
+    public class GenreRepository : IGenreRepository
     {
         private readonly MusicStoreDbContext _dbContext;
 
-        public GroupRepository(MusicStoreDbContext dbContext)
+        public GenreRepository(MusicStoreDbContext dbContext)
         {
             _dbContext = dbContext;
         }
 
-        public async Task<List<Group>> Get()
+        public async Task<List<Genre>> Get()
         {
-            return await _dbContext.Groups
+            return await _dbContext.Genres
                 .AsNoTracking()
                 .OrderBy(a => a.Id)
-                .Include(a => a.Genres)
-                .Include(a => a.Members)
+                .Include(a => a.Groups)
                 .ToListAsync();
         }
 
-        public async Task<Group?> GetById(int id)
+        public async Task<Genre?> GetById(int id)
         {
-            return await _dbContext.Groups
+            return await _dbContext.Genres
                 .AsNoTracking().FirstOrDefaultAsync(a => a.Id == id);
         }
 
-        public async Task Add(string name, byte[] image)
+        public async Task Add(string name)
         {
-            var group = new Group
+            var genre = new Genre
             {
                 Name = name,
-                Image = image
+
             };
 
-            await _dbContext.AddAsync(group);
+            await _dbContext.AddAsync(genre);
             await _dbContext.SaveChangesAsync();
         }
 
-        public async Task Update(int id, string name, byte[] image)
+        public async Task Update(int id, string name)
         {
-            await _dbContext.Groups
+            await _dbContext.Genres
                 .Where(a => a.Id == id)
                 .ExecuteUpdateAsync(s => s
-                    .SetProperty(a => a.Name, name)
-                    .SetProperty(a => a.Image, image));
+                    .SetProperty(a => a.Name, name));
             await _dbContext.SaveChangesAsync();
         }
 
         public async Task Delete(int id)
         {
-            await _dbContext.Groups
+            await _dbContext.Genres
                 .Where(a => a.Id == id)
                 .ExecuteDeleteAsync();
             await _dbContext.SaveChangesAsync();

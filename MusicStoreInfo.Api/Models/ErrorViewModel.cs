@@ -1,4 +1,4 @@
-namespace MusicStoreInfo.Web.Models
+namespace MusicStoreInfo.Api.Models
 {
     public class ErrorViewModel
     {

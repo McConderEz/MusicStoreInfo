@@ -17,10 +17,10 @@ namespace MusicStoreInfo.Domain.Entities
         public int Id { get; set; }
         public int CityId { get; set; }
         [MaxLength(200)]
-        public required string Name { get; set; }   
+        public string Name { get; set; } = string.Empty;
 
-        public virtual City City { get; set; }
-        public virtual ICollection<Store> Stores { get; set; }
-        public virtual ICollection<Company> Companies { get; set; }
+        public virtual City? City { get; set; }
+        public virtual ICollection<Store>? Stores { get; set; } = [];
+        public virtual ICollection<Company>? Companies { get; set; } = [];
     }
 }

@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+
 using MusicStoreInfo.DAL;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -9,10 +10,9 @@ builder.Services.AddDbContext<MusicStoreDbContext>(options =>
 {
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
 });
-builder.Services.AddRazorPages();
-
 
 var app = builder.Build();
+
 
 if (!app.Environment.IsDevelopment())
 {

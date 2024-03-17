@@ -11,12 +11,12 @@ namespace MusicStoreInfo.DAL
 {
     public class MusicStoreDbContext: DbContext
     {
-        private readonly StreamWriter _logStream = new StreamWriter("log.txt", true);
+        //private readonly StreamWriter _logStream = new StreamWriter("log.txt", true);
         public static string CONNECTION_STRING = "data source=(localdb)\\MSSQLLocalDB;Initial Catalog=musicStores;Integrated Security=True;";
         public MusicStoreDbContext(DbContextOptions<MusicStoreDbContext> options)
             : base(options)
         {
-            Database.EnsureDeleted();
+            //Database.EnsureDeleted();
             Database.EnsureCreated();
         }
 
@@ -43,13 +43,13 @@ namespace MusicStoreInfo.DAL
         public override void Dispose()
         {
             base.Dispose();
-            _logStream.Dispose();
+            //_logStream.Dispose();
         }
 
         public override async ValueTask DisposeAsync()
         {
             await base.DisposeAsync();
-            await _logStream.DisposeAsync();
+            //await _logStream.DisposeAsync();
         }
 
         #region Таблицы
