@@ -32,13 +32,8 @@ namespace MusicStoreInfo.DAL.Repositories
                 .AsNoTracking().FirstOrDefaultAsync(a => a.Id == id);
         }
 
-        public async Task Add(string name)
+        public async Task Add(Specialization specialization)
         {
-            var specialization = new Specialization
-            {
-                Name = name
-            };
-
             await _dbContext.AddAsync(specialization);
             await _dbContext.SaveChangesAsync();
         }

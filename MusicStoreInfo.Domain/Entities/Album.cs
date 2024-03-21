@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -22,7 +23,11 @@ namespace MusicStoreInfo.Domain.Entities
         public int Duration { get; set; }
         public DateTime ReleaseDate { get; set; }
         public int SongsCount { get; set; }
-        public byte[] Image { get; set; } = [];
+        public byte[]? Image { get; set; } = [];
+        [NotMapped]
+        //TODO: Возможно костыль, убрать по возможности
+        //TODO: Создать локальное хранилище для Image и создать модель для хранения Картинок
+        public IFormFile? ImageName { get; set; } = null;
 
         public virtual ICollection<Store>? Stores { get; set; } = [];
         public virtual ICollection<Product>? Products { get; set; } = [];

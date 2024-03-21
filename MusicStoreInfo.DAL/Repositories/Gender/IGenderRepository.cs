@@ -4,7 +4,7 @@ namespace MusicStoreInfo.DAL.Repositories
 {
     public interface IGenderRepository
     {
-        Task Add(string name);
+        Task Add(Gender gender);
         Task Delete(int id);
         Task<List<Gender>> Get();
         Task<Gender?> GetById(int id);

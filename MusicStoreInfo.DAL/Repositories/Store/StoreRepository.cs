@@ -35,18 +35,8 @@ namespace MusicStoreInfo.DAL.Repositories
                 .AsNoTracking().FirstOrDefaultAsync(a => a.Id == id);
         }
 
-        public async Task Add(int ownershipId, int districtId, string phoneNumber,
-            string name, DateTime yearOpened)
+        public async Task Add(Store store)
         {
-            var store = new Store
-            {
-                OwnershipTypeId = ownershipId,
-                DistrictId = districtId,
-                PhoneNumber = phoneNumber,
-                Name = name,
-                YearOpened = yearOpened
-            };
-
             await _dbContext.AddAsync(store);
             await _dbContext.SaveChangesAsync();
         }

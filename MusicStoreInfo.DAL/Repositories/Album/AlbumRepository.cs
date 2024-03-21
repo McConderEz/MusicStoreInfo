@@ -1,4 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Migrations;
 using MusicStoreInfo.Domain.Entities;
 using System;
 using System.Collections.Generic;
@@ -23,34 +25,25 @@ namespace MusicStoreInfo.DAL.Repositories
             return await _dbContext.Albums
                 .AsNoTracking()
                 .OrderBy(a => a.Id)
-                .Include(a => a.Songs)
-                .Include(a => a.Stores)
-                .Include(a => a.Company)
-                .Include(a => a.Products)
                 .ToListAsync();
         }
+
 
         public async Task<Album?> GetById(int id)
         {
             return await _dbContext.Albums
-                .AsNoTracking().FirstOrDefaultAsync(a => a.Id == id);
+                .AsNoTracking()
+                .Include(a => a.Songs)
+                .Include(a => a.Stores)
+                .Include(a => a.Company)
+                .Include(a => a.Products)
+                .Include(a => a.ListenerType)
+                .Include(a => a.Group)
+                .FirstOrDefaultAsync(a => a.Id == id);
         }
 
-        public async Task Add(int listenerTypeId, int companyId, int groupId,
-            string name, int duration, DateTime releaseDate, int songsCount, byte[] image)
+        public async Task Add(Album album)
         {
-            var album = new Album
-            {
-                ListenerTypeId = listenerTypeId,
-                CompanyId = companyId,
-                GroupId = groupId,
-                Name = name,
-                Duration = duration,
-                ReleaseDate = releaseDate,
-                SongsCount = songsCount,
-                Image = image
-            };
-
             await _dbContext.AddAsync(album);
             await _dbContext.SaveChangesAsync();
         }
@@ -79,5 +72,6 @@ namespace MusicStoreInfo.DAL.Repositories
                 .ExecuteDeleteAsync();
             await _dbContext.SaveChangesAsync();
         }
+       
     }
 }

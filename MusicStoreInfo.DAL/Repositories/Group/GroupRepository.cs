@@ -33,14 +33,8 @@ namespace MusicStoreInfo.DAL.Repositories
                 .AsNoTracking().FirstOrDefaultAsync(a => a.Id == id);
         }
 
-        public async Task Add(string name, byte[] image)
+        public async Task Add(Group group)
         {
-            var group = new Group
-            {
-                Name = name,
-                Image = image
-            };
-
             await _dbContext.AddAsync(group);
             await _dbContext.SaveChangesAsync();
         }

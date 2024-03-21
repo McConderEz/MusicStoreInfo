@@ -32,13 +32,8 @@ namespace MusicStoreInfo.DAL.Repositories
                 .AsNoTracking().FirstOrDefaultAsync(a => a.Id == id);
         }
 
-        public async Task Add(string name)
+        public async Task Add(Gender gender)
         {
-            var gender = new Gender
-            {
-                Name = name
-            };
-
             await _dbContext.AddAsync(gender);
             await _dbContext.SaveChangesAsync();
         }

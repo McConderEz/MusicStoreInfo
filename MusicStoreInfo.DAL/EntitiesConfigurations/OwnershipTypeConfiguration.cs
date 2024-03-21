@@ -15,6 +15,7 @@ namespace MusicStoreInfo.DAL.EntitiesConfigurations
         {
             builder.HasMany(t => t.Stores)
                 .WithOne(t => t.OwnershipType)
+                .HasForeignKey(s => s.OwnershipTypeId)
                 .OnDelete(DeleteBehavior.Cascade);
         }
     }

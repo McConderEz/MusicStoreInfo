@@ -16,6 +16,15 @@ namespace MusicStoreInfo.DAL.EntitiesConfigurations
             builder.ToTable<Store>(t => t.HasCheckConstraint("YearOpened", $"YEAR(YearOpened) <= YEAR(GETDATE())"));
             builder.HasIndex(t => t.Id);
             
+            builder.HasOne(s => s.District)
+                .WithMany(d => d.Stores)
+                .HasForeignKey(s => s.DistrictId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            builder.HasOne(s => s.OwnershipType)
+                .WithMany(o => o.Stores)
+                .HasForeignKey(s => s.OwnershipTypeId)
+                .OnDelete(DeleteBehavior.Cascade);
 
             builder.HasMany(a => a.Albums)
                 .WithMany(s => s.Stores)

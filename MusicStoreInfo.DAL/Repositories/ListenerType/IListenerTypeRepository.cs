@@ -4,7 +4,7 @@ namespace MusicStoreInfo.DAL.Repositories
 {
     public interface IListenerTypeRepository
     {
-        Task Add(string name);
+        Task Add(ListenerType listenerType);
         Task Delete(int id);
         Task<List<ListenerType>> Get();
         Task<ListenerType?> GetById(int id);

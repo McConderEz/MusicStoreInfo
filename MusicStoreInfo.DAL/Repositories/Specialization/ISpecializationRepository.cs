@@ -4,7 +4,7 @@ namespace MusicStoreInfo.DAL.Repositories
 {
     public interface ISpecializationRepository
     {
-        Task Add(string name);
+        Task Add(Specialization specialization);
         Task Delete(int id);
         Task<List<Specialization>> Get();
         Task<Specialization?> GetById(int id);

@@ -4,7 +4,7 @@ namespace MusicStoreInfo.DAL.Repositories
 {
     public interface ICompanyRepository
     {
-        Task Add(int districtId, string phoneNumber, string name);
+        Task Add(Company company);
         Task Delete(int id);
         Task<List<Company>> Get();
         Task<Company?> GetById(int id);

@@ -16,9 +16,10 @@ namespace MusicStoreInfo.Domain.Entities
         public int Id { get; set; }
         [MaxLength(50)]
         public string Name { get; set; } = string.Empty;
-        public byte[] Image { get; set; } = [];
+        public byte[]? Image { get; set; } = [];
 
         public virtual ICollection<Genre>? Genres { get; set; } = [];
         public virtual ICollection<Member>? Members { get; set; } = [];
+        public virtual ICollection<Album>? Albums { get; set; } = [];
     }
 }

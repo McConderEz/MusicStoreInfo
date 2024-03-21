@@ -32,13 +32,8 @@ namespace MusicStoreInfo.DAL.Repositories
                 .AsNoTracking().FirstOrDefaultAsync(a => a.Id == id);
         }
 
-        public async Task Add(string name)
+        public async Task Add(OwnershipType ownershipType)
         {
-            var ownershipType = new OwnershipType
-            {
-                Name = name
-            };
-
             await _dbContext.AddAsync(ownershipType);
             await _dbContext.SaveChangesAsync();
         }

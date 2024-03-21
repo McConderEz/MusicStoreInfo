@@ -17,7 +17,7 @@ namespace MusicStoreInfo.DAL.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "8.0.2")
+                .HasAnnotation("ProductVersion", "8.0.3")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
@@ -85,7 +85,6 @@ namespace MusicStoreInfo.DAL.Migrations
                         .HasColumnType("int");
 
                     b.Property<byte[]>("Image")
-                        .IsRequired()
                         .HasColumnType("varbinary(max)");
 
                     b.Property<int>("ListenerTypeId")
@@ -231,7 +230,6 @@ namespace MusicStoreInfo.DAL.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<byte[]>("Image")
-                        .IsRequired()
                         .HasColumnType("varbinary(max)");
 
                     b.Property<string>("Name")
@@ -546,7 +544,7 @@ namespace MusicStoreInfo.DAL.Migrations
                         .IsRequired();
 
                     b.HasOne("MusicStoreInfo.Domain.Entities.Group", "Group")
-                        .WithMany()
+                        .WithMany("Albums")
                         .HasForeignKey("GroupId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -602,7 +600,7 @@ namespace MusicStoreInfo.DAL.Migrations
                     b.HasOne("MusicStoreInfo.Domain.Entities.Album", "Album")
                         .WithMany("Products")
                         .HasForeignKey("AlbumId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("MusicStoreInfo.Domain.Entities.Store", "Store")
@@ -684,6 +682,11 @@ namespace MusicStoreInfo.DAL.Migrations
             modelBuilder.Entity("MusicStoreInfo.Domain.Entities.Gender", b =>
                 {
                     b.Navigation("Members");
+                });
+
+            modelBuilder.Entity("MusicStoreInfo.Domain.Entities.Group", b =>
+                {
+                    b.Navigation("Albums");
                 });
 
             modelBuilder.Entity("MusicStoreInfo.Domain.Entities.ListenerType", b =>

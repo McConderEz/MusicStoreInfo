@@ -15,6 +15,7 @@ namespace MusicStoreInfo.Domain.EntitiesConfigurations
         {
             builder.HasMany(t => t.Members)
                 .WithOne(t => t.Gender)
+                .HasForeignKey(t => t.GenderId)
                 .OnDelete(DeleteBehavior.Cascade);
         }
     }

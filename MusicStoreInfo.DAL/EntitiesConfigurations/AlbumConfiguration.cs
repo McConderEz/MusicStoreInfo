@@ -19,6 +19,21 @@ namespace MusicStoreInfo.DAL.EntitiesConfigurations
 
             builder.HasIndex(a => a.GroupId);
 
+            builder.HasOne(a => a.Group)
+                .WithMany(a => a.Albums)
+                .HasForeignKey(a => a.GroupId);
+
+            builder.HasOne(a => a.Company)
+                .WithMany(a => a.Albums)
+                .HasForeignKey(a => a.CompanyId);
+
+            builder.HasOne(a => a.ListenerType)
+                .WithMany(a => a.Albums)
+                .HasForeignKey(a => a.ListenerTypeId);
+
+            builder.HasMany(a => a.Songs)
+                .WithOne()
+                .HasForeignKey(s => s.AlbumId);
 
             builder.HasMany(a => a.Stores)
                 .WithMany(s => s.Albums)

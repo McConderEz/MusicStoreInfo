@@ -33,18 +33,8 @@ namespace MusicStoreInfo.DAL.Repositories
                 .AsNoTracking().FirstOrDefaultAsync(a => a.Id == id);
         }
 
-        public async Task Add(int albumId, int storeId, decimal price,
-            int quantity, DateTime dateReceived)
+        public async Task Add(Product product)
         {
-            var product = new Product()
-            {
-                AlbumId = albumId,
-                StoreId = storeId,
-                Price = price,
-                Quantity = quantity,
-                DateReceived = dateReceived
-            };
-
             await _dbContext.AddAsync(product);
             await _dbContext.SaveChangesAsync();
         }
