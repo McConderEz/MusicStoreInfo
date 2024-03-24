@@ -9,5 +9,6 @@ namespace MusicStoreInfo.Services.Services.GenderService
         Task<Gender?> DetailsAsync(int id);
         Task EditAsync(int id, Gender model);
         Task<List<Gender>?> GetAllAsync();
+        Task<Gender?> GetByIdAsync(int id);
     }
 }

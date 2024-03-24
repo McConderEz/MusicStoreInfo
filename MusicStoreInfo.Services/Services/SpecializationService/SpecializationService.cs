@@ -52,5 +52,11 @@ namespace MusicStoreInfo.Services.Services.SpecializationService
         {
             await _repository.Delete(id);
         }
+
+        public async Task<Specialization?> GetByIdAsync(int id)
+        {
+            var specialization = await _repository.GetById(id);
+            return specialization;
+        }
     }
 }

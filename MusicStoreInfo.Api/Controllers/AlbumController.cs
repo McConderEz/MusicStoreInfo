@@ -11,7 +11,6 @@ namespace MusicStoreInfo.Api.Controllers
 {
     public class AlbumController : Controller
     {
-        //TODO: Сделать добавление данных:Песни, Продукты, Магазины
         //TODO: Сделать ввод справочников по названиям, а не Id.(Выбираем по названию, за которым закреплен Id)
         //TODO: Добавить стиль
 
@@ -75,7 +74,6 @@ namespace MusicStoreInfo.Api.Controllers
             return View(model);
         }
 
-        //TODO: Изменить на DTO 
         [HttpPost]
         public async Task<IActionResult> Edit(Album model)
         {

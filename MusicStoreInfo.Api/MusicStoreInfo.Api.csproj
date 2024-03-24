@@ -29,16 +29,8 @@
 
   <ItemGroup>
     <Folder Include="Views\Group\" />
-    <Folder Include="Views\Genre\" />
-    <Folder Include="Views\Store\" />
     <Folder Include="Views\Product\" />
     <Folder Include="Views\Member\" />
-    <Folder Include="Views\Gender\" />
-    <Folder Include="Views\Specialization\" />
-    <Folder Include="Views\City\" />
-    <Folder Include="Views\District\" />
-    <Folder Include="Views\OwnershipType\" />
-    <Folder Include="Views\ListenerType\" />
     <Folder Include="wwwroot\Image\" />
   </ItemGroup>
 

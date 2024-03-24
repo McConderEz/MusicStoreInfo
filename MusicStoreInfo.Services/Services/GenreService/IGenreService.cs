@@ -9,5 +9,6 @@ namespace MusicStoreInfo.Services.Services.GenreService
         Task<Genre?> DetailsAsync(int id);
         Task EditAsync(int id, Genre model);
         Task<List<Genre>?> GetAllAsync();
+        Task<Genre?> GetByIdAsync(int id);
     }
 }

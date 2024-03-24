@@ -52,5 +52,11 @@ namespace MusicStoreInfo.Services.Services.GenderService
         {
             await _repository.Delete(id);
         }
+
+        public async Task<Gender?> GetByIdAsync(int id)
+        {
+            var gender = await _repository.GetById(id);
+            return gender;
+        }
     }
 }

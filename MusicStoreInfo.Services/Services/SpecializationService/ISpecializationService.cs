@@ -9,5 +9,6 @@ namespace MusicStoreInfo.Services.Services.SpecializationService
         Task<Specialization?> DetailsAsync(int id);
         Task EditAsync(int id, Specialization model);
         Task<List<Specialization>?> GetAllAsync();
+        Task<Specialization?> GetByIdAsync(int id);
     }
 }

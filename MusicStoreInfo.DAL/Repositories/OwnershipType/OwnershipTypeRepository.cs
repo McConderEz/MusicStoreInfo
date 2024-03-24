@@ -21,14 +21,16 @@ namespace MusicStoreInfo.DAL.Repositories
         {
             return await _dbContext.OwnershipTypes
                 .AsNoTracking()
-                .OrderBy(a => a.Id)
-                .Include(a => a.Stores)
+                .OrderBy(a => a.Id)                
                 .ToListAsync();
         }
 
         public async Task<OwnershipType?> GetById(int id)
         {
             return await _dbContext.OwnershipTypes
+                .Include(a => a.Stores)
+                    .ThenInclude(s => s.District)
+                        .ThenInclude(d => d.City)
                 .AsNoTracking().FirstOrDefaultAsync(a => a.Id == id);
         }
 

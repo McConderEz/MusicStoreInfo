@@ -9,5 +9,6 @@ namespace MusicStoreInfo.Services.Services.ListenerTypeService
         Task<ListenerType?> DetailsAsync(int id);
         Task EditAsync(int id, ListenerType model);
         Task<List<ListenerType>?> GetAllAsync();
+        Task<ListenerType?> GetByIdAsync(int id);
     }
 }

@@ -1,0 +1,108 @@
+﻿@model MusicStoreInfo.Domain.Entities.Store
+
+@{
+    ViewData["Title"] = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Подробности</h1>
+
+<div>
+    <h4>Магазин</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            Номер телефона
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.PhoneNumber)
+        </dd>
+        <dt class = "col-sm-2">
+            Название
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+        <dt class = "col-sm-2">
+            Год открытия
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.YearOpened.Date)
+        </dd>
+        <dt class = "col-sm-2">
+            Тип собственности
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.OwnershipType.Name)
+        </dd>
+        <dt class = "col-sm-2">
+            Район
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.District.Name)
+        </dd>
+        <dt class="col-sm-2">
+            Город
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.District.City.Name)
+        </dd>
+    </dl>
+</div>
+
+<h1 class="text-center">Продаваемые альбомы магазина</h1>
+
+<div class="container">
+    <table class="table table-bordered">
+        <tr>
+            <th>
+                Id
+            </th>
+            <th>
+                Название
+            </th>
+            <th>
+                Длительность
+            </th>
+            <th>
+                Стоимость
+            </th>
+            <th>
+                Количество
+            </th>
+            <th>
+                Дата поступления
+            </th>
+        </tr>
+        @foreach (var item in Model.Products)
+            {
+            <tr>
+
+                <td>
+                    @item.Id
+                </td>
+                <td>
+                    @item.Album.Name
+                </td>
+                <td>
+                    @item.Album.Duration
+                </td>
+                <td>
+                    @item.Price
+                </td>
+                <td>
+                    @item.Quantity
+                </td>
+                <td>
+                    @item.DateReceived
+                </td>
+            
+        </tr>
+        }
+    </table>
+</div>
+
+<div>
+    <a asp-action="Edit" asp-route-id="@Model?.Id">Изменить</a> |
+    <a asp-action="Index">Вернуться назад</a>
+</div>

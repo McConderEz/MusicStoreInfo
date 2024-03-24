@@ -9,5 +9,6 @@ namespace MusicStoreInfo.Services.Services.OwnershipTypeService
         Task<OwnershipType?> DetailsAsync(int id);
         Task EditAsync(int id, OwnershipType model);
         Task<List<OwnershipType>?> GetAllAsync();
+        Task<OwnershipType?> GetByIdAsync(int id);
     }
 }

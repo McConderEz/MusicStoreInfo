@@ -22,15 +22,16 @@ namespace MusicStoreInfo.DAL.Repositories
             return await _dbContext.Districts
                 .AsNoTracking()
                 .OrderBy(a => a.Id)
-                .Include(a => a.Companies)
                 .Include(a => a.City)
-                .Include(a => a.Stores)
                 .ToListAsync();
         }
 
         public async Task<District?> GetById(int id)
         {
             return await _dbContext.Districts
+                .Include(a => a.Companies)
+                .Include(a => a.City)
+                .Include(a => a.Stores)
                 .AsNoTracking().FirstOrDefaultAsync(a => a.Id == id);
         }
 

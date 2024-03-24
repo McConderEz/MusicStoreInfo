@@ -80,9 +80,10 @@
                 Альбом
             </th>
         </tr>
+        @foreach(var item in Model.Songs)
+        {
         <tr>
-            @foreach(var item in Model.Songs)
-            {
+            
                 <td>
                     @item.Id
                 </td>
@@ -95,8 +96,9 @@
                 <td>
                     @item.Album.Name
                 </td>
-            }
+            
         </tr>
+         }
     </table>
 </div>
 

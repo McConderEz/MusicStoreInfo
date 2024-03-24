@@ -52,5 +52,11 @@ namespace MusicStoreInfo.Services.Services.OwnershipTypeService
         {
             await _repository.Delete(id);
         }
+
+        public async Task<OwnershipType?> GetByIdAsync(int id)
+        {
+            var ownershipType = await _repository.GetById(id);
+            return ownershipType;
+        }
     }
 }

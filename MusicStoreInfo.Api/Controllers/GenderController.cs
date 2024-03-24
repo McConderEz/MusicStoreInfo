@@ -39,20 +39,21 @@ namespace MusicStoreInfo.Api.Controllers
         }
 
         [HttpGet]
-        public IActionResult Edit()
+        public async Task<IActionResult> Edit(int id)
         {
+            var model = await _service.GetByIdAsync(id);
             return View();
         }
 
         [HttpPost]
-        public async Task<IActionResult> Edit(int id, Gender model)
+        public async Task<IActionResult> Edit(Gender model)
         {
             if (!ModelState.IsValid)
             {
                 return View();
             }
 
-            await _service.EditAsync(id, model);
+            await _service.EditAsync(model.Id, model);
             return RedirectToAction("Index");
         }
 

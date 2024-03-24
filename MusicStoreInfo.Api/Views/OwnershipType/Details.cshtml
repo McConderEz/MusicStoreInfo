@@ -1,0 +1,75 @@
+﻿@model MusicStoreInfo.Domain.Entities.OwnershipType
+
+@{
+    ViewData["Title"] = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Подробности</h1>
+
+<div>
+    <h4>Тип собственности</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            Id
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Id)
+        </dd>
+        <dt class = "col-sm-2">
+            Название
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+    </dl>
+</div>
+
+<h1 class="text-center">Магазины данного типа собственности</h1>
+
+<div class="container">
+    <table class="table table-bordered">
+        <tr>
+            <th>
+                Id
+            </th>
+            <th>
+                Название
+            </th>
+            <th>
+                Номер телефона
+            </th>
+            <th>
+                Район
+            </th>
+            <th>
+                Город
+            </th>
+        </tr>
+        @foreach (var item in Model.Stores)
+            {
+        <tr>
+            
+                <td>
+                    @item.Id
+                </td>
+                <td>
+                    @item.Name
+                </td>
+                <td>
+                    @item.District?.Name
+                </td>
+                <td>
+                    @item.District?.City?.Name
+                </td>
+            
+        </tr>
+            }
+    </table>
+</div>
+
+<div>
+    <a asp-action="Edit" asp-route-id="@Model?.Id">Изменить</a> |
+    <a asp-action="Index">Вернуться назад</a>
+</div>
