@@ -24,6 +24,7 @@ namespace MusicStoreInfo.DAL.Repositories
         {
             return await _dbContext.Albums
                 .AsNoTracking()
+                .Include(a => a.Group)
                 .OrderBy(a => a.Id)
                 .ToListAsync();
         }
@@ -49,7 +50,7 @@ namespace MusicStoreInfo.DAL.Repositories
         }
 
         public async Task Update(int id, int listenerTypeId, int companyId, int groupId,
-            string name, int duration, DateTime releaseDate, int songsCount, byte[] image)
+            string name, int duration, DateTime releaseDate, int songsCount, string imagePath)
         {
             await _dbContext.Albums
                 .Where(a => a.Id == id)
@@ -61,7 +62,7 @@ namespace MusicStoreInfo.DAL.Repositories
                     .SetProperty(a => a.Duration, duration)
                     .SetProperty(a => a.ReleaseDate, releaseDate)
                     .SetProperty(a => a.SongsCount, songsCount)
-                    .SetProperty(a => a.Image, image));
+                    .SetProperty(a => a.ImagePath, imagePath));
             await _dbContext.SaveChangesAsync();
         }
 

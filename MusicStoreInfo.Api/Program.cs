@@ -9,6 +9,7 @@ using MusicStoreInfo.Services.Services.DistrictService;
 using MusicStoreInfo.Services.Services.GenderService;
 using MusicStoreInfo.Services.Services.GenreService;
 using MusicStoreInfo.Services.Services.GroupService;
+using MusicStoreInfo.Services.Services.ImageService;
 using MusicStoreInfo.Services.Services.ListenerTypeService;
 using MusicStoreInfo.Services.Services.MemberService;
 using MusicStoreInfo.Services.Services.OwnershipTypeService;
@@ -73,10 +74,12 @@ builder.Services.AddScoped<IStoreService, StoreService>();
 
 builder.Services.AddScoped<IProductRepository, ProductRepository>();
 builder.Services.AddScoped<IProductService, ProductService>();
+
+builder.Services.AddScoped<IImageService, ImageService>();
 #endregion
 
 var app = builder.Build();
-
+app.UseStaticFiles();
 
 if (!app.Environment.IsDevelopment())
 {

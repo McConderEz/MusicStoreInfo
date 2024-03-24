@@ -1,13 +1,12 @@
 ﻿@model MusicStoreInfo.Domain.Entities.Album
-@using Microsoft.AspNetCore.Http;
 @{
     ViewData["Title"] = "Create";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Create</h1>
+<h1>Создание</h1>
 
-<h4>Album</h4>
+<h4>Альбом</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
@@ -20,15 +19,15 @@
             </div>
             <div class="form-group">
                 <label asp-for="ListenerTypeId" class="control-label"></label>
-                <input asp-for="ListenerTypeId" type="text" class="form-control" />
+                <input asp-for="ListenerTypeId" class="form-control" />
             </div>
             <div class="form-group">
                 <label asp-for="CompanyId" class="control-label"></label>
-                <input asp-for="CompanyId" type="text" class="form-control" />
+                <input asp-for="CompanyId" class="form-control" />
             </div>
             <div class="form-group">
                 <label asp-for="GroupId" class="control-label"></label>
-                <input asp-for="GroupId" type="text" class="form-control" />
+                <input asp-for="GroupId" class="form-control" />
             </div>
             <div class="form-group">
                 <label asp-for="Duration" class="control-label"></label>
@@ -46,19 +45,19 @@
                 <span asp-validation-for="SongsCount" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="ImageName" class="control-label"></label>
-                <input asp-for="ImageName" type="file" accept="image/jpeg, image/png, image/gif" class="form-control" />
-                <span asp-validation-for="Image" class="text-danger"></span>
+                <label asp-for="ImagePath" class="control-label"></label>
+                <input asp-for="ImagePath" class="form-control" type="file" />
+                <span asp-validation-for="ImagePath" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
+                <input type="submit" value="Создать" class="btn btn-primary" />
             </div>
         </form>
     </div>
 </div>
 
 <div>
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Index">Вернуться назад</a>
 </div>
 
 @section Scripts {

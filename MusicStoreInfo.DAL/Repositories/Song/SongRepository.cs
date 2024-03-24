@@ -28,7 +28,7 @@ namespace MusicStoreInfo.DAL.Repositories
 
         public async Task<Song?> GetById(int id)
         {
-            return await _dbContext.Songs
+            return await _dbContext.Songs.Include(s => s.Album)
                 .AsNoTracking().FirstOrDefaultAsync(a => a.Id == id);
         }
 

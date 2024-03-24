@@ -9,5 +9,6 @@ namespace MusicStoreInfo.Services.Services.SongService
         Task<Song?> DetailsAsync(int id);
         Task EditAsync(int id, Song model);
         Task<List<Song>?> GetAllAsync();
+        Task<Song?> GetByIdAsync(int id);
     }
 }

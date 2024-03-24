@@ -7,6 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="bootstrap" Version="5.3.3" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.3" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.3">
       <PrivateAssets>all</PrivateAssets>
@@ -24,6 +25,21 @@
     <ProjectReference Include="..\MusicStoreInfo.DAL\MusicStoreInfo.DAL.csproj" />
     <ProjectReference Include="..\MusicStoreInfo.Domain\MusicStoreInfo.Domain.csproj" />
     <ProjectReference Include="..\MusicStoreInfo.Services\MusicStoreInfo.Services.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Views\Group\" />
+    <Folder Include="Views\Genre\" />
+    <Folder Include="Views\Store\" />
+    <Folder Include="Views\Product\" />
+    <Folder Include="Views\Member\" />
+    <Folder Include="Views\Gender\" />
+    <Folder Include="Views\Specialization\" />
+    <Folder Include="Views\City\" />
+    <Folder Include="Views\District\" />
+    <Folder Include="Views\OwnershipType\" />
+    <Folder Include="Views\ListenerType\" />
+    <Folder Include="wwwroot\Image\" />
   </ItemGroup>
 
 </Project>

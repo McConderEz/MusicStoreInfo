@@ -10,6 +10,6 @@ namespace MusicStoreInfo.DAL.Repositories
         Task Delete(int id);
         Task<List<Album>> Get();
         Task<Album?> GetById(int id);
-        Task Update(int id, int listenerTypeId, int companyId, int groupId, string name, int duration, DateTime releaseDate, int songsCount, byte[] image);        
+        Task Update(int id, int listenerTypeId, int companyId, int groupId, string name, int duration, DateTime releaseDate, int songsCount, string imagePath);        
     }
 }

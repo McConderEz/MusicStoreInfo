@@ -1,11 +1,11 @@
-﻿@model IEnumerable<MusicStoreInfo.Domain.Entities.Album>
+﻿@model IEnumerable<MusicStoreInfo.Domain.Entities.Song>
 
 @{
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Альбомы</h1>
+<h1>Песни</h1>
 
 <p>
     <a asp-action="Create">Создать</a>
@@ -23,13 +23,7 @@
                 Длительность
             </th>
             <th>
-                Дата выхода
-            </th>
-            <th>
-                Количество песен 
-            </th>            
-            <th>
-                Группа
+                Альбом
             </th>
             <th></th>
         </tr>
@@ -47,13 +41,7 @@
                 @Html.DisplayFor(modelItem => item.Duration)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.ReleaseDate.Date)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.SongsCount)
-            </td>            
-            <td>
-                @Html.DisplayFor(modelItem => item.Group.Name)
+                @Html.DisplayFor(modelItem => item.Album.Name)
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.Id">Изменить</a> |

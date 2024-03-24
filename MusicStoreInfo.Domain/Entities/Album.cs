@@ -12,6 +12,8 @@ namespace MusicStoreInfo.Domain.Entities
 {
     public class Album
     {
+        private int _songsCount;
+
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
@@ -22,12 +24,16 @@ namespace MusicStoreInfo.Domain.Entities
         public int GroupId { get; set; }
         public int Duration { get; set; }
         public DateTime ReleaseDate { get; set; }
-        public int SongsCount { get; set; }
-        public byte[]? Image { get; set; } = [];
-        [NotMapped]
-        //TODO: Возможно костыль, убрать по возможности
-        //TODO: Создать локальное хранилище для Image и создать модель для хранения Картинок
-        public IFormFile? ImageName { get; set; } = null;
+        public int SongsCount
+        {
+            get => _songsCount;
+            set
+            {
+                _songsCount = value;
+                SongsCount = Songs?.Count ?? 0;
+            }
+        }
+        public string ImagePath { get; set; } = string.Empty;
 
         public virtual ICollection<Store>? Stores { get; set; } = [];
         public virtual ICollection<Product>? Products { get; set; } = [];

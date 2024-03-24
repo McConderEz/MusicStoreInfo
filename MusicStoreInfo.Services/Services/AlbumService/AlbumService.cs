@@ -21,6 +21,7 @@ namespace MusicStoreInfo.Services.Services.AlbumService
 
         public async Task CreateAsync(Album model)
         {
+
             await _repository.Add(model);
         }
 
@@ -39,7 +40,7 @@ namespace MusicStoreInfo.Services.Services.AlbumService
 
             await _repository.Update(id,
                 model.ListenerTypeId, model.GroupId, model.CompanyId,
-                model.Name, model.Duration, model.ReleaseDate, model.SongsCount, model.Image);
+                model.Name, model.Duration, model.ReleaseDate, model.SongsCount, model.ImagePath);
         }
 
         public async Task<Album?> DetailsAsync(int id)
@@ -57,20 +58,10 @@ namespace MusicStoreInfo.Services.Services.AlbumService
             await _repository.Delete(id);
         }
 
-        public async Task<byte[]?> GetImageBytesAsync(IFormFile imageFile)
+        public async Task<Album?> GetByIdAsync(int id)
         {
-            if (imageFile != null && imageFile.Length > 0)
-            {
-                await using (var stream = new MemoryStream())
-                {
-                    await imageFile.CopyToAsync(stream);
-                    return stream.ToArray();
-                }
-            }
-            else
-            {
-                return null;
-            }
+            var album = await _repository.GetById(id);
+            return album;
         }
     }
 }

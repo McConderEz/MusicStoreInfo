@@ -1,67 +1,106 @@
-﻿@model MusicStoreInfo.Domain.Entities.Album
+﻿@model MusicStoreInfo.Api.Models.AlbumViewModel
 
 @{
     ViewData["Title"] = "Details";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Details</h1>
+<h1>Подробности</h1>
 
 <div>
-    <h4>Album</h4>
+    <h4>Альбом</h4>
     <hr />
     <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Name)
+        <dt class="col-sm-2">
+            Обложка альбома
         </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Name)
+        <dd class="col-sm-10">
+            <img src="@("~/image/" + Model.Album.ImagePath)" asp-append-version="true" width="200px" height="200px" />
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Duration)
+            Название альбома
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Duration)
+            @Html.DisplayFor(model => model.Album.Name)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.ReleaseDate)
+            Длительность
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.ReleaseDate)
+            @Html.DisplayFor(model => model.Album.Duration)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.SongsCount)
+            Дата выхода
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.SongsCount)
+            @Html.DisplayFor(model => model.Album.ReleaseDate.Date)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Image)
+            Количество песен
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Image)
+            @Html.DisplayFor(model => model.Album.SongsCount)
+        </dd>       
+        <dt class = "col-sm-2">
+            Исполнитель
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Album.Group.Name)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Group)
+            Тип прослушивателя
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Group.Name)
+            @Html.DisplayFor(model => model.Album.ListenerType.Name)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.ListenerType)
+            Компания издатель
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.ListenerType.Name)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Company)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Company.Name)
+            @Html.DisplayFor(model => model.Album.Company.Name)
         </dd>
     </dl>
 </div>
+
+<h1 class="text-center">Песни из альбома</h1>
+
+<div class="container">
+    <table class="table table-bordered">
+        <tr>
+            <th>
+                Id
+            </th>
+            <th>
+                Название
+            </th>
+            <th>
+                Длительность
+            </th>
+            <th>
+                Альбом
+            </th>
+        </tr>
+        <tr>
+            @foreach(var item in Model.Songs)
+            {
+                <td>
+                    @item.Id
+                </td>
+                <td>
+                    @item.Name
+                </td>
+                <td>
+                    @item.Duration
+                </td>
+                <td>
+                    @item.Album.Name
+                </td>
+            }
+        </tr>
+    </table>
+</div>
+
 <div>
-    <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Edit" asp-route-id="@Model?.Album.Id">Изменить</a> |
+    <a asp-action="Index">Вернуться назад</a>
 </div>

@@ -10,6 +10,6 @@ namespace MusicStoreInfo.Services.Services.AlbumService
         Task<Album?> DetailsAsync(int id);
         Task EditAsync(int id, Album model);
         Task<List<Album>?> GetAllAsync();
-        Task<byte[]?> GetImageBytesAsync(IFormFile imageFile);
+        Task<Album?> GetByIdAsync(int id);
     }
 }

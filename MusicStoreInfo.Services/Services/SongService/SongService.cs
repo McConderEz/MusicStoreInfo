@@ -52,5 +52,11 @@ namespace MusicStoreInfo.Services.Services.SongService
         {
             await _repository.Delete(id);
         }
+
+        public async Task<Song?> GetByIdAsync(int id)
+        {
+            var song = await _repository.GetById(id);
+            return song;
+        }
     }
 }
