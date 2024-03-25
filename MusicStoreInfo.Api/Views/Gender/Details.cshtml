@@ -1,0 +1,76 @@
+﻿@model MusicStoreInfo.Domain.Entities.Gender
+
+@{
+    ViewData["Title"] = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>Gender</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            Название
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+    </dl>
+</div>
+
+<h1 class="text-center">Список исполнителей по гендеру</h1>
+
+<div class="container">
+    <table class="table table-bordered">
+        <tr>
+            <th>
+                Id
+            </th>
+            <th>
+                Имя
+            </th>
+            <th>
+                Фамилия
+            </th>
+            <th>
+                Возраст
+            </th>
+            <th>
+                Группа
+            </th>
+            <th>
+                Специализация
+            </th>
+        </tr>
+        @foreach (var item in Model.Members)
+        {
+            <tr>
+
+                <td>
+                    @item.Id
+                </td>
+                <td>
+                    @item.Name
+                </td>
+                <td>
+                    @item.SecondName
+                </td>
+                <td>
+                    @item.Age
+                </td>
+                <td>
+                    @string.Join(",",item.Groups.Select(x => x.Name));                    
+                </td>
+                <td>
+                    @string.Join(",", item.Specializations.Select(x => x.Name));
+                </td>
+            </tr>
+        }
+    </table>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>

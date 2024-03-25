@@ -17,16 +17,16 @@ namespace MusicStoreInfo.Domain.Entities
         public int OwnershipTypeId { get; set; }
         public int DistrictId { get; set; }
         [RegularExpression(@"^\+\d{1,3}\d{10}$", ErrorMessage = "Несоответствие формату")]
-        public required string PhoneNumber { get; set; }
+        public string PhoneNumber { get; set; }
         [MaxLength(50)]
-        public required string Name { get; set; }
+        public string Name { get; set; } = string.Empty;
         public DateTime YearOpened { get; set; }
 
 
-        public virtual ICollection<Album> Albums { get; set; }
-        public virtual ICollection<Product> Products { get; set; }
-        public virtual OwnershipType OwnershipType { get; set; }
-        public virtual District District { get; set; }
+        public virtual ICollection<Album>? Albums { get; set; } = [];
+        public virtual ICollection<Product>? Products { get; set; } = [];
+        public virtual OwnershipType? OwnershipType { get; set; }
+        public virtual District? District { get; set; }
 
     }
 }

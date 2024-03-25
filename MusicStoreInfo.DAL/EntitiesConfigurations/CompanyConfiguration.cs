@@ -14,7 +14,14 @@ namespace MusicStoreInfo.DAL.EntitiesConfigurations
         public void Configure(EntityTypeBuilder<Company> builder)
         {
             builder.HasMany(t => t.Albums)
-                .WithOne(t => t.Company);                
+                .WithOne(t => t.Company)
+                .HasForeignKey(t => t.CompanyId);
+
+            builder.HasOne(t => t.District)
+                .WithMany(t => t.Companies)
+                .HasForeignKey(t => t.DistrictId)
+                .OnDelete(DeleteBehavior.Cascade);
+
         }
     }
 }

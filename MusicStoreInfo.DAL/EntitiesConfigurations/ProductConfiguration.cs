@@ -17,6 +17,16 @@ namespace MusicStoreInfo.DAL.EntitiesConfigurations
                 .ToTable(t => t.HasCheckConstraint("Quantity", "Quantity >= 0"))
                 .ToTable(t => t.HasCheckConstraint("DateReceived", "DateReceived <= GETDATE()"));
             builder.HasIndex(t => t.Id);
+
+            builder.HasOne(p => p.Store)
+                .WithMany(p => p.Products)
+                .HasForeignKey(p => p.StoreId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            builder.HasOne(p => p.Album)
+                .WithMany(p => p.Products)
+                .HasForeignKey(p => p.AlbumId)
+                .OnDelete(DeleteBehavior.Cascade);
         }
     }
 }

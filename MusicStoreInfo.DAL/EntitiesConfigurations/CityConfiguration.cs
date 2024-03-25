@@ -15,6 +15,7 @@ namespace MusicStoreInfo.DAL.EntitiesConfigurations
         {
             builder.HasMany(t => t.Districts)
                 .WithOne(t => t.City)
+                .HasForeignKey(t => t.CityId)
                 .OnDelete(DeleteBehavior.Cascade);
         }
     }

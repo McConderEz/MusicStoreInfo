@@ -16,9 +16,9 @@ namespace MusicStoreInfo.Domain.Entities
         public int Id { get; set; }
         public int AlbumId { get; set; }
         [MaxLength(50)]
-        public required string Name { get; set; }
+        public string Name { get; set; } = string.Empty;
         public int Duration { get; set; }        
 
-        public virtual Album Album { get; set; }
+        public virtual Album? Album { get; set; }
     }
 }

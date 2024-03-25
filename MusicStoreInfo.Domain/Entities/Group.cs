@@ -15,9 +15,11 @@ namespace MusicStoreInfo.Domain.Entities
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
         [MaxLength(50)]
-        public required string Name { get; set; }       
-        
-        public virtual ICollection<Genre> Genres { get; set; }
-        public virtual ICollection<Member> Members { get; set; }
+        public string Name { get; set; } = string.Empty;
+        public string? ImagePath { get; set; } = string.Empty;
+
+        public virtual ICollection<Genre>? Genres { get; set; } = [];
+        public virtual ICollection<Member>? Members { get; set; } = [];
+        public virtual ICollection<Album>? Albums { get; set; } = [];
     }
 }

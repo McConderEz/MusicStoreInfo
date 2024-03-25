@@ -16,6 +16,10 @@ namespace MusicStoreInfo.DAL.EntitiesConfigurations
             builder.ToTable<Member>(t => t.HasCheckConstraint("Age", "Age > 0 AND Age < 120"));
             builder.HasIndex(t => t.Id);
 
+            builder.HasOne(m => m.Gender)
+                .WithMany(g => g.Members)
+                .HasForeignKey(m => m.GenderId);                
+
             builder.HasMany(s => s.Specializations)
                 .WithMany(m => m.Members)
                 .UsingEntity(j => j.ToTable("MemberSpecializationLink"));

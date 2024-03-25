@@ -15,6 +15,11 @@ namespace MusicStoreInfo.DAL.EntitiesConfigurations
         {
             builder.ToTable<Song>(t => t.HasCheckConstraint("Duration", "Duration > 0"));
             builder.HasIndex(t => t.Id);
+
+            builder.HasOne(s => s.Album)
+                .WithMany(a => a.Songs)
+                .HasForeignKey(s => s.AlbumId)
+                .OnDelete(DeleteBehavior.Cascade);
         }
     }
 }
