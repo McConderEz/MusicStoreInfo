@@ -8,6 +8,6 @@ namespace MusicStoreInfo.DAL.Repositories
         Task Delete(int id);
         Task<List<Group>> Get();
         Task<Group?> GetById(int id);
-        Task Update(int id, string name, byte[] image);
+        Task Update(int id, string name, string image);
     }
 }

@@ -1,18 +1,26 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using MusicStoreInfo.Api.Contracts;
 using MusicStoreInfo.Domain.Entities;
 using MusicStoreInfo.Services.Services.DistrictService;
 using MusicStoreInfo.Services.Services.GroupService;
+using MusicStoreInfo.Services.Services.ImageService;
 
 namespace MusicStoreInfo.Api.Controllers
 {
     public class GroupController : Controller
     {
         private readonly IGroupService _service;
+        private readonly IImageService _imageService;
+        private readonly IWebHostEnvironment _hostEnvironment;
+        private readonly string _staticFilesPath;
 
 
-        public GroupController(IGroupService groupService)
+        public GroupController(IGroupService groupService, IImageService imageService, IWebHostEnvironment hostEnvironment)
         {
             _service = groupService;
+            _imageService = imageService;
+            _hostEnvironment = hostEnvironment;
+            _staticFilesPath = Path.Combine(Directory.GetCurrentDirectory(), _hostEnvironment.WebRootPath + "\\Image");
         }
 
         [HttpGet]
@@ -28,31 +36,50 @@ namespace MusicStoreInfo.Api.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create(Group model)
+        public async Task<IActionResult> Create(GroupDto model)
         {
             if (!ModelState.IsValid)
             {
                 return View();
             }
-            await _service.CreateAsync(model);
+
+            var image = await _imageService.CreateImageAsync(model.ImagePath, _staticFilesPath);
+
+            var group = new Group
+            {
+                Name = model.Name,
+                ImagePath = image
+            };
+
+            await _service.CreateAsync(group);
             return RedirectToAction("Index");
         }
 
         [HttpGet]
-        public IActionResult Edit()
+        public async Task<IActionResult> Edit(int id)
         {
-            return View();
+            var model = await _service.GetByIdAsync(id);
+            return View(model);
         }
 
         [HttpPost]
-        public async Task<IActionResult> Edit(int id, Group model)
+        public async Task<IActionResult> Edit(GroupDto model)
         {
             if (!ModelState.IsValid)
             {
                 return View();
             }
 
-            await _service.EditAsync(id, model);
+            var image = await _imageService.CreateImageAsync(model.ImagePath, _staticFilesPath);
+
+            var group = new Group
+            {
+                Id = model.Id,
+                Name = model.Name,
+                ImagePath = image,
+            };
+
+            await _service.EditAsync(group.Id, group);
             return RedirectToAction("Index");
         }
 

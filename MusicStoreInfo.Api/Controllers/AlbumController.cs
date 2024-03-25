@@ -74,15 +74,34 @@ namespace MusicStoreInfo.Api.Controllers
             return View(model);
         }
 
+
+        //TODO:Проблема с редактированием записи
+        //При вводе новых данных на моменте создания нового экземпляра класса программа экстренно закрывается без ошибки
+
         [HttpPost]
-        public async Task<IActionResult> Edit(Album model)
+        public async Task<IActionResult> Edit(AlbumDto model)
         {
             if(!ModelState.IsValid)
             {
                 return View();
             }
 
-            await _service.EditAsync(model.Id, model);
+            var image = await _imageService.CreateImageAsync(model.ImagePath, _staticFilesPath);
+
+            var album = new Album
+            {
+                Id = model.Id,
+                Name = model.Name,
+                ListenerTypeId = model.ListenerTypeId,
+                CompanyId = model.CompanyId,
+                GroupId = model.GroupId,
+                Duration = model.Duration,
+                ReleaseDate = model.ReleaseDate,
+                SongsCount = model.SongsCount,
+                ImagePath = image
+            };
+
+            await _service.EditAsync(album.Id, album);
             return RedirectToAction("Index");
         }
        

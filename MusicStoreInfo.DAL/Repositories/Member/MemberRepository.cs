@@ -23,14 +23,15 @@ namespace MusicStoreInfo.DAL.Repositories
                 .AsNoTracking()
                 .OrderBy(a => a.Id)
                 .Include(a => a.Gender)
-                .Include(a => a.Groups)
-                .Include(a => a.Specializations)
                 .ToListAsync();
         }
 
         public async Task<Member?> GetById(int id)
         {
             return await _dbContext.Members
+                .Include(a => a.Groups)
+                .Include(a => a.Specializations)
+                .Include(a => a.Gender)
                 .AsNoTracking().FirstOrDefaultAsync(a => a.Id == id);
         }
 

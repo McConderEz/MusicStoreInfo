@@ -11,5 +11,6 @@ namespace MusicStoreInfo.Api.Contracts
         [Required] int Duration,
         [Required] DateTime ReleaseDate,
         [Required] int SongsCount,
-        IFormFile ImagePath);
+        IFormFile ImagePath,
+        int Id = 0);
 }

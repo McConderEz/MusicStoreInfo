@@ -35,7 +35,7 @@ namespace MusicStoreInfo.Services.Services.GroupService
             if (group == null)
                 throw new InvalidOperationException("Данный объект не найден в коллекции");
 
-            await _repository.Update(id, model.Name, model.Image);
+            await _repository.Update(id, model.Name, model.ImagePath);
         }
 
         public async Task<Group?> DetailsAsync(int id)
@@ -51,6 +51,12 @@ namespace MusicStoreInfo.Services.Services.GroupService
         public async Task DeleteAsync(int id)
         {
             await _repository.Delete(id);
+        }
+
+        public async Task<Group?> GetByIdAsync(int id)
+        {
+            var group = await _repository.GetById(id);
+            return group;
         }
     }
 }

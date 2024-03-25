@@ -9,5 +9,6 @@ namespace MusicStoreInfo.Services.Services.CompanySerivce
         Task<Company?> DetailsAsync(int id);
         Task EditAsync(int id, Company model);
         Task<List<Company>?> GetAllAsync();
+        Task<Company?> GetByIdAsync(int id);
     }
 }

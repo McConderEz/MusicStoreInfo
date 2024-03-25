@@ -1,0 +1,89 @@
+﻿@model MusicStoreInfo.Domain.Entities.Company
+
+@{
+    ViewData["Title"] = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>Company</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            Id
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Id)
+        </dd>
+        <dt class = "col-sm-2">
+            Номер телефона
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.PhoneNumber)
+        </dd>
+        <dt class = "col-sm-2">
+            Название
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+        <dt class = "col-sm-2">
+            Район
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.District.Name)
+        </dd>
+        <dt class="col-sm-2">
+            Город
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.District.City.Name)
+        </dd>
+    </dl>
+
+    <h1 class="text-center">Альбомы изданные этой компанией</h1>
+
+    <div class="container">
+        <table class="table table-bordered">
+            <tr>
+                <th>
+                    Id
+                </th>
+                <th>
+                    Название
+                </th>
+                <th>
+                    Группа
+                </th>
+                <th>
+                    Дата выпуска
+                </th>
+            </tr>
+            @foreach (var item in Model.Albums)
+            {
+                <tr>
+
+                    <td>
+                        @item.Id
+                    </td>
+                    <td>
+                        @item.Name
+                    </td>
+                    <td>
+                        @item.Group.Name
+                    </td>
+                    <td>
+                        @item.ReleaseDate.Date
+                    </td>
+
+                </tr>
+            }
+        </table>
+    </div>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>

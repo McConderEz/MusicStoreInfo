@@ -1,0 +1,90 @@
+﻿@model MusicStoreInfo.Domain.Entities.Group
+
+@{
+    ViewData["Title"] = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>Group</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            Обложка альбома
+        </dt>
+        <dd class="col-sm-10">
+            <img src="@("~/image/" + Model.ImagePath)" asp-append-version="true" width="200px" height="200px" />
+        </dd>
+        <dt class="col-sm-2">
+            Id
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Id)
+        </dd>
+        <dt class = "col-sm-2">
+            Название
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+    </dl>
+</div>
+
+<h1 class="text-center">Члены группы</h1>
+
+<div class="container">
+    <table class="table table-bordered">
+        <tr>
+            <th>
+                Id
+            </th>
+            <th>
+                Имя
+            </th>
+            <th>
+                Фамилия
+            </th>
+            <th>
+                Пол
+            </th>
+            <th>
+                Возраст
+            </th>
+            <th>
+                Специализация
+            </th>
+        </tr>
+        @foreach (var item in Model.Members)
+        {
+            <tr>
+
+                <td>
+                    @item.Id
+                </td>
+                <td>
+                    @item.Name
+                </td>
+                <td>
+                    @item.SecondName
+                </td>
+                <td>
+                    @item.Gender.Name
+                </td>
+                <td>
+                    @item.Age
+                </td>
+                <td>
+                    @string.Join(",", item.Specializations);
+                </td>
+
+            </tr>
+        }
+    </table>
+</div>
+
+<div>
+    <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>

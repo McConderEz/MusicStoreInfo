@@ -22,14 +22,18 @@ namespace MusicStoreInfo.DAL.Repositories
             return await _dbContext.Groups
                 .AsNoTracking()
                 .OrderBy(a => a.Id)
-                .Include(a => a.Genres)
-                .Include(a => a.Members)
                 .ToListAsync();
         }
 
         public async Task<Group?> GetById(int id)
         {
             return await _dbContext.Groups
+                .Include(a => a.Genres)
+                .Include(a => a.Members)
+                     .ThenInclude(a => a.Gender)
+                .Include(a => a.Members)
+                     .ThenInclude(a => a.Specializations)
+                .Include(a => a.Albums)
                 .AsNoTracking().FirstOrDefaultAsync(a => a.Id == id);
         }
 
@@ -39,13 +43,13 @@ namespace MusicStoreInfo.DAL.Repositories
             await _dbContext.SaveChangesAsync();
         }
 
-        public async Task Update(int id, string name, byte[] image)
+        public async Task Update(int id, string name, string image)
         {
             await _dbContext.Groups
                 .Where(a => a.Id == id)
                 .ExecuteUpdateAsync(s => s
                     .SetProperty(a => a.Name, name)
-                    .SetProperty(a => a.Image, image));
+                    .SetProperty(a => a.ImagePath, image));
             await _dbContext.SaveChangesAsync();
         }
 
