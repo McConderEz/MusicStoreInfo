@@ -1,7 +1,10 @@
 ﻿using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
 using MusicStoreInfo.Api.Contracts;
 using MusicStoreInfo.Api.Models;
+using MusicStoreInfo.DAL;
 using MusicStoreInfo.DAL.Repositories;
 using MusicStoreInfo.Domain.Entities;
 using MusicStoreInfo.Services.Services.AlbumService;
@@ -11,20 +14,24 @@ namespace MusicStoreInfo.Api.Controllers
 {
     public class AlbumController : Controller
     {
-        //TODO: Сделать ввод справочников по названиям, а не Id.(Выбираем по названию, за которым закреплен Id)
-        //TODO: Добавить стиль
+
+        //TODO: Сделать добавление записей в связи м-к-м(относится ко всем сущностям)
+        //TODO: Сделать возможность смотреть все связанные таблицы (относится ко всем сущностям)
+        //TODO: Добавить пагинацию по возможности
 
         private readonly IAlbumService _service;
         private readonly IImageService _imageService;
         private readonly IWebHostEnvironment _hostEnvironment;
+        private readonly MusicStoreDbContext _dbContext;
         private readonly string _staticFilesPath;
 
         public AlbumController(IAlbumService albumService, IImageService imageService,
-            IWebHostEnvironment hostEnvironment)
+            IWebHostEnvironment hostEnvironment, MusicStoreDbContext dbContext)
         {
             _service = albumService;
             _imageService = imageService;
             _hostEnvironment = hostEnvironment;
+            _dbContext = dbContext;
             _staticFilesPath = Path.Combine(Directory.GetCurrentDirectory(), _hostEnvironment.WebRootPath + "\\Image");
         }
 
@@ -37,6 +44,9 @@ namespace MusicStoreInfo.Api.Controllers
         [HttpGet]
         public IActionResult Create()
         {
+            ViewBag.ListenerTypes = new SelectList(_dbContext.ListenerTypes, "Id","Name");
+            ViewBag.Companies = new SelectList(_dbContext.Companies, "Id","Name");
+            ViewBag.Groups = new SelectList(_dbContext.Groups, "Id","Name");
             return View();
         }
 
@@ -70,13 +80,15 @@ namespace MusicStoreInfo.Api.Controllers
         [HttpGet]
         public IActionResult Edit(int id)
         {
+            ViewBag.ListenerTypes = new SelectList(_dbContext.ListenerTypes, "Id", "Name");
+            ViewBag.Companies = new SelectList(_dbContext.Companies, "Id", "Name");
+            ViewBag.Groups = new SelectList(_dbContext.Groups, "Id", "Name");
             var model = _service.GetByIdAsync(id).Result;
             return View(model);
         }
 
 
-        //TODO:Проблема с редактированием записи
-        //При вводе новых данных на моменте создания нового экземпляра класса программа экстренно закрывается без ошибки
+        //TODO:Сделать ограничения на картинки
 
         [HttpPost]
         public async Task<IActionResult> Edit(AlbumDto model)
@@ -113,7 +125,8 @@ namespace MusicStoreInfo.Api.Controllers
             {
                 Album = album,
                 Songs = album.Songs.ToList(),
-                Stores = album.Stores.ToList(),
+                Stores = _dbContext.Stores.Include(s => s.District)
+                                          .ThenInclude(d => d.City).ToList(),
                 Products = album.Products.ToList(),
             };
 
@@ -125,6 +138,14 @@ namespace MusicStoreInfo.Api.Controllers
             await _service.DeleteAsync(id);
 
             return RedirectToAction("Index");
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> AddStore(int albumId, int storeId)
+        {
+            var store = await _dbContext.Stores.FindAsync(storeId);
+            await _service.AddStore(albumId, store);
+            return Json(new {success = true});
         }
     }
 }

@@ -58,5 +58,25 @@ namespace MusicStoreInfo.Services.Services.GroupService
             var group = await _repository.GetById(id);
             return group;
         }
+
+        public async Task AddGenre(int id, int genreId)
+        {
+            await _repository.AddGenre(id, genreId);
+        }
+
+        public async Task DeleteGenreAsync(int id, int genreId)
+        {
+            await _repository.DeleteGenre(id, genreId);
+        }
+
+        public async Task AddMemberAsync(int id, int memberId)
+        {
+            await _repository.AddMember(id, memberId);
+        }
+
+        public async Task DeleteMemberAsync(int id, int memberId)
+        {
+            await _repository.DeleteMember(id, memberId);
+        }
     }
 }

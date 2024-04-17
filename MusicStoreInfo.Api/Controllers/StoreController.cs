@@ -41,7 +41,7 @@ namespace MusicStoreInfo.Api.Controllers
         [HttpGet]
         public async Task<IActionResult> Edit(int id)
         {
-            var model = _service.GetByIdAsync(id);
+            var model = await _service.GetByIdAsync(id);
             return View(model);
         }
 

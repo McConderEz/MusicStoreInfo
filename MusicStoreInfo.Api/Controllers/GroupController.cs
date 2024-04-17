@@ -1,5 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using MusicStoreInfo.Api.Contracts;
+using MusicStoreInfo.Api.Models;
+using MusicStoreInfo.DAL;
 using MusicStoreInfo.Domain.Entities;
 using MusicStoreInfo.Services.Services.DistrictService;
 using MusicStoreInfo.Services.Services.GroupService;
@@ -12,14 +15,16 @@ namespace MusicStoreInfo.Api.Controllers
         private readonly IGroupService _service;
         private readonly IImageService _imageService;
         private readonly IWebHostEnvironment _hostEnvironment;
+        private readonly MusicStoreDbContext _dbContext;
         private readonly string _staticFilesPath;
 
 
-        public GroupController(IGroupService groupService, IImageService imageService, IWebHostEnvironment hostEnvironment)
+        public GroupController(IGroupService groupService, IImageService imageService, IWebHostEnvironment hostEnvironment, MusicStoreDbContext dbContext)
         {
             _service = groupService;
             _imageService = imageService;
             _hostEnvironment = hostEnvironment;
+            _dbContext = dbContext; 
             _staticFilesPath = Path.Combine(Directory.GetCurrentDirectory(), _hostEnvironment.WebRootPath + "\\Image");
         }
 
@@ -56,9 +61,9 @@ namespace MusicStoreInfo.Api.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Edit(int id)
+        public IActionResult Edit(int id)
         {
-            var model = await _service.GetByIdAsync(id);
+            var model = _service.GetByIdAsync(id).Result;
             return View(model);
         }
 
@@ -87,7 +92,14 @@ namespace MusicStoreInfo.Api.Controllers
         {
             var group = await _service.DetailsAsync(id);
 
-            return View(group);
+            var groupViewModel = new GroupViewModel
+            {
+                Group = group,
+                Members = _dbContext.Members.Include(m => m.Specializations)
+                                            .Include(m => m.Gender).ToList(),
+                Genres = _dbContext.Genres.ToList(),
+            };
+            return View(groupViewModel);
         }
 
         public async Task<IActionResult> Delete(int id)
@@ -95,6 +107,35 @@ namespace MusicStoreInfo.Api.Controllers
             await _service.DeleteAsync(id);
 
             return RedirectToAction("Index");
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> AddGenre(int groupId, int genreId)
+        {
+            await _service.AddGenre(groupId, genreId);
+            return Json(new { success = true });
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> DeleteGenre(int groupId, int genreId)
+        {
+            await _service.DeleteGenreAsync(groupId, genreId);
+            return Json(new { success = true });
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> AddMember(int groupId, int memberId)
+        {
+            await _service.AddMemberAsync(groupId, memberId);
+            return Json(new { success = true });
+        }
+
+
+        [HttpPost]
+        public async Task<IActionResult> DeleteMember(int groupId, int memberId)
+        {
+            await _service.DeleteMemberAsync(groupId, memberId);
+            return Json(new { success = true });
         }
     }
 }

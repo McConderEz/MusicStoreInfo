@@ -73,6 +73,16 @@ namespace MusicStoreInfo.DAL.Repositories
                 .ExecuteDeleteAsync();
             await _dbContext.SaveChangesAsync();
         }
-       
+
+        public async Task AddStore(int id, Store store)
+        {
+           var album = await _dbContext.Albums.FindAsync(id); 
+
+           if(album != null)
+           {
+                album.Stores.Add(store);
+                await _dbContext.SaveChangesAsync();
+           }
+        }
     }
 }

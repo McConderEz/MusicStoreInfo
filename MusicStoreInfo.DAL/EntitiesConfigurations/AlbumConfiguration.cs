@@ -33,7 +33,7 @@ namespace MusicStoreInfo.DAL.EntitiesConfigurations
 
             builder.HasMany(a => a.Songs)
                 .WithOne()
-                .HasForeignKey(s => s.AlbumId);
+                .HasForeignKey(s => s.AlbumId);           
 
             builder.HasMany(a => a.Stores)
                 .WithMany(s => s.Albums)
@@ -59,7 +59,7 @@ namespace MusicStoreInfo.DAL.EntitiesConfigurations
                                           j.ToTable("Product");
 
                                       });
-            
+
         }
     }
 }

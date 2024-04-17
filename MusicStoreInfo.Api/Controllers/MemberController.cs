@@ -1,4 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using MusicStoreInfo.DAL;
 using MusicStoreInfo.Domain.Entities;
 using MusicStoreInfo.Services.Services.DistrictService;
 using MusicStoreInfo.Services.Services.MemberService;
@@ -8,11 +10,13 @@ namespace MusicStoreInfo.Api.Controllers
     public class MemberController : Controller
     {
         private readonly IMemberService _service;
+        private readonly MusicStoreDbContext _dbContext;
 
 
-        public MemberController(IMemberService memberService)
+        public MemberController(IMemberService memberService, MusicStoreDbContext dbContext)
         {
             _service = memberService;
+            _dbContext = dbContext;
         }
 
         [HttpGet]
@@ -24,6 +28,7 @@ namespace MusicStoreInfo.Api.Controllers
         [HttpGet]
         public IActionResult Create()
         {
+            ViewBag.Genders = new SelectList(_dbContext.Genders, "Id", "Name");
             return View();
         }
 

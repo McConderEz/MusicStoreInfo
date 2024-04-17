@@ -60,5 +60,52 @@ namespace MusicStoreInfo.DAL.Repositories
                 .ExecuteDeleteAsync();
             await _dbContext.SaveChangesAsync();
         }
+
+        public async Task AddGenre(int id, int genreId)
+        {
+            var group = await _dbContext.Groups.FirstOrDefaultAsync(g => g.Id == id);
+            var genre = await _dbContext.Genres.FindAsync(genreId);
+
+            if (group != null && genre != null)
+            {
+                group.Genres.Add(genre);
+                await _dbContext.SaveChangesAsync();
+            }
+        }
+
+        public async Task DeleteGenre(int id, int genreId)
+        {
+            var group = await _dbContext.Groups.Include(g => g.Genres).FirstOrDefaultAsync(g => g.Id == id);
+            var genre = group.Genres.FirstOrDefault(g => g.Id == genreId);
+            if(group != null && genre != null)
+            {
+                group.Genres.Remove(genre);
+                await _dbContext.SaveChangesAsync();    
+            }
+        }
+
+        public async Task AddMember(int id, int memberId)
+        {
+            var group = await _dbContext.Groups.Include(g => g.Members).FirstOrDefaultAsync(g => g.Id == id);
+            var member = await _dbContext.Members.FindAsync(memberId);
+
+            if (group != null && member != null)
+            {
+                group.Members.Add(member);
+                await _dbContext.SaveChangesAsync();
+            }
+        }
+
+        public async Task DeleteMember(int id, int memberId)
+        {
+            var group = await _dbContext.Groups.Include(g => g.Members).FirstOrDefaultAsync(g => g.Id == id);
+            var member = group.Members.FirstOrDefault(g => g.Id == memberId);
+
+            if (group != null && member != null)
+            {
+                group.Members.Remove(member);
+                await _dbContext.SaveChangesAsync();
+            }
+        }
     }
 }

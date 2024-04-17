@@ -1,40 +1,62 @@
-﻿@model MusicStoreInfo.Domain.Entities.Group
+﻿@model MusicStoreInfo.Api.Models.GroupViewModel
 
 @{
     ViewData["Title"] = "Details";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Details</h1>
+<h1>Подробнее</h1>
 
 <div>
-    <h4>Group</h4>
+    <h4>Группа</h4>
     <hr />
     <dl class="row">
         <dt class="col-sm-2">
             Обложка альбома
         </dt>
         <dd class="col-sm-10">
-            <img src="@("~/image/" + Model.ImagePath)" asp-append-version="true" width="200px" height="200px" />
+            <img src="@("~/image/" + Model.Group.ImagePath)" asp-append-version="true" width="200px" height="200px" />
         </dd>
         <dt class="col-sm-2">
             Id
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Id)
+            @Html.DisplayFor(model => model.Group.Id)
         </dd>
         <dt class = "col-sm-2">
             Название
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Name)
+            @Html.DisplayFor(model => model.Group.Name)
         </dd>
     </dl>
 </div>
 
-<h1 class="text-center">Члены группы</h1>
-
 <div class="container">
+    <label for="tableType">Выберите связующие таблицы:</label>
+    <select id="tableType">
+        <option value="members" selected>Члены группы</option>
+        <option value="genres">Жанры</option>
+        <option value="albums">Альбомы</option>
+    </select>
+    <select id="genreSelect" style="display: none;">
+        @foreach (var genre in Model.Genres)
+        {
+            <option value="@genre.Id" genreSelect="@genre.Id">@genre.Name</option>
+        }
+    </select>
+    <button id="addGenreBtn" class="btn btn-primary" style="display: none;" group-id="@Model.Group.Id">Добавить</button>
+
+    <select id="memberSelect" >
+        @foreach (var member in Model.Members)
+        {
+            <option value="@member.Id" memberSelect="@member.Id">@member.Name @member.SecondName @member.Age</option>
+        }
+    </select>
+    <button id="addMemberBtn" class="btn btn-primary" group-id="@Model.Group.Id">Добавить</button>
+</div>
+
+<div id="membersTable" class="container">
     <table class="table table-bordered">
         <tr>
             <th>
@@ -47,19 +69,18 @@
                 Фамилия
             </th>
             <th>
-                Пол
+                Возраст
             </th>
             <th>
-                Возраст
+                Пол
             </th>
             <th>
                 Специализация
             </th>
         </tr>
-        @foreach (var item in Model.Members)
+        @foreach (var item in Model.Group.Members)
         {
             <tr>
-
                 <td>
                     @item.Id
                 </td>
@@ -70,21 +91,226 @@
                     @item.SecondName
                 </td>
                 <td>
-                    @item.Gender.Name
-                </td>
-                <td>
                     @item.Age
                 </td>
                 <td>
-                    @string.Join(",", item.Specializations);
+                    @item.Gender.Name
                 </td>
-
+                <td>
+                    @string.Join(",",@item.Specializations);
+                </td>
+                <td>
+                    <button class="btn btn-danger btn-sm deleteMemberBtn" member-id="@item.Id">Удалить</button>
+                </td>
             </tr>
         }
     </table>
 </div>
 
+<div id="genresTable" class="container" style="display: none;">
+    <table table id="genresTable" class="table table-bordered">
+        <tr>
+            <th>
+                Id
+            </th>
+            <th>
+                Название
+            </th>     
+            <th>
+
+            </th>
+        </tr>
+        @foreach (var item in Model.Group.Genres)
+        {
+            <tr>
+                <td>
+                    @item.Id
+                </td>
+                <td>
+                    @item.Name
+                </td>
+                <td>
+                    <button class="btn btn-danger btn-sm deleteGenreBtn" genre-id="@item.Id">Удалить</button>
+                </td>
+            </tr>
+        }
+    </table>
+</div>
+<div id="albumsTable" class="container" style="display: none;">
+    <table table id="albumsTable" class="table table-bordered">
+        <tr>
+            <th>
+                Id
+            </th>
+            <th>
+                Название
+            </th>
+            <th>
+                Длительность альбома
+            </th>
+            <th>
+                Дата выхода
+            </th>
+            <th>
+                Количество песен
+            </th>
+            <th>
+                Тип прослушивателя
+            </th>
+        </tr>
+        @foreach (var item in Model.Group.Albums)
+        {
+            <tr>
+                <td>
+                    @item.Id
+                </td>
+                <td>
+                    @item.Name
+                </td>
+                <td>
+                    @item.Duration
+                </td>
+                <td>
+                    @item.ReleaseDate
+                </td>
+                <td>
+                    @item.SongsCount
+                </td>
+                <td>
+                    @item.ListenerType.Name
+                </td>
+            </tr>
+        }
+    </table>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $("#tableType").change(function () {
+            var selectedValue = $(this).val();
+            if (selectedValue === "members") {
+                $("#membersTable").show();
+                $("#genresTable").hide();
+                $("#genreSelect").hide();
+                $("#memberSelect").show();
+                $("#addGenreBtn").hide();
+                $("#addMemberBtn").show();
+                $("#albumsTable").hide();
+            } else if (selectedValue === "genres") {
+                $("#membersTable").hide();
+                $("#genresTable").show();
+                $("#genreSelect").show();
+                $("#addGenreBtn").show();
+                $("#addMemberBtn").hide();
+                $("#albumsTable").hide();
+                $("#memberSelect").hide();
+            }
+            else if (selectedValue === "albums") {
+                $("#membersTable").hide();
+                $("#genresTable").hide();
+                $("#genreSelect").hide();
+                $("#addGenreBtn").hide();
+                $("#addMemberBtn").hide();
+                $("#albumsTable").show();
+                $("#memberSelect").hide();
+            }
+        });
+
+        $("#addGenreBtn").click(function () {
+            var selectedGenreId = $("#genreSelect").val();
+            var groupId = $(this).attr("group-id");
+
+            var data = {
+                groupId: groupId,
+                genreId: selectedGenreId
+            };
+
+            $.ajax({
+                url: '@Url.Action("AddGenre", "Group")',
+                type: "POST",
+                data: data,
+                success: function (response) {
+                    console.log("Жанр успешно добавлен в Group.Genres.");
+                    location.reload();
+                },
+                error: function (error) {
+                    console.log("Произошла ошибка при добавлении жанра в Group.Genres:", error);
+                }
+            });
+        });
+        $(".deleteGenreBtn").click(function () {
+            var genreId = $(this).attr("genre-id");
+            var groupId = @Model.Group.Id;
+
+            var data = {
+                groupId: groupId,
+                genreId: genreId
+            };
+
+            $.ajax({
+                url: '@Url.Action("DeleteGenre", "Group")',
+                type: "POST",
+                data: data,
+                success: function (response) {
+                    console.log("Жанр успешно удален из Group.Genres.");
+                    // Обновление таблицы жанров
+                    location.reload(); // Перезагрузка страницы
+                },
+                error: function (error) {
+                    console.log("Произошла ошибка при удалении жанра из Group.Genres:", error);
+                }
+            });
+        });
+        $("#addMemberBtn").click(function () {
+            var selectedMemberId = $("#memberSelect").val();
+            var groupId = $(this).attr("group-id");
+
+            var data = {
+                groupId: groupId,
+                memberId: selectedMemberId
+            };
+
+            $.ajax({
+                url: '@Url.Action("AddMember", "Group")',
+                type: "POST",
+                data: data,
+                success: function (response) {
+                    console.log("Жанр успешно добавлен в Group.Genres.");
+                    location.reload();
+                },
+                error: function (error) {
+                    console.log("Произошла ошибка при добавлении жанра в Group.Genres:", error);
+                }
+            });
+        });
+        $(".deleteMemberBtn").click(function () {
+            var memberId = $(this).attr("member-id");
+            var groupId = @Model.Group.Id;
+
+            var data = {
+                groupId: groupId,
+                memberId: memberId
+            };
+
+            $.ajax({
+                url: '@Url.Action("DeleteMember", "Group")',
+                type: "POST",
+                data: data,
+                success: function (response) {
+                    console.log("Жанр успешно удален из Group.Genres.");
+                    // Обновление таблицы жанров
+                    location.reload(); // Перезагрузка страницы
+                },
+                error: function (error) {
+                    console.log("Произошла ошибка при удалении жанра из Group.Genres:", error);
+                }
+            });
+        });
+    });
+</script>
+
 <div>
-    <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Edit" class="btn btn-primary" asp-route-id="@Model?.Group.Id">Изменить</a>
+    <a asp-action="Index" class="btn btn-secondary">Вернуться назад</a>
 </div>
