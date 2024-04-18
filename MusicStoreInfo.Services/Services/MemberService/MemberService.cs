@@ -58,5 +58,25 @@ namespace MusicStoreInfo.Services.Services.MemberService
             var member = await _repository.GetById(id);
             return member;
         }
+
+        public async Task AddGroupAsync(int id, int groupId)
+        {
+            await _repository.AddGroup(id, groupId);
+        }
+
+        public async Task AddSpecializationAsync(int id, int specializationId)
+        {
+            await _repository.AddSpecialization(id, specializationId);
+        }
+
+        public async Task DeleteGroupAsync(int id, int groupId)
+        {
+            await _repository.DeleteGroup(id, groupId);
+        }
+
+        public async Task DeleteSpecializationAsync(int id, int specializationId)
+        {
+            await _repository.DeleteSpecialization(id, specializationId);
+        }
     }
 }

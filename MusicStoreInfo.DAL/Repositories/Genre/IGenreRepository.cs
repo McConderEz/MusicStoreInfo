@@ -9,5 +9,7 @@ namespace MusicStoreInfo.DAL.Repositories
         Task<List<Genre>> Get();
         Task<Genre?> GetById(int id);
         Task Update(int id, string name);
+        Task AddGroup(int id, int groupId);
+        Task DeleteGroup(int id, int groupId);
     }
 }

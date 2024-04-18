@@ -60,5 +60,53 @@ namespace MusicStoreInfo.DAL.Repositories
                 .ExecuteDeleteAsync();
             await _dbContext.SaveChangesAsync();
         }
+
+        public async Task AddGroup(int id, int groupId)
+        {
+            var member = await _dbContext.Members.Include(g => g.Groups).FirstOrDefaultAsync(g => g.Id == id);
+            var group = await _dbContext.Groups.FindAsync(groupId);
+
+            if (group != null && member != null)
+            {
+                member.Groups.Add(group);
+                await _dbContext.SaveChangesAsync();
+            }
+        }
+
+        public async Task AddSpecialization(int id, int specializationId)
+        {
+            var member = await _dbContext.Members.Include(g => g.Specializations).FirstOrDefaultAsync(g => g.Id == id);
+            var specialization = await _dbContext.Specializations.FindAsync(specializationId);
+
+            if (specialization != null && member != null)
+            {
+                member.Specializations.Add(specialization);
+                await _dbContext.SaveChangesAsync();
+            }
+        }
+
+        public async Task DeleteGroup(int id, int groupId)
+        {
+            var member = await _dbContext.Members.Include(g => g.Groups).FirstOrDefaultAsync(g => g.Id == id);
+            var group = await _dbContext.Groups.FindAsync(groupId);
+
+            if (group != null && member != null)
+            {
+                member.Groups.Remove(group);
+                await _dbContext.SaveChangesAsync();
+            }
+        }
+
+        public async Task DeleteSpecialization(int id, int specializationId)
+        {
+            var member = await _dbContext.Members.Include(g => g.Specializations).FirstOrDefaultAsync(g => g.Id == id);
+            var specialization = await _dbContext.Specializations.FindAsync(specializationId);
+
+            if (specialization != null && member != null)
+            {
+                member.Specializations.Remove(specialization);
+                await _dbContext.SaveChangesAsync();
+            }
+        }
     }
 }

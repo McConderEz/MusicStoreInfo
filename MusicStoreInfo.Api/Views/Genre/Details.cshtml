@@ -1,25 +1,188 @@
-﻿@model MusicStoreInfo.Domain.Entities.Genre
+﻿@model MusicStoreInfo.Api.Models.GenreViewModel
 
 @{
     ViewData["Title"] = "Details";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Details</h1>
+<h1>Подробнее</h1>
 
 <div>
-    <h4>Genre</h4>
+    <h4>Жанр</h4>
     <hr />
     <dl class="row">
+        <dt class="col-sm-2">
+            Id
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Genre.Id)
+        </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Name)
+            Название
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Name)
+            @Html.DisplayFor(model => model.Genre.Name)
         </dd>
     </dl>
 </div>
+
+<div class="container">
+    <label for="tableType">Выберите связующие таблицы:</label>
+    <select id="tableType">
+        <option value="groups" selected>Группы</option>
+    </select>
+    <select id="groupSelect">
+        @foreach (var group in Model.Groups)
+        {
+            <option value="@group.Id" genreSelect="@group.Id">@group.Name</option>
+        }
+    </select>
+    <button id="addGroupBtn" class="btn btn-primary"  genre-id="@Model.Genre.Id">Добавить</button>
+</div>
+
+<div id="membersTable" class="container">
+    <table class="table table-bordered">
+        <tr>
+            <th>
+                Id
+            </th>
+            <th>
+                Название
+            </th>
+            <th>
+                
+            </th>
+        </tr>
+        @foreach (var item in Model.Genre.Groups)
+        {
+            <tr>
+                <td>
+                    @item.Id
+                </td>
+                <td>
+                    @item.Name
+                </td>
+                <td>
+                    <button class="btn btn-danger btn-sm deleteGroupBtn" group-id="@item.Id">Удалить</button>
+                </td>
+            </tr>
+        }
+    </table>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $("#tableType").change(function () {
+            var selectedValue = $(this).val();
+            if (selectedValue === "groups") {
+                $("#groupTable").show();
+                $("#groupSelect").show();
+                $("#addGroupBtn").show();
+            }
+        });
+
+        $("#addGroupBtn").click(function () {
+            var selectedGroupId = $("#groupSelect").val(); // Правильное получение выбранного значения из списка
+            var genreId = $(this).attr("genre-id");
+
+            var data = {
+                genreId: genreId,
+                groupId: selectedGroupId
+            };
+
+            $.ajax({
+                url: '@Url.Action("AddGroup", "Genre")',
+                type: "POST",
+                data: data,
+                success: function (response) {
+                    location.reload();
+                },
+                error: function (error) {
+                }
+            });
+        });
+        $(".deleteGroupBtn").click(function () {
+            var groupId = $(this).attr("group-id");
+            var genreId = @Model.Genre.Id; // Получение id жанра из модели
+
+            var data = {
+                genreId: genreId,
+                groupId: groupId
+            };
+
+            $.ajax({
+                url: '@Url.Action("DeleteGroup", "Genre")',
+                type: "POST",
+                data: data,
+                success: function (response) {
+                    // Обновление таблицы жанров
+                    location.reload(); // Перезагрузка страницы
+                },
+                error: function (error) {
+                }
+            });
+        });
+    });
+</script>
+
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function () {
+        // Добавление группы
+        $("#addGroupBtn").click(function () {
+            var selectedGroupId = $("#groupSelect").val();
+            var memberId = $(this).attr("member-id");
+
+            var data = {
+                memberId: memberId,
+                groupId: selectedGroupId
+            };
+
+            $.ajax({
+                url: '@Url.Action("AddGroup", "Member")',
+                type: "POST",
+                data: data,
+                success: function (response) {
+                    console.log("Группа успешно добавлена.");
+                    location.reload();
+                },
+                error: function (error) {
+                    console.log("Ошибка при добавлении группы:", error);
+                }
+            });
+        });
+
+        // Добавление специализации
+        $("#addSpecializationBtn").click(function () {
+            var selectedSpecializationId = $("#specializationSelect").val();
+            var memberId = $(this).attr("member-id");
+
+            var data = {
+                memberId: memberId,
+                specializationId: selectedSpecializationId
+            };
+
+            $.ajax({
+                url: '@Url.Action("AddSpecialization", "Member")',
+                type: "POST",
+                data: data,
+                success: function (response) {
+                    console.log("Специализация успешно добавлена.");
+                    location.reload();
+                },
+                error: function (error) {
+                    console.log("Ошибка при добавлении специализации:", error);
+                }
+            });
+        });
+
+
+    });
+</script>
+
 <div>
-    <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Edit" class="btn btn-primary" asp-route-id="@Model?.Genre.Id">Изменить</a>
+    <a asp-action="Index" class="btn btn-secondary">Вернуться назад</a>
 </div>

@@ -55,5 +55,29 @@ namespace MusicStoreInfo.DAL.Repositories
                 .ExecuteDeleteAsync();
             await _dbContext.SaveChangesAsync();
         }
+
+        public async Task AddGroup(int id, int groupId)
+        {
+            var genre = await _dbContext.Genres.Include(g => g.Groups).FirstOrDefaultAsync(g => g.Id == id);
+            var group = await _dbContext.Groups.FindAsync(groupId);
+
+            if (group != null && genre != null)
+            {
+                genre.Groups.Add(group);
+                await _dbContext.SaveChangesAsync();
+            }
+        }
+
+        public async Task DeleteGroup(int id, int groupId)
+        {
+            var genre = await _dbContext.Genres.Include(g => g.Groups).FirstOrDefaultAsync(g => g.Id == id);
+            var group = await _dbContext.Groups.FindAsync(groupId);
+
+            if (group != null && genre != null)
+            {
+                genre.Groups.Remove(group);
+                await _dbContext.SaveChangesAsync();
+            }
+        }
     }
 }
