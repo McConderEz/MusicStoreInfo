@@ -12,7 +12,7 @@
     <hr />
     <dl class="row">
         <dt class="col-sm-2">
-            Обложка альбома
+            Обложка группы
         </dt>
         <dd class="col-sm-10">
             <img src="@("~/image/" + Model.Group.ImagePath)" asp-append-version="true" width="200px" height="200px" />
@@ -97,7 +97,7 @@
                     @item.Gender.Name
                 </td>
                 <td>
-                    @string.Join(",",@item.Specializations);
+                    @string.Join(",",@item.Specializations.Select(s => s.Name));
                 </td>
                 <td>
                     <button class="btn btn-danger btn-sm deleteMemberBtn" member-id="@item.Id">Удалить</button>
@@ -231,11 +231,9 @@
                 type: "POST",
                 data: data,
                 success: function (response) {
-                    console.log("Жанр успешно добавлен в Group.Genres.");
                     location.reload();
                 },
                 error: function (error) {
-                    console.log("Произошла ошибка при добавлении жанра в Group.Genres:", error);
                 }
             });
         });

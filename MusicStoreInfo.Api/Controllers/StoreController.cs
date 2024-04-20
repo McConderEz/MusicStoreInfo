@@ -1,4 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using MusicStoreInfo.DAL;
 using MusicStoreInfo.Domain.Entities;
 using MusicStoreInfo.Services.Services.DistrictService;
 using MusicStoreInfo.Services.Services.StoreService;
@@ -8,11 +10,12 @@ namespace MusicStoreInfo.Api.Controllers
     public class StoreController : Controller
     {
         private readonly IStoreService _service;
+        private readonly MusicStoreDbContext _dbContext;
 
-
-        public StoreController(IStoreService storeService)
+        public StoreController(IStoreService storeService, MusicStoreDbContext dbContext)
         {
             _service = storeService;
+            _dbContext = dbContext;
         }
 
         [HttpGet]
@@ -24,6 +27,8 @@ namespace MusicStoreInfo.Api.Controllers
         [HttpGet]
         public IActionResult Create()
         {
+            ViewBag.OwnershipTypes = new SelectList(_dbContext.OwnershipTypes, "Id", "Name");
+            ViewBag.Districts = new SelectList(_dbContext.Districts, "Id", "Name");
             return View();
         }
 
@@ -41,6 +46,8 @@ namespace MusicStoreInfo.Api.Controllers
         [HttpGet]
         public async Task<IActionResult> Edit(int id)
         {
+            ViewBag.OwnershipTypes = new SelectList(_dbContext.OwnershipTypes, "Id", "Name");
+            ViewBag.Districts = new SelectList(_dbContext.Districts, "Id", "Name");
             var model = await _service.GetByIdAsync(id);
             return View(model);
         }

@@ -11,6 +11,12 @@
     <h4>Магазин</h4>
     <hr />
     <dl class="row">
+        <dt class="col-sm-2">
+            Id
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Id)
+        </dd>
         <dt class = "col-sm-2">
             Номер телефона
         </dt>
@@ -50,7 +56,7 @@
     </dl>
 </div>
 
-<h1 class="text-center">Продаваемые альбомы магазина</h1>
+<h1 class="text-center">Каталог альбомов</h1>
 
 <div class="container">
     <table class="table table-bordered">
@@ -60,6 +66,9 @@
             </th>
             <th>
                 Название
+            </th>
+            <th>
+                Группа
             </th>
             <th>
                 Длительность
@@ -85,6 +94,9 @@
                     @item.Album.Name
                 </td>
                 <td>
+                    @item.Album.Group.Name
+                </td>
+                <td>
                     @item.Album.Duration
                 </td>
                 <td>
@@ -103,6 +115,6 @@
 </div>
 
 <div>
-    <a asp-action="Edit" asp-route-id="@Model?.Id">Изменить</a> |
-    <a asp-action="Index">Вернуться назад</a>
+    <a asp-action="Edit" class="btn btn-primary" asp-route-id="@Model?.Id">Изменить</a>
+    <a asp-action="Index" class="btn btn-secondary">Вернуться назад</a>
 </div>

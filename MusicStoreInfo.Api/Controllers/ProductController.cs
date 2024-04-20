@@ -1,4 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using MusicStoreInfo.DAL;
 using MusicStoreInfo.Domain.Entities;
 using MusicStoreInfo.Services.Services.DistrictService;
 using MusicStoreInfo.Services.Services.ProductService;
@@ -8,11 +10,12 @@ namespace MusicStoreInfo.Api.Controllers
     public class ProductController : Controller
     {
         private readonly IProductService _service;
+        private readonly MusicStoreDbContext _dbContext;
 
-
-        public ProductController(IProductService productService)
+        public ProductController(IProductService productService, MusicStoreDbContext dbContext)
         {
             _service = productService;
+            _dbContext = dbContext;
         }
 
         [HttpGet]
@@ -24,6 +27,8 @@ namespace MusicStoreInfo.Api.Controllers
         [HttpGet]
         public IActionResult Create()
         {
+            ViewBag.Stores = new SelectList(_dbContext.Stores, "Id", "Name");
+            ViewBag.Albums = new SelectList(_dbContext.Albums, "Id", "Name");
             return View();
         }
 
@@ -41,6 +46,8 @@ namespace MusicStoreInfo.Api.Controllers
         [HttpGet]
         public IActionResult Edit()
         {
+            ViewBag.Albums = new SelectList(_dbContext.Albums, "Id", "Name");
+            ViewBag.Stores = new SelectList(_dbContext.Stores, "Id", "Name");
             return View();
         }
 

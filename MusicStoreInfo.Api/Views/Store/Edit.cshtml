@@ -15,27 +15,25 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="Id" />
             <div class="form-group">
-                <label asp-for="OwnershipTypeId" class="control-label"></label>
-                <input asp-for="OwnershipTypeId" class="form-control" />
-                <span asp-validation-for="OwnershipTypeId" class="text-danger"></span>
+                <label asp-for="OwnershipTypeId" class="control-label">Тип собственности</label>
+                <select asp-for="OwnershipTypeId" asp-items="ViewBag.OwnershipTypes" class="form-control"></select>
             </div>
             <div class="form-group">
-                <label asp-for="DistrictId" class="control-label"></label>
-                <input asp-for="DistrictId" class="form-control"/>
-                <span asp-validation-for="DistrictId" class="text-danger"></span>
+                <label asp-for="DistrictId" class="control-label">Районы</label>
+                <select asp-for="DistrictId" asp-items="ViewBag.Districts" class="form-control"></select>
             </div>
             <div class="form-group">
-                <label asp-for="PhoneNumber" class="control-label"></label>
+                <label asp-for="PhoneNumber" class="control-label">Номер телефона</label>
                 <input asp-for="PhoneNumber" class="form-control" />
                 <span asp-validation-for="PhoneNumber" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Name" class="control-label"></label>
+                <label asp-for="Name" class="control-label">Название</label>
                 <input asp-for="Name" class="form-control" />
                 <span asp-validation-for="Name" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="YearOpened" class="control-label"></label>
+                <label asp-for="YearOpened" class="control-label">Год открытия</label>
                 <input asp-for="YearOpened" class="form-control" />
                 <span asp-validation-for="YearOpened" class="text-danger"></span>
             </div>

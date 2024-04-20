@@ -5,31 +5,34 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Index</h1>
+<h1>Продукты</h1>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="Create" class="btn btn-primary">Создать</a>
 </p>
-<table class="table">
+<table class="table table-bordered">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Id)
+                Id
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Store)
+                Магазин
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Album)
+                Альбом
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.DateReceived)
+                Группа
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Quantity)
+                Дата поставки
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Price)
+                Количество
+            </th>
+            <th>
+                Цена
             </th>
             <th></th>
         </tr>
@@ -46,6 +49,9 @@
             <td>
                 @Html.DisplayFor(modelItem => item.Album.Name)
             </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Album.Group.Name)
+                </td>
             <td>
                 @Html.DisplayFor(modelItem => item.DateReceived)
             </td>
@@ -56,9 +62,9 @@
                 @Html.DisplayFor(modelItem => item.Price)
             </td>
             <td>
-                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+                    <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-primary btn-sm">Изменить</a>
+                    <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-primary btn-sm">Подробнее</a>
+                    <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger btn-sm">Удалить</a>
             </td>
         </tr>
 }

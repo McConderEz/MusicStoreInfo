@@ -15,9 +15,12 @@ namespace MusicStoreInfo.Api.Controllers
     public class AlbumController : Controller
     {
 
-        //TODO: Сделать добавление записей в связи м-к-м(относится ко всем сущностям)
-        //TODO: Сделать возможность смотреть все связанные таблицы (относится ко всем сущностям)
         //TODO: Добавить пагинацию по возможности
+        //TODO: Добавить красивый список вкладок
+        //TODO: Добавить аутентификацию и авторизацию
+        //TODO: Добавить роли и политику
+        //TODO: Добавить админ-панель
+        //TODO: Добавить корзину товаров
 
         private readonly IAlbumService _service;
         private readonly IImageService _imageService;

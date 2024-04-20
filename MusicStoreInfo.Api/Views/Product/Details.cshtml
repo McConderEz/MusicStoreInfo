@@ -5,44 +5,55 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Details</h1>
+<h1>Подробнее</h1>
 
 <div>
-    <h4>Product</h4>
+    <h4>Продукт</h4>
     <hr />
     <dl class="row">
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Id)
+            Id
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.Id)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Store)
+            Магазин
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.Store.Name)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Album)
+            Альбом
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.Album.Name)
         </dd>
+        <dt class="col-sm-2">
+        </dt>
+        <dd class="col-sm-10">
+            <img src="@("~/image/" + Model.Album.ImagePath)" asp-append-version="true" width="200px" height="200px" />
+        </dd>
+        <dt class="col-sm-2">
+            Группа
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Album.Group.Name)
+        </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.DateReceived)
+            Дата поставки
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.DateReceived)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Quantity)
+            Количество
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.Quantity)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Price)
+            Цена
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.Price)
@@ -50,6 +61,6 @@
     </dl>
 </div>
 <div>
-    @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Edit" class="btn btn-primary" asp-route-id="@Model?.Id">Изменить</a>
+    <a asp-action="Index" class="btn btn-secondary">Вернуться назад</a>
 </div>

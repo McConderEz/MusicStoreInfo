@@ -38,6 +38,9 @@ namespace MusicStoreInfo.DAL.Repositories
                 .Include(a => a.Stores)
                 .Include(a => a.Company)
                 .Include(a => a.Products)
+                    .ThenInclude(p => p.Store)
+                        .ThenInclude(s => s.District)
+                            .ThenInclude(d => d.City)
                 .Include(a => a.ListenerType)
                 .Include(a => a.Group)
                 .FirstOrDefaultAsync(a => a.Id == id);

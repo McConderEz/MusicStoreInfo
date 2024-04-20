@@ -33,6 +33,8 @@ namespace MusicStoreInfo.DAL.Repositories
             return await _dbContext.Stores
                 .Include(a => a.Albums)
                 .Include(a => a.Products)
+                    .ThenInclude(p => p.Album)
+                       .ThenInclude(a => a.Group)
                 .Include(a => a.OwnershipType)
                 .Include(a => a.District)
                     .ThenInclude(a => a.City)
