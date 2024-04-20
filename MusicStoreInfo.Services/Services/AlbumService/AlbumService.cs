@@ -63,5 +63,10 @@ namespace MusicStoreInfo.Services.Services.AlbumService
             var album = await _repository.GetById(id);
             return album;
         }
+
+        public async Task AddStore(int id, Store store)
+        {
+            await _repository.AddStore(id, store);
+        }
     }
 }

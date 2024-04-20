@@ -9,5 +9,7 @@ namespace MusicStoreInfo.DAL.Repositories
         Task<List<Specialization>> Get();
         Task<Specialization?> GetById(int id);
         Task Update(int id, string name);
+        Task AddMember(int id, int memberId);
+        Task DeleteMember(int id, int memberId);
     }
 }

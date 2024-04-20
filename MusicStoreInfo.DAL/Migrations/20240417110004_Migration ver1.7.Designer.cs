@@ -12,15 +12,15 @@ using MusicStoreInfo.DAL;
 namespace MusicStoreInfo.DAL.Migrations
 {
     [DbContext(typeof(MusicStoreDbContext))]
-    [Migration("20240321115534_ChangeConfiguration")]
-    partial class ChangeConfiguration
+    [Migration("20240417110004_Migration ver1.7")]
+    partial class Migrationver17
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "8.0.3")
+                .HasAnnotation("ProductVersion", "8.0.4")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
@@ -87,8 +87,8 @@ namespace MusicStoreInfo.DAL.Migrations
                     b.Property<int>("GroupId")
                         .HasColumnType("int");
 
-                    b.Property<byte[]>("Image")
-                        .HasColumnType("varbinary(max)");
+                    b.Property<string>("ImagePath")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("ListenerTypeId")
                         .HasColumnType("int");
@@ -232,8 +232,8 @@ namespace MusicStoreInfo.DAL.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<byte[]>("Image")
-                        .HasColumnType("varbinary(max)");
+                    b.Property<string>("ImagePath")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
                         .IsRequired()

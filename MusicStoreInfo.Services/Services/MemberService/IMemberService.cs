@@ -10,5 +10,9 @@ namespace MusicStoreInfo.Services.Services.MemberService
         Task EditAsync(int id, Member model);
         Task<List<Member>?> GetAllAsync();
         Task<Member?> GetByIdAsync(int id);
+        Task AddGroupAsync(int id, int groupId);
+        Task AddSpecializationAsync(int id, int specializationId);
+        Task DeleteGroupAsync(int id, int groupId);
+        Task DeleteSpecializationAsync(int id, int specializationId);
     }
 }

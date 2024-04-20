@@ -1,4 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using MusicStoreInfo.DAL;
 using MusicStoreInfo.Domain.Entities;
 using MusicStoreInfo.Services.Services.CityService;
 using MusicStoreInfo.Services.Services.CompanySerivce;
@@ -8,11 +10,12 @@ namespace MusicStoreInfo.Api.Controllers
     public class CompanyController : Controller
     {
         private readonly ICompanyService _service;
+        private readonly MusicStoreDbContext _dbContext;
 
-
-        public CompanyController(ICompanyService companyService)
+        public CompanyController(ICompanyService companyService, MusicStoreDbContext dbContext)
         {
             _service = companyService;
+            _dbContext = dbContext;
         }
 
         [HttpGet]
@@ -24,6 +27,7 @@ namespace MusicStoreInfo.Api.Controllers
         [HttpGet]
         public IActionResult Create()
         {
+            ViewBag.Districts = new SelectList(_dbContext.Districts, "Id","Name");
             return View();
         }
 
@@ -41,6 +45,7 @@ namespace MusicStoreInfo.Api.Controllers
         [HttpGet]
         public async Task<IActionResult> Edit(int id)
         {
+            ViewBag.Districts = new SelectList(_dbContext.Districts, "Id", "Name");
             var model = await _service.GetByIdAsync(id);
             return View(model);
         }

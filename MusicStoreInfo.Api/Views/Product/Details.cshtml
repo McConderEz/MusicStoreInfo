@@ -1,0 +1,66 @@
+﻿@model MusicStoreInfo.Domain.Entities.Product
+
+@{
+    ViewData["Title"] = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Подробнее</h1>
+
+<div>
+    <h4>Продукт</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            Id
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Id)
+        </dd>
+        <dt class = "col-sm-2">
+            Магазин
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Store.Name)
+        </dd>
+        <dt class = "col-sm-2">
+            Альбом
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Album.Name)
+        </dd>
+        <dt class="col-sm-2">
+        </dt>
+        <dd class="col-sm-10">
+            <img src="@("~/image/" + Model.Album.ImagePath)" asp-append-version="true" width="200px" height="200px" />
+        </dd>
+        <dt class="col-sm-2">
+            Группа
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Album.Group.Name)
+        </dd>
+        <dt class = "col-sm-2">
+            Дата поставки
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.DateReceived)
+        </dd>
+        <dt class = "col-sm-2">
+            Количество
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Quantity)
+        </dd>
+        <dt class = "col-sm-2">
+            Цена
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Price)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" class="btn btn-primary" asp-route-id="@Model?.Id">Изменить</a>
+    <a asp-action="Index" class="btn btn-secondary">Вернуться назад</a>
+</div>

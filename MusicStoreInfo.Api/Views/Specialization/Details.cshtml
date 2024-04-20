@@ -1,28 +1,47 @@
-﻿@model MusicStoreInfo.Domain.Entities.Specialization
+﻿@model MusicStoreInfo.Api.Models.SpecializationViewModel
 
 @{
     ViewData["Title"] = "Details";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Details</h1>
+<h1>Подробнее</h1>
 
 <div>
-    <h4>Specialization</h4>
+    <h4>Специализация</h4>
     <hr />
     <dl class="row">
+        <dt class="col-sm-2">
+            Id
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Specialization.Id)
+        </dd>
         <dt class = "col-sm-2">
             Название
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Name)
+            @Html.DisplayFor(model => model.Specialization.Name)
         </dd>
     </dl>
 </div>
 
-<h1 class="text-center">Список музыкантов по специализации</h1>
-
 <div class="container">
+    <label for="tableType">Выберите связующие таблицы:</label>
+    <select id="tableType">
+        <option value="members" selected>Исполнители</option>
+    </select>
+
+    <select id="memberSelect">
+        @foreach (var member in Model.Members)
+        {
+            <option value="@member.Id" memberSelect="@member.Id">@member.Name @member.SecondName @member.Age</option>
+        }
+    </select>
+    <button id="addMemberBtn" class="btn btn-primary" specialization-id="@Model.Specialization.Id">Добавить</button>
+</div>
+
+<div id="membersTable" class="container">
     <table class="table table-bordered">
         <tr>
             <th>
@@ -38,13 +57,12 @@
                 Возраст
             </th>
             <th>
-                Гендер
+                Пол
             </th>
         </tr>
-        @foreach (var item in Model.Members)
+        @foreach (var item in Model.Specialization.Members)
         {
             <tr>
-
                 <td>
                     @item.Id
                 </td>
@@ -58,14 +76,76 @@
                     @item.Age
                 </td>
                 <td>
-                    @item.Gender.Name;
+                    @item.Gender.Name
+                </td>
+                <td>
+                    <button class="btn btn-danger btn-sm deleteMemberBtn" member-id="@item.Id">Удалить</button>
                 </td>
             </tr>
         }
     </table>
 </div>
 
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $("#tableType").change(function () {
+            var selectedValue = $(this).val();
+            if (selectedValue === "members") {
+                $("#membersTable").show();
+                $("#memberSelect").show();
+                $("#addMemberBtn").show();
+            }
+        });
+        $("#addMemberBtn").click(function () {
+            var selectedMemberId = $("#memberSelect").val();
+            var specializationId = $(this).attr("specialization-id");
+
+            var data = {
+                specializationId: specializationId,
+                memberId: selectedMemberId
+            };
+
+            $.ajax({
+                url: '@Url.Action("AddMember", "Specialization")',
+                type: "POST",
+                data: data,
+                success: function (response) {
+                    console.log("Жанр успешно добавлен в Group.Genres.");
+                    location.reload();
+                },
+                error: function (error) {
+                    console.log("Произошла ошибка при добавлении жанра в Group.Genres:", error);
+                }
+            });
+        });
+        $(".deleteMemberBtn").click(function () {
+            var memberId = $(this).attr("member-id");
+            var specializationId = @Model.Specialization.Id;
+
+            var data = {
+                specializationId: specializationId,
+                memberId: memberId
+            };
+
+            $.ajax({
+                url: '@Url.Action("DeleteMember", "Specialization")',
+                type: "POST",
+                data: data,
+                success: function (response) {
+                    // Обновление таблицы жанров
+                    location.reload(); // Перезагрузка страницы
+                },
+                error: function (error) {
+                }
+            });
+        });
+    });
+</script>
+
+
 <div>
-    <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Edit" class="btn btn-primary" asp-route-id="@Model?.Specialization.Id">Изменить</a>
+    <a asp-action="Index" class="btn btn-secondary">Вернуться назад</a>
 </div>

@@ -23,6 +23,7 @@ namespace MusicStoreInfo.DAL.EntitiesConfigurations
                 .WithMany(g => g.Groups)
                 .UsingEntity(j => j.ToTable("GroupGenreLink"));
 
+
             builder.HasMany(g => g.Albums)
                 .WithOne(a => a.Group)
                 .HasForeignKey(a => a.GroupId)

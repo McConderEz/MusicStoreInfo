@@ -16,6 +16,8 @@ namespace MusicStoreInfo.DAL.EntitiesConfigurations
             builder.HasMany(g => g.Groups)
                 .WithMany(g => g.Genres)
                 .UsingEntity(j => j.ToTable("GroupGenreLink"));
+
         }
     }
 }
+

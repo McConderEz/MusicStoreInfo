@@ -23,6 +23,7 @@ namespace MusicStoreInfo.DAL.Repositories
                 .AsNoTracking()
                 .OrderBy(a => a.Id)
                 .Include(a => a.Album)
+                    .ThenInclude(a => a.Group)
                 .Include(a => a.Store)
                 .ToListAsync();
         }
@@ -30,7 +31,11 @@ namespace MusicStoreInfo.DAL.Repositories
         public async Task<Product?> GetById(int id)
         {
             return await _dbContext.Products
-                .AsNoTracking().FirstOrDefaultAsync(a => a.Id == id);
+                .AsNoTracking()
+                .Include(a => a.Album)
+                    .ThenInclude(a => a.Group)
+                .Include(a => a.Store)
+                .FirstOrDefaultAsync(a => a.Id == id);
         }
 
         public async Task Add(Product product)

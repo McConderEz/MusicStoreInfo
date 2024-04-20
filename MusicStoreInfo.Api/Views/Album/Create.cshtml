@@ -8,44 +8,45 @@
 
 <h4>Альбом</h4>
 <hr />
+
 <div class="row">
     <div class="col-md-4">
         <form asp-action="Create" enctype="multipart/form-data">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="Name" class="control-label"></label>
+                <label asp-for="Name" class="control-label">Название</label>
                 <input asp-for="Name" class="form-control" />
                 <span asp-validation-for="Name" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="ListenerTypeId" class="control-label"></label>
-                <input asp-for="ListenerTypeId" class="form-control" />
+                <label asp-for="ListenerTypeId" class="control-label">Тип прослушивателя</label>
+                <select asp-for="ListenerTypeId" asp-items="ViewBag.ListenerTypes" class="form-control"></select>
             </div>
             <div class="form-group">
-                <label asp-for="CompanyId" class="control-label"></label>
-                <input asp-for="CompanyId" class="form-control" />
+                <label asp-for="CompanyId" class="control-label">Компания</label>
+                <select asp-for="CompanyId" asp-items="ViewBag.Companies" class="form-control"></select>
             </div>
             <div class="form-group">
-                <label asp-for="GroupId" class="control-label"></label>
-                <input asp-for="GroupId" class="form-control" />
+                <label asp-for="GroupId" class="control-label">Группа</label>
+                <select asp-for="GroupId" asp-items="ViewBag.Groups" class="form-control"></select>
             </div>
             <div class="form-group">
-                <label asp-for="Duration" class="control-label"></label>
+                <label asp-for="Duration" class="control-label">Длительность</label>
                 <input asp-for="Duration" class="form-control" />
                 <span asp-validation-for="Duration" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="ReleaseDate" class="control-label"></label>
+                <label asp-for="ReleaseDate" class="control-label">Дата выхода</label>
                 <input asp-for="ReleaseDate" class="form-control" />
                 <span asp-validation-for="ReleaseDate" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="SongsCount" class="control-label"></label>
+                <label asp-for="SongsCount" class="control-label">Количество песен</label>
                 <input asp-for="SongsCount" class="form-control" />
                 <span asp-validation-for="SongsCount" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="ImagePath" class="control-label"></label>
+                <label asp-for="ImagePath" class="control-label">Обложка альбома</label>
                 <input asp-for="ImagePath" class="form-control" type="file" />
                 <span asp-validation-for="ImagePath" class="text-danger"></span>
             </div>
@@ -57,7 +58,7 @@
 </div>
 
 <div>
-    <a asp-action="Index">Вернуться назад</a>
+    <a asp-action="Index" class="btn btn-secondary">Вернуться назад</a>
 </div>
 
 @section Scripts {

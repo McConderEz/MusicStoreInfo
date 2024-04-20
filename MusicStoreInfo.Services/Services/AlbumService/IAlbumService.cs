@@ -11,5 +11,6 @@ namespace MusicStoreInfo.Services.Services.AlbumService
         Task EditAsync(int id, Album model);
         Task<List<Album>?> GetAllAsync();
         Task<Album?> GetByIdAsync(int id);
+        Task AddStore(int id, Store store);
     }
 }

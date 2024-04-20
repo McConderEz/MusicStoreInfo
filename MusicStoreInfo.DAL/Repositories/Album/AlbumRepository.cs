@@ -38,6 +38,9 @@ namespace MusicStoreInfo.DAL.Repositories
                 .Include(a => a.Stores)
                 .Include(a => a.Company)
                 .Include(a => a.Products)
+                    .ThenInclude(p => p.Store)
+                        .ThenInclude(s => s.District)
+                            .ThenInclude(d => d.City)
                 .Include(a => a.ListenerType)
                 .Include(a => a.Group)
                 .FirstOrDefaultAsync(a => a.Id == id);
@@ -73,6 +76,16 @@ namespace MusicStoreInfo.DAL.Repositories
                 .ExecuteDeleteAsync();
             await _dbContext.SaveChangesAsync();
         }
-       
+
+        public async Task AddStore(int id, Store store)
+        {
+           var album = await _dbContext.Albums.FindAsync(id); 
+
+           if(album != null)
+           {
+                album.Stores.Add(store);
+                await _dbContext.SaveChangesAsync();
+           }
+        }
     }
 }

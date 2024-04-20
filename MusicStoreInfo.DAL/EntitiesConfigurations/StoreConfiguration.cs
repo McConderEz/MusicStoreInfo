@@ -49,8 +49,8 @@ namespace MusicStoreInfo.DAL.EntitiesConfigurations
                                           j.HasKey(t => new { t.StoreId, t.AlbumId });
                                           j.ToTable("Product");
 
-                                      });                                  
-                                      
+                                      });
+
         }
     }
 }

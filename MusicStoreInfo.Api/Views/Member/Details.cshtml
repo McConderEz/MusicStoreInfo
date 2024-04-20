@@ -1,43 +1,232 @@
-﻿@model MusicStoreInfo.Domain.Entities.Member
+﻿@model MusicStoreInfo.Api.Models.MemberViewModel
 
 @{
     ViewData["Title"] = "Details";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Details</h1>
+<h1>Подробнее</h1>
 
 <div>
-    <h4>Member</h4>
+    <h4>Исполнитель</h4>
     <hr />
     <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Name)
+        <dt class="col-sm-2">
+            Id
         </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Name)
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Member.Id)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.SecondName)
+            Имя
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.SecondName)
+            @Html.DisplayFor(model => model.Member.Name)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Age)
+            Фамилия
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Age)
+            @Html.DisplayFor(model => model.Member.SecondName)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Gender)
+            Возраст
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Gender.Name)
+            @Html.DisplayFor(model => model.Member.Age)
+        </dd>
+        <dt class = "col-sm-2">
+            Пол
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Member.Gender.Name)
+        </dd>
+        <dt class="col-sm-2">
+            Специализация
+        </dt>
+        <dd class="col-sm-10">
+            @string.Join(";", Model.Member.Specializations.Select(x => x.Name));
         </dd>
     </dl>
 </div>
+
+
+
+<div class="container">
+    <label for="tableType">Выберите связующие таблицы:</label>
+    <select id="tableType">
+        <option value="groups" selected>Группы</option>
+        <option value="specializations">Специализации</option>
+    </select>
+    <select id="groupSelect">
+        @foreach (var group in Model.Groups)
+        {
+            <option value="@group.Id" groupSelect="@group.Id">@group.Name</option>
+        }
+    </select>
+    <button id="addGroupBtn" class="btn btn-primary" member-id="@Model.Member.Id">Добавить</button>
+
+    <select id="specializationSelect" style="display: none;">
+        @foreach (var specialization in Model.Specializations)
+        {
+            <option value="@specialization.Id" specializationSelect="@specialization.Id">@specialization.Name</option>
+        }
+    </select>
+    <button id="addSpecializationBtn" class="btn btn-primary" style="display: none;" member-id="@Model.Member.Id">Добавить</button>
+</div>
+
+
+<div id="groupsTable" class="container">
+    <table class="table table-bordered">
+        <tr>
+            <th>
+                Id
+            </th>
+            <th>
+                Имя
+            </th>
+            <th>
+
+            </th>
+        </tr>
+        @foreach (var item in Model.Member.Groups)
+        {
+            <tr>
+                <td>
+                    @item.Id
+                </td>
+                <td>
+                    @item.Name
+                </td>
+                <td>
+                    <button class="btn btn-danger btn-sm deleteGroupBtn" group-id="@item.Id">Удалить</button>
+                </td>
+            </tr>
+        }
+    </table>
+</div>
+<div id="specializationsTable" class="container" style="display: none;">
+    <table class="table table-bordered">
+        <tr>
+            <th>
+                Id
+            </th>
+            <th>
+                Название
+            </th>
+            <th>
+
+            </th>
+        </tr>
+        @foreach (var item in Model.Member.Specializations)
+        {
+            <tr>
+                <td>
+                    @item.Id
+                </td>
+                <td>
+                    @item.Name
+                </td>
+                <td>
+                    <button class="btn btn-danger btn-sm deleteSpecializationBtn" specialization-id="@item.Id">Удалить</button>
+                </td>
+            </tr>
+        }
+    </table>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $("#tableType").change(function () {
+            var selectedValue = $(this).val();
+            if (selectedValue === "groups") {
+                $("#groupsTable").show(); 
+                $("#groupSelect").show();
+                $("#addGroupBtn").show();
+                $("#specializationsTable").hide(); 
+                $("#specializationSelect").hide();
+                $("#addSpecializationBtn").hide();
+            } else if (selectedValue === "specializations") {
+                $("#groupsTable").hide();
+                $("#groupSelect").hide();
+                $("#addGroupBtn").hide();
+                $("#specializationsTable").show();
+                $("#specializationSelect").show();
+                $("#addSpecializationBtn").show();
+            }
+        });
+        $("#addGroupBtn").click(function () {
+            var memberId = $(this).attr("member-id");
+            var groupId = $("#groupSelect").val();
+
+            $.ajax({
+                url: '@Url.Action("AddGroup", "Member")', // Замените на URL вашего серверного обработчика добавления группы
+                method: "POST",
+                data: { memberId: memberId, groupId: groupId },
+                success: function (response) {
+                    location.reload();
+                },
+                error: function (error) {
+                    // Обработка ошибки при добавлении группы
+                }
+            });
+        });
+
+        $(".deleteGroupBtn").click(function () {
+            var groupId = $(this).attr("group-id");
+            var memberId = @Model.Member.Id
+
+            $.ajax({
+                url: '@Url.Action("DeleteGroup", "Member")', // Замените на URL вашего серверного обработчика удаления группы
+                method: "POST",
+                data: { memberId, groupId },
+                success: function (response) {
+                    location.reload();
+                },
+                error: function (error) {
+                    // Обработка ошибки при удалении группы
+                }
+            });
+        });
+
+        $("#addSpecializationBtn").click(function () {
+            var memberId = $(this).attr("member-id");
+            var specializationId = $("#specializationSelect").val();
+
+            $.ajax({
+                url: '@Url.Action("AddSpecialization", "Member")', // Замените на URL вашего серверного обработчика добавления специализации
+                method: "POST",
+                data: { memberId: memberId, specializationId: specializationId },
+                success: function (response) {
+                    location.reload();
+                },
+                error: function (error) {
+                    // Обработка ошибки при добавлении специализации
+                }
+            });
+        });
+
+        $(".deleteSpecializationBtn").click(function () {
+            var specializationId = $(this).attr("specialization-id");
+            var memberId = @Model.Member.Id;
+            $.ajax({
+                url: '@Url.Action("DeleteSpecialization", "Member")', // Убрана лишняя запятая
+                method: "POST",
+                data: { memberId: specializationId },
+                success: function (response) {
+                    location.reload();
+                },
+                error: function (error) {
+                    // Обработка ошибки при удалении специализации
+                }
+            });
+        });
+
+    });
+</script>
+
 <div>
-    <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Edit" class="btn btn-primary" asp-route-id="@Model?.Member.Id">Изменить</a>
+    <a asp-action="Index" class="btn btn-secondary">Вернуться назад</a>
 </div>

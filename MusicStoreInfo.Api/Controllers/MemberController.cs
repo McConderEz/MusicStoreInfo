@@ -1,18 +1,24 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using MusicStoreInfo.Api.Models;
+using MusicStoreInfo.DAL;
 using MusicStoreInfo.Domain.Entities;
 using MusicStoreInfo.Services.Services.DistrictService;
 using MusicStoreInfo.Services.Services.MemberService;
+using NuGet.Protocol.Core.Types;
 
 namespace MusicStoreInfo.Api.Controllers
 {
     public class MemberController : Controller
     {
         private readonly IMemberService _service;
+        private readonly MusicStoreDbContext _dbContext;
 
 
-        public MemberController(IMemberService memberService)
+        public MemberController(IMemberService memberService, MusicStoreDbContext dbContext)
         {
             _service = memberService;
+            _dbContext = dbContext;
         }
 
         [HttpGet]
@@ -24,6 +30,7 @@ namespace MusicStoreInfo.Api.Controllers
         [HttpGet]
         public IActionResult Create()
         {
+            ViewBag.Genders = new SelectList(_dbContext.Genders, "Id", "Name");
             return View();
         }
 
@@ -61,7 +68,14 @@ namespace MusicStoreInfo.Api.Controllers
         {
             var member = await _service.DetailsAsync(id);
 
-            return View(member);
+            var memberViewModel = new MemberViewModel
+            {
+                Member = member,
+                Groups = _dbContext.Groups.ToList(),
+                Specializations = _dbContext.Specializations.ToList(),
+            };
+
+            return View(memberViewModel);
         }
 
         public async Task<IActionResult> Delete(int id)
@@ -69,6 +83,34 @@ namespace MusicStoreInfo.Api.Controllers
             await _service.DeleteAsync(id);
 
             return RedirectToAction("Index");
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> AddGroup(int memberId, int groupId)
+        {
+            await _service.AddGroupAsync(memberId, groupId);
+            return Json(new { success = true });
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> AddSpecialization(int memberId, int specializationId)
+        {
+            await _service.AddSpecializationAsync(memberId, specializationId);
+            return Json(new { success = true });
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> DeleteGroup(int memberId, int groupId)
+        {
+            await _service.DeleteGroupAsync(memberId, groupId);
+            return Json(new { success = true });
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> DeleteSpecialization(int memberId, int specializationId)
+        {
+            await _service.DeleteSpecializationAsync(memberId, specializationId);
+            return Json(new { success = true });
         }
     }
 }

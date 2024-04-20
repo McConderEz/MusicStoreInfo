@@ -1,4 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using MusicStoreInfo.Api.Models;
+using MusicStoreInfo.DAL;
 using MusicStoreInfo.Domain.Entities;
 using MusicStoreInfo.Services.Services.DistrictService;
 using MusicStoreInfo.Services.Services.SpecializationService;
@@ -8,11 +11,12 @@ namespace MusicStoreInfo.Api.Controllers
     public class SpecializationController : Controller
     {
         private readonly ISpecializationService _service;
+        private readonly MusicStoreDbContext _dbContext;
 
-
-        public SpecializationController(ISpecializationService specializationService)
+        public SpecializationController(ISpecializationService specializationService, MusicStoreDbContext dbContext)
         {
             _service = specializationService;
+            _dbContext = dbContext;
         }
 
         [HttpGet]
@@ -61,7 +65,14 @@ namespace MusicStoreInfo.Api.Controllers
         {
             var specialization = await _service.DetailsAsync(id);
 
-            return View(specialization);
+            var specializationViewModel = new SpecializationViewModel
+            {
+                Specialization = specialization,
+                Members = _dbContext.Members.Include(m => m.Gender)
+                                            .Include(m => m.Groups).ToList()
+            };
+
+            return View(specializationViewModel);
         }
 
         public async Task<IActionResult> Delete(int id)
@@ -69,6 +80,21 @@ namespace MusicStoreInfo.Api.Controllers
             await _service.DeleteAsync(id);
 
             return RedirectToAction("Index");
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> AddMember(int specializationId, int memberId)
+        {
+            await _service.AddMemberAsync(specializationId, memberId);
+            return Json(new { success = true });
+        }
+
+
+        [HttpPost]
+        public async Task<IActionResult> DeleteMember(int specializationId, int memberId)
+        {
+            await _service.DeleteMemberAsync(specializationId, memberId);
+            return Json(new { success = true });
         }
     }
 }
