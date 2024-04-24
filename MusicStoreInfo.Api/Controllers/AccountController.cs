@@ -29,10 +29,11 @@ namespace MusicStoreInfo.Api.Controllers
             return View();
         }
         
-        //TODO:Что-то не так с верификацией, пароль не совпадает с хэшем
+        
 
         [HttpPost]
         [AllowAnonymous]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Login(LoginViewModel model)
         {
             if (!ModelState.IsValid)
@@ -45,7 +46,9 @@ namespace MusicStoreInfo.Api.Controllers
 
             var claims = new List<Claim>
             {
-                new Claim("Demo","Value")
+                new Claim("Demo","Value"),
+                new Claim(ClaimTypes.Name,model.UserName),
+
             };
             var claimIdentity = new ClaimsIdentity(claims, "Cookie");
             var claimPrincipal = new ClaimsPrincipal(claimIdentity);

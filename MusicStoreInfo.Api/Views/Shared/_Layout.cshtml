@@ -25,8 +25,14 @@
         </ul>
 
         <div class="col-md-3 text-end">
-            <a class="btn btn-outline-primary me-2" asp-controller="Account" asp-action="Index">Войти</a>
-            <a class="btn btn-primary" asp-controller="Account" asp-action="Register" asp-route-returnUrl="/Account">Регистрация</a>
+            @if (!User.Identity!.IsAuthenticated)
+            {
+                <a class="btn btn-outline-primary me-2" asp-controller="Account" asp-action="Index">Войти</a>
+                <a class="btn btn-primary" asp-controller="Account" asp-action="Register" asp-route-returnUrl="/Account">Регистрация</a>
+            }else{
+                <a>@User.Identity.Name</a>
+                <a class="btn btn-primary" asp-controller="Account" asp-action="Logout" asp-route-returnUrl="/Account">Выйти</a>
+            }
         </div>
     </header>
     @* <header>
