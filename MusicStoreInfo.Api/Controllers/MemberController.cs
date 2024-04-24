@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using MusicStoreInfo.Api.Models;
 using MusicStoreInfo.DAL;
@@ -9,6 +10,7 @@ using NuGet.Protocol.Core.Types;
 
 namespace MusicStoreInfo.Api.Controllers
 {
+    [Authorize]
     public class MemberController : Controller
     {
         private readonly IMemberService _service;

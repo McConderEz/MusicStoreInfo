@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using MusicStoreInfo.DAL;
 using MusicStoreInfo.Domain.Entities;
@@ -7,6 +8,7 @@ using MusicStoreInfo.Services.Services.CompanySerivce;
 
 namespace MusicStoreInfo.Api.Controllers
 {
+    [Authorize]
     public class CompanyController : Controller
     {
         private readonly ICompanyService _service;

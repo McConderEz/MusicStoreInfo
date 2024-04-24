@@ -15,10 +15,10 @@ namespace MusicStoreInfo.Domain.Entities
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
-        [MaxLength(25), MinLength(3)]
-        public string Name { get; set; }
-        [MaxLength(25), MinLength(6)]
-        public string Password { get; set; }
+        [MaxLength(50), MinLength(3)]
+        public string UserName { get; set; }
+        [MinLength(6)]
+        public string PasswordHash { get; set; }
 
         public int RoleId { get; set; }
         public virtual Role? Role { get; set; }

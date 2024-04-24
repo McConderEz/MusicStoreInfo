@@ -1,0 +1,20 @@
+﻿@model LoginViewModel
+
+
+<div class="d-flex justify-content-center">
+    <form asp-controller="Account" asp-action="Register" method="get">
+        <h1 class="h3 mb-3 fw-normal">Регистрация</h1>
+        <input type="hidden" asp-for="ReturnUrl" />
+        <div class="form-floating">
+            <input asp-for="UserName" class="form-control" id="floatingUserName" placeholder="Имя пользователя">
+            <label asp-for="UserName">Имя пользователя</label>
+        </div>
+        <div class="form-floating">
+            <input asp-for="Password" type="password" class="form-control" id="floatingPassword" placeholder="Пароль">
+            <label for="floatingPassword">Пароль</label>
+        </div>
+        <br />
+        <button class="btn btn-primary w-100 py-2" type="submit">Зарегистрироваться</button>
+        <p class="mt-5 mb-3 text-body-secondary"></p>
+    </form>
+</div>

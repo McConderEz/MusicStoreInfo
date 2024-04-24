@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using MusicStoreInfo.Api.Models;
 using MusicStoreInfo.DAL;
@@ -8,6 +9,7 @@ using MusicStoreInfo.Services.Services.SpecializationService;
 
 namespace MusicStoreInfo.Api.Controllers
 {
+    [Authorize]
     public class SpecializationController : Controller
     {
         private readonly ISpecializationService _service;

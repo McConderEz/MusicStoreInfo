@@ -25,6 +25,7 @@
   <ItemGroup>
     <ProjectReference Include="..\MusicStoreInfo.DAL\MusicStoreInfo.DAL.csproj" />
     <ProjectReference Include="..\MusicStoreInfo.Domain\MusicStoreInfo.Domain.csproj" />
+    <ProjectReference Include="..\MusicStoreInfo.Infrastructure\MusicStoreInfo.Infrastructure.csproj" />
     <ProjectReference Include="..\MusicStoreInfo.Services\MusicStoreInfo.Services.csproj" />
   </ItemGroup>
 

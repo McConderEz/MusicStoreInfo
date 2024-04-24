@@ -1,10 +1,12 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using MusicStoreInfo.Domain.Entities;
 using MusicStoreInfo.Services.Services.DistrictService;
 using MusicStoreInfo.Services.Services.OwnershipTypeService;
 
 namespace MusicStoreInfo.Api.Controllers
 {
+    [Authorize]
     public class OwnershipTypeController : Controller
     {
         private readonly IOwnershipTypeService _service;
