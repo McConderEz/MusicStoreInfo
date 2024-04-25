@@ -30,8 +30,18 @@
                 <a class="btn btn-outline-primary me-2" asp-controller="Account" asp-action="Index">Войти</a>
                 <a class="btn btn-primary" asp-controller="Account" asp-action="Register" asp-route-returnUrl="/Account">Регистрация</a>
             }else{
-                <a>@User.Identity.Name</a>
-                <a class="btn btn-primary" asp-controller="Account" asp-action="Logout" asp-route-returnUrl="/Account">Выйти</a>
+                <div class="dropdown text-end">
+                    <a href="#" class="d-inline-flex align-items-center link-body-emphasis text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                        <img src="https://avatars.githubusercontent.com/u/59931307?s=400&u=4b223142f5f576edc1a9bce6728e3098929a9ea2&v=4" alt="mdo" width="32" height="32" class="rounded-circle me-2">
+                        <span>@User.Identity.Name</span>
+                    </a>
+                    <ul class="dropdown-menu text-small">
+                        <li><a class="dropdown-item" href="#">Корзина</a></li>
+                        <li><a class="dropdown-item" href="#">Профиль</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item" asp-controller="Account" asp-action="Logout" asp-route-returnUrl="/Account">Выйти</a></li>
+                    </ul>
+                </div>
             }
         </div>
     </header>
