@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http.HttpResults;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -12,15 +13,20 @@ using MusicStoreInfo.Services.Services.ImageService;
 
 namespace MusicStoreInfo.Api.Controllers
 {
+    [Authorize]
     public class AlbumController : Controller
     {
 
         //TODO: Добавить пагинацию по возможности
         //TODO: Добавить красивый список вкладок
-        //TODO: Добавить аутентификацию и авторизацию
-        //TODO: Добавить роли и политику
-        //TODO: Добавить админ-панель
-        //TODO: Добавить корзину товаров
+        //TODO: Добавить аутентификацию/авторизацию и регистрацию(Выполнено)
+
+        //TODO: Добавить роли и политику*
+        //TODO: Добавить админ-панель*
+        //TODO: Добавить корзину товаров*
+
+        //TODO: Добавить возможность устанавливать фото в профиль
+
 
         private readonly IAlbumService _service;
         private readonly IImageService _imageService;

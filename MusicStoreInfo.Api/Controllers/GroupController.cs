@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using MusicStoreInfo.Api.Contracts;
 using MusicStoreInfo.Api.Models;
@@ -10,6 +11,7 @@ using MusicStoreInfo.Services.Services.ImageService;
 
 namespace MusicStoreInfo.Api.Controllers
 {
+    [Authorize]
     public class GroupController : Controller
     {
         private readonly IGroupService _service;

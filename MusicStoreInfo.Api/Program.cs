@@ -1,7 +1,12 @@
+using Microsoft.AspNetCore.CookiePolicy;
 using Microsoft.EntityFrameworkCore;
 using MusicStoreInfo.Api.Controllers;
+using MusicStoreInfo.Api.Extensions;
 using MusicStoreInfo.DAL;
 using MusicStoreInfo.DAL.Repositories;
+using MusicStoreInfo.Infrastructure;
+using MusicStoreInfo.Services;
+using MusicStoreInfo.Services.Services;
 using MusicStoreInfo.Services.Services.AlbumService;
 using MusicStoreInfo.Services.Services.CityService;
 using MusicStoreInfo.Services.Services.CompanySerivce;
@@ -20,6 +25,18 @@ using MusicStoreInfo.Services.Services.StoreService;
 
 var builder = WebApplication.CreateBuilder(args);
 
+var configuration = builder.Configuration;
+
+builder.Services.Configure<JwtOptions>(configuration.GetSection(nameof(JwtOptions)));
+builder.Services.AddApiAuthentication(configuration);
+
+builder.Services.AddAuthentication("Cookie")
+    .AddCookie("Cookie", config =>
+    {
+        config.LoginPath = "/Account/Login";
+        config.ReturnUrlParameter = "ReturnUrl";
+    });
+builder.Services.AddAuthorization();
 
 
 builder.Services.AddControllersWithViews();
@@ -76,6 +93,14 @@ builder.Services.AddScoped<IProductRepository, ProductRepository>();
 builder.Services.AddScoped<IProductService, ProductService>();
 
 builder.Services.AddScoped<IImageService, ImageService>();
+
+builder.Services.AddScoped<IUserRepository, UserRepository>();
+
+builder.Services.AddScoped<IAccountService, AccountService>();
+
+builder.Services.AddScoped<IPasswordHasher, PasswordHasher>();
+
+builder.Services.AddScoped<IJwtProvider, JwtProvider>();
 #endregion
 
 var app = builder.Build();
@@ -88,11 +113,22 @@ if (!app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+app.UseCookiePolicy(new CookiePolicyOptions
+{
+    MinimumSameSitePolicy = SameSiteMode.Strict,
+    HttpOnly = HttpOnlyPolicy.Always,
+    Secure = CookieSecurePolicy.Always
+});
+
 app.UseStaticFiles();
 
 app.UseRouting();
 
+app.UseAuthentication();
 app.UseAuthorization();
+
+
 
 app.MapControllerRoute(
     name: "default",

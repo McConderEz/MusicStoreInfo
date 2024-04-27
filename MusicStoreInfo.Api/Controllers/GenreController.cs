@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using MusicStoreInfo.Api.Models;
 using MusicStoreInfo.DAL;
 using MusicStoreInfo.Domain.Entities;
@@ -7,6 +8,7 @@ using MusicStoreInfo.Services.Services.GenreService;
 
 namespace MusicStoreInfo.Api.Controllers
 {
+    [Authorize]
     public class GenreController : Controller
     {
         private readonly IGenreService _service;

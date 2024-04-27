@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using MusicStoreInfo.DAL;
@@ -8,6 +9,7 @@ using MusicStoreInfo.Services.Services.DistrictService;
 
 namespace MusicStoreInfo.Api.Controllers
 {
+    [Authorize]
     public class DistrictController : Controller
     {
         private readonly IDistrictService _service;
