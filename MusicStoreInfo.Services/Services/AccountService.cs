@@ -37,7 +37,7 @@ namespace MusicStoreInfo.Services.Services
                 {
                     UserName = userName,
                     PasswordHash = hashedPassword,
-                    RoleId = 2
+                    RoleId = 1
                 };
 
                 await _userRepository.Add(user);
@@ -62,6 +62,11 @@ namespace MusicStoreInfo.Services.Services
             return (token, user);
         }
 
+        public async Task<List<User>> GetAsync()
+        {
+            return await _userRepository.Get();
+        }
+
         public async Task<User> GetUserByNameAsync(string userName)
         {
             return await _userRepository.GetByUserName(userName);
@@ -75,7 +80,7 @@ namespace MusicStoreInfo.Services.Services
         public async Task EditAsync(int id, User model)
         {
             await _userRepository.Update(id, model.UserName, model.PasswordHash,
-                model.Email, model.PhoneNumber, model.ImagePath);
+                model.Email, model.PhoneNumber, model.ImagePath, model.RoleId);
         }
     }
 }

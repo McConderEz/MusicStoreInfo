@@ -32,8 +32,9 @@
                 <li><a asp-area="" asp-controller="Genre" asp-action="Index" class="nav-link px-2">Жанры</a></li>
                 <li><a asp-area="" asp-controller="Group" asp-action="Index" class="nav-link px-2">Группы</a></li>
             }
-            else if(User.IsInRole("Manager"))
+            else if(User.IsInRole("Manager") || User.IsInRole("Admin"))
             {
+                <div class="d-flex align-items-center">
                 <div class="dropdown text-end me-3">
                     <a href="#" class="d-inline-flex align-items-center link-body-emphasis text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">                      
                         <span>Справочники</span>
@@ -62,6 +63,14 @@
                         <li><a class="dropdown-item" asp-controller="Company" asp-action="Index">Компании</a></li>
                         <li><a class="dropdown-item" asp-controller="Member" asp-action="Index">Исполнители</a></li>
                     </ul>
+                </div>
+
+                @if (User.IsInRole("Admin"))
+                {
+                    <div class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
+                    <li><a asp-area="" asp-controller="Admin" asp-action="Index" class="nav-link px-2">Админ-панель</a></li>
+                    </div>
+                }
                 </div>
             }
         </ul>

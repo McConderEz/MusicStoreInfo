@@ -17,7 +17,7 @@ namespace MusicStoreInfo.Api.Controllers
     public class AccountController : Controller
     {
 
-        public readonly IAccountService _accountService;
+        private readonly IAccountService _accountService;
         private readonly IImageService _imageService;
         private readonly IWebHostEnvironment _hostEnvironment;
         private readonly string _staticFilesPath;
@@ -102,9 +102,12 @@ namespace MusicStoreInfo.Api.Controllers
             {
                 new Claim("Demo","Value"),
                 new Claim(ClaimTypes.Name,model.UserName),
-                new Claim(ClaimTypes.Role, user.Role!.Name!),
-                new Claim("ImagePath", user.ImagePath!)
+                new Claim(ClaimTypes.Role, user.Role!.Name!)
             };
+
+            if (user.ImagePath != null)
+                claims.Add(new Claim("ImagePath", user.ImagePath));
+
             var claimIdentity = new ClaimsIdentity(claims, "Cookie");
             var claimPrincipal = new ClaimsPrincipal(claimIdentity);
             await HttpContext.SignInAsync("Cookie", claimPrincipal);

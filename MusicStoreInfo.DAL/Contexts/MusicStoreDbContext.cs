@@ -69,6 +69,7 @@ namespace MusicStoreInfo.DAL
         public DbSet<Specialization> Specializations { get; set; } = null!;
         public DbSet<User> Users { get; set; } = null!;
         public DbSet<Role> Roles { get; set; } = null!;
+        //public DbSet<ShoppingCart> ShoppingCarts { get; set; } = null!;
         #endregion
     }
 }

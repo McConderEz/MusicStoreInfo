@@ -42,7 +42,7 @@ namespace MusicStoreInfo.DAL.Repositories
                                    .Include(u => u.Role)
                                    .ToListAsync();
         }
-        public async Task Update(int id, string userName, string passwordHash, string? email, string? phoneNumber, string? imagePath)
+        public async Task Update(int id, string userName, string passwordHash, string? email, string? phoneNumber, string? imagePath,int roleId)
         {
             await _dbContext.Users
                 .Where(a => a.Id == id)
@@ -51,7 +51,8 @@ namespace MusicStoreInfo.DAL.Repositories
                     .SetProperty(a => a.PasswordHash, passwordHash)
                     .SetProperty(a => a.Email, email)
                     .SetProperty(a => a.PhoneNumber, phoneNumber)
-                    .SetProperty(a => a.ImagePath, imagePath));
+                    .SetProperty(a => a.ImagePath, imagePath)
+                    .SetProperty(a => a.RoleId, roleId));
             await _dbContext.SaveChangesAsync();
         }
     }

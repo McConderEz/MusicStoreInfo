@@ -10,5 +10,6 @@ namespace MusicStoreInfo.Services.Services
         Task<User> GetUserByNameAsync(string userName);
         Task<User> GetUserByIdAsync(int id);
         Task EditAsync(int id, User model);
+        Task<List<User>> GetAsync();
     }
 }
