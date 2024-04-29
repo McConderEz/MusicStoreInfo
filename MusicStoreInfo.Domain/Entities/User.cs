@@ -19,6 +19,10 @@ namespace MusicStoreInfo.Domain.Entities
         public string UserName { get; set; }
         [MinLength(6)]
         public string PasswordHash { get; set; }
+        public string? ImagePath { get; set; } = null;
+        public string? Email { get; set; } = null;
+        [RegularExpression(@"(^\+\d{1,3}\d{10}$|^$)", ErrorMessage = "Несоответствие формату")]
+        public string? PhoneNumber { get; set; } = null;
 
         public int RoleId { get; set; }
         public virtual Role? Role { get; set; }

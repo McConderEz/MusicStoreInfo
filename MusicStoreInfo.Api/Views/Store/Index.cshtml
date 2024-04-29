@@ -8,7 +8,10 @@
 <h1>Магазины</h1>
 
 <p>
-    <a asp-action="Create" class="btn btn-primary">Создать</a>
+    @if (User.IsInRole("Manager"))
+    {
+        <a asp-action="Create" class="btn btn-primary">Создать</a>
+    }
 </p>
 <table class="table table-bordered">
     <thead>
@@ -62,10 +65,17 @@
                 @Html.DisplayFor(modelItem => item.District.City.Name)
             </td>
             <td>
-                    <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-primary btn-sm">Изменить</a>
-                    <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-primary btn-sm">Подробнее</a>
-                    <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger btn-sm">Удалить</a>
-            </td>
+                    @if (User.IsInRole("Manager"))
+                    {
+                        <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-primary btn-sm">Изменить</a>
+                        <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-primary btn-sm">Подробнее</a>
+                        <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger btn-sm">Удалить</a>
+                    }
+                    else
+                    {
+                        <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-primary btn-sm">Подробнее</a>
+                    }
+                </td>
         </tr>
 }
     </tbody>

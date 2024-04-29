@@ -33,4 +33,11 @@
     <Folder Include="wwwroot\Image\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Content Update="Views\Home\AccessDenied.cshtml">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+  </ItemGroup>
+
 </Project>

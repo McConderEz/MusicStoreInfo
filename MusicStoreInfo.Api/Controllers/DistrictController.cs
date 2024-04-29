@@ -29,6 +29,7 @@ namespace MusicStoreInfo.Api.Controllers
         }
 
         [HttpGet]
+        [Authorize(Policy = "Manager")]
         public IActionResult Create()
         {
             ViewBag.Cities = new SelectList(_dbContext.Cities, "Id", "Name");
@@ -47,6 +48,7 @@ namespace MusicStoreInfo.Api.Controllers
         }
 
         [HttpGet]
+        [Authorize(Policy = "Manager")]
         public async Task<IActionResult> Edit(int id)
         {
             ViewBag.Cities = new SelectList(_dbContext.Cities, "Id", "Name");
@@ -73,6 +75,7 @@ namespace MusicStoreInfo.Api.Controllers
             return View(district);
         }
 
+        [Authorize(Policy = "Manager")]
         public async Task<IActionResult> Delete(int id)
         {
             await _service.DeleteAsync(id);

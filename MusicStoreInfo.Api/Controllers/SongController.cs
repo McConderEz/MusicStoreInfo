@@ -27,6 +27,7 @@ namespace MusicStoreInfo.Api.Controllers
         }
 
         [HttpGet]
+        [Authorize(Policy = "Manager")]
         public IActionResult Create()
         {
             ViewBag.Albums = new SelectList(_dbContext.Albums, "Id", "Name");
@@ -34,6 +35,7 @@ namespace MusicStoreInfo.Api.Controllers
         }
 
         [HttpPost]
+        [Authorize(Policy = "Manager")]
         public async Task<IActionResult> Create(Song model)
         {
             if (!ModelState.IsValid)
@@ -45,6 +47,7 @@ namespace MusicStoreInfo.Api.Controllers
         }
 
         [HttpGet]
+        [Authorize(Policy = "Manager")]
         public async Task<IActionResult> Edit(int id)
         {
             ViewBag.Albums = new SelectList(_dbContext.Albums, "Id", "Name");
@@ -71,6 +74,7 @@ namespace MusicStoreInfo.Api.Controllers
             return View(song);
         }
 
+        [Authorize(Policy = "Manager")]
         public async Task<IActionResult> Delete(int id)
         {
             await _service.DeleteAsync(id);

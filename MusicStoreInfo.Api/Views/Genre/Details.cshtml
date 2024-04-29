@@ -31,6 +31,7 @@
     <select id="tableType">
         <option value="groups" selected>Группы</option>
     </select>
+    @if (User.IsInRole("Manager")){
     <select id="groupSelect">
         @foreach (var group in Model.Groups)
         {
@@ -38,6 +39,7 @@
         }
     </select>
     <button id="addGroupBtn" class="btn btn-primary"  genre-id="@Model.Genre.Id">Добавить</button>
+    }
 </div>
 
 <div id="membersTable" class="container">
@@ -63,7 +65,10 @@
                     @item.Name
                 </td>
                 <td>
-                    <button class="btn btn-danger btn-sm deleteGroupBtn" group-id="@item.Id">Удалить</button>
+                    @if (User.IsInRole("Manager"))
+                    {
+                        <button class="btn btn-danger btn-sm deleteGroupBtn" group-id="@item.Id">Удалить</button>
+                    }
                 </td>
             </tr>
         }
@@ -183,6 +188,9 @@
 </script>
 
 <div>
-    <a asp-action="Edit" class="btn btn-primary" asp-route-id="@Model?.Genre.Id">Изменить</a>
+    @if (User.IsInRole("Manager"))
+    {
+        <a asp-action="Edit" class="btn btn-primary" asp-route-id="@Model?.Genre.Id">Изменить</a>
+    }
     <a asp-action="Index" class="btn btn-secondary">Вернуться назад</a>
 </div>

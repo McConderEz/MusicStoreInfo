@@ -22,6 +22,7 @@ using MusicStoreInfo.Services.Services.ProductService;
 using MusicStoreInfo.Services.Services.SongService;
 using MusicStoreInfo.Services.Services.SpecializationService;
 using MusicStoreInfo.Services.Services.StoreService;
+using System.Security.Claims;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -35,8 +36,9 @@ builder.Services.AddAuthentication("Cookie")
     {
         config.LoginPath = "/Account/Login";
         config.ReturnUrlParameter = "ReturnUrl";
+        config.AccessDeniedPath = "/Home/AccessDenied";
     });
-builder.Services.AddAuthorization();
+//builder.Services.AddAuthorization();
 
 
 builder.Services.AddControllersWithViews();

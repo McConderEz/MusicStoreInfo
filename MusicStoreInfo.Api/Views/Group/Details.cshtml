@@ -39,6 +39,7 @@
         <option value="genres">Жанры</option>
         <option value="albums">Альбомы</option>
     </select>
+    @if (User.IsInRole("Manager")){
     <select id="genreSelect" style="display: none;">
         @foreach (var genre in Model.Genres)
         {
@@ -54,6 +55,7 @@
         }
     </select>
     <button id="addMemberBtn" class="btn btn-primary" group-id="@Model.Group.Id">Добавить</button>
+    }
 </div>
 
 <div id="membersTable" class="container">
@@ -100,7 +102,10 @@
                     @string.Join(",",@item.Specializations.Select(s => s.Name));
                 </td>
                 <td>
-                    <button class="btn btn-danger btn-sm deleteMemberBtn" member-id="@item.Id">Удалить</button>
+                    @if (User.IsInRole("Manager"))
+                    {
+                        <button class="btn btn-danger btn-sm deleteMemberBtn" member-id="@item.Id">Удалить</button>
+                    }
                 </td>
             </tr>
         }
@@ -130,7 +135,10 @@
                     @item.Name
                 </td>
                 <td>
-                    <button class="btn btn-danger btn-sm deleteGenreBtn" genre-id="@item.Id">Удалить</button>
+                    @if (User.IsInRole("Manager"))
+                    {
+                        <button class="btn btn-danger btn-sm deleteGenreBtn" genre-id="@item.Id">Удалить</button>
+                    }
                 </td>
             </tr>
         }
@@ -309,6 +317,9 @@
 </script>
 
 <div>
-    <a asp-action="Edit" class="btn btn-primary" asp-route-id="@Model?.Group.Id">Изменить</a>
+    @if (User.IsInRole("Manager"))
+    {
+        <a asp-action="Edit" class="btn btn-primary" asp-route-id="@Model?.Group.Id">Изменить</a>
+    }
     <a asp-action="Index" class="btn btn-secondary">Вернуться назад</a>
 </div>

@@ -44,9 +44,11 @@ namespace MusicStoreInfo.Services.Services
             }
         }
 
-        public async Task<string> Login(string userName, string password)
+        public async Task<(string, User)> Login(string userName, string password)
         {
             var user = await _userRepository.GetByUserName(userName);
+
+            //TODO: Добавить уведомление, что неверные данные 
 
             var result = _passwordHasher.Verify(password, user.PasswordHash);
 
@@ -57,7 +59,23 @@ namespace MusicStoreInfo.Services.Services
 
             var token = _jwtProvider.GenerateToken(user);
 
-            return token;
+            return (token, user);
+        }
+
+        public async Task<User> GetUserByNameAsync(string userName)
+        {
+            return await _userRepository.GetByUserName(userName);
+        }
+
+        public async Task<User> GetUserByIdAsync(int id)
+        {
+            return await _userRepository.GetById(id);
+        }
+
+        public async Task EditAsync(int id, User model)
+        {
+            await _userRepository.Update(id, model.UserName, model.PasswordHash,
+                model.Email, model.PhoneNumber, model.ImagePath);
         }
     }
 }

@@ -27,6 +27,7 @@ namespace MusicStoreInfo.Api.Controllers
         }
 
         [HttpGet]
+        [Authorize(Policy = "Manager")]
         public IActionResult Create()
         {
             ViewBag.OwnershipTypes = new SelectList(_dbContext.OwnershipTypes, "Id", "Name");
@@ -46,6 +47,7 @@ namespace MusicStoreInfo.Api.Controllers
         }
 
         [HttpGet]
+        [Authorize(Policy = "Manager")]
         public async Task<IActionResult> Edit(int id)
         {
             ViewBag.OwnershipTypes = new SelectList(_dbContext.OwnershipTypes, "Id", "Name");
@@ -73,6 +75,7 @@ namespace MusicStoreInfo.Api.Controllers
             return View(store);
         }
 
+        [Authorize(Policy = "Manager")]
         public async Task<IActionResult> Delete(int id)
         {
             await _service.DeleteAsync(id);

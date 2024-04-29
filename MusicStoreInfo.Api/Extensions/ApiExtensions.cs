@@ -2,6 +2,7 @@
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using MusicStoreInfo.Infrastructure;
+using System.Security.Claims;
 using System.Text;
 
 namespace MusicStoreInfo.Api.Extensions
@@ -39,7 +40,24 @@ namespace MusicStoreInfo.Api.Extensions
                     };
                 });
 
-            services.AddAuthorization();
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy("Admin", policy =>
+                {
+                    policy.RequireClaim(ClaimTypes.Role, "Admin");
+                });
+
+                options.AddPolicy("Manager", policy =>
+                {
+                    policy.RequireAssertion(x => x.User.HasClaim(ClaimTypes.Role, "Admin")
+                                                || x.User.HasClaim(ClaimTypes.Role, "Manager"));
+                });
+
+                options.AddPolicy("Client", policy =>
+                {
+                    policy.RequireClaim(ClaimTypes.Role, "Client");
+                });
+            });
         }
     }
 }

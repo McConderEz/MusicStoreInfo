@@ -30,6 +30,7 @@ namespace MusicStoreInfo.Api.Controllers
         }
 
         [HttpGet]
+        [Authorize(Policy = "Manager")]
         public IActionResult Create()
         {
             ViewBag.Genders = new SelectList(_dbContext.Genders, "Id", "Name");
@@ -48,6 +49,7 @@ namespace MusicStoreInfo.Api.Controllers
         }
 
         [HttpGet]
+        [Authorize(Policy = "Manager")]
         public async Task<IActionResult> Edit(int id)
         {
             var model = await _service.GetByIdAsync(id);
@@ -80,6 +82,7 @@ namespace MusicStoreInfo.Api.Controllers
             return View(memberViewModel);
         }
 
+        [Authorize(Policy = "Manager")]
         public async Task<IActionResult> Delete(int id)
         {
             await _service.DeleteAsync(id);
@@ -88,6 +91,7 @@ namespace MusicStoreInfo.Api.Controllers
         }
 
         [HttpPost]
+        [Authorize(Policy = "Manager")]
         public async Task<IActionResult> AddGroup(int memberId, int groupId)
         {
             await _service.AddGroupAsync(memberId, groupId);
@@ -95,6 +99,7 @@ namespace MusicStoreInfo.Api.Controllers
         }
 
         [HttpPost]
+        [Authorize(Policy = "Manager")]
         public async Task<IActionResult> AddSpecialization(int memberId, int specializationId)
         {
             await _service.AddSpecializationAsync(memberId, specializationId);
@@ -102,6 +107,7 @@ namespace MusicStoreInfo.Api.Controllers
         }
 
         [HttpPost]
+        [Authorize(Policy = "Manager")]
         public async Task<IActionResult> DeleteGroup(int memberId, int groupId)
         {
             await _service.DeleteGroupAsync(memberId, groupId);
@@ -109,6 +115,7 @@ namespace MusicStoreInfo.Api.Controllers
         }
 
         [HttpPost]
+        [Authorize(Policy = "Manager")]
         public async Task<IActionResult> DeleteSpecialization(int memberId, int specializationId)
         {
             await _service.DeleteSpecializationAsync(memberId, specializationId);

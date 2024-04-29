@@ -54,6 +54,9 @@
  </div>
 
 <div>
-    <a asp-action="Edit" class="btn btn-primary" asp-route-id="@Model?.Id">Изменить</a>
+    @if (User.IsInRole("Manager"))
+    {
+        <a asp-action="Edit" class="btn btn-primary" asp-route-id="@Model?.Id">Изменить</a>
+    }
     <a asp-action="Index" class="btn btn-secondary">Вернуться назад</a>
 </div>

@@ -28,6 +28,7 @@ namespace MusicStoreInfo.Api.Controllers
         }
 
         [HttpGet]
+        [Authorize(Policy = "Manager")]
         public IActionResult Create()
         {
             
@@ -46,6 +47,7 @@ namespace MusicStoreInfo.Api.Controllers
         }
 
         [HttpGet]
+        [Authorize(Policy = "Manager")]
         public async Task<IActionResult> Edit(int id)
         {
             
@@ -54,6 +56,7 @@ namespace MusicStoreInfo.Api.Controllers
         }
 
         [HttpPost]
+        [Authorize(Policy = "Manager")]
         public async Task<IActionResult> Edit(City model)
         {
             if (!ModelState.IsValid)
@@ -72,6 +75,7 @@ namespace MusicStoreInfo.Api.Controllers
             return View(city);
         }
 
+        [Authorize(Policy = "Manager")]
         public async Task<IActionResult> Delete(int id)
         {
             await _service.DeleteAsync(id);

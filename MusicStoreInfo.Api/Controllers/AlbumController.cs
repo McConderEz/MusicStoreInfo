@@ -25,8 +25,13 @@ namespace MusicStoreInfo.Api.Controllers
         //TODO: Добавить админ-панель*
         //TODO: Добавить корзину товаров*
 
-        //TODO: Добавить возможность устанавливать фото в профиль
+        //TODO: Добавить возможность устанавливать фото в профиль(Изменить модель User)
 
+        //TODO: Сделать отдельным модулем генерацию записей для таблиц и справочников 
+
+        //TODO: Сделать 5 и 6 лабу*(Запросы)
+
+        //TODO: Сделать фильтрацию и поиск записей
 
         private readonly IAlbumService _service;
         private readonly IImageService _imageService;
@@ -51,6 +56,7 @@ namespace MusicStoreInfo.Api.Controllers
         }
 
         [HttpGet]
+        [Authorize(Policy = "Manager")]
         public IActionResult Create()
         {
             ViewBag.ListenerTypes = new SelectList(_dbContext.ListenerTypes, "Id","Name");
@@ -60,6 +66,7 @@ namespace MusicStoreInfo.Api.Controllers
         }
 
         [HttpPost]
+        [Authorize(Policy = "Manager")]
         public async Task<IActionResult> Create(AlbumDto model)
         {
 
@@ -87,6 +94,7 @@ namespace MusicStoreInfo.Api.Controllers
         }
 
         [HttpGet]
+        [Authorize(Policy = "Manager")]
         public IActionResult Edit(int id)
         {
             ViewBag.ListenerTypes = new SelectList(_dbContext.ListenerTypes, "Id", "Name");
@@ -100,6 +108,7 @@ namespace MusicStoreInfo.Api.Controllers
         //TODO:Сделать ограничения на картинки
 
         [HttpPost]
+        [Authorize(Policy = "Manager")]
         public async Task<IActionResult> Edit(AlbumDto model)
         {
             if(!ModelState.IsValid)
@@ -142,6 +151,7 @@ namespace MusicStoreInfo.Api.Controllers
             return View(albumViewModel);
         }
 
+        [Authorize(Policy = "Manager")]
         public async Task<IActionResult> Delete(int id)
         {
             await _service.DeleteAsync(id);
@@ -150,6 +160,7 @@ namespace MusicStoreInfo.Api.Controllers
         }
 
         [HttpPost]
+        [Authorize(Policy = "Manager")]
         public async Task<IActionResult> AddStore(int albumId, int storeId)
         {
             var store = await _dbContext.Stores.FindAsync(storeId);
