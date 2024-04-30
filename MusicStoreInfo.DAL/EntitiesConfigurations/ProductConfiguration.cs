@@ -27,6 +27,10 @@ namespace MusicStoreInfo.DAL.EntitiesConfigurations
                 .WithMany(p => p.Products)
                 .HasForeignKey(p => p.AlbumId)
                 .OnDelete(DeleteBehavior.Cascade);
+
+            builder.HasMany(p => p.ShoppingCarts)
+                .WithMany(s => s.Products)
+                .UsingEntity(j => j.ToTable("ShoppingCartProductLink"));
         }
     }
 }

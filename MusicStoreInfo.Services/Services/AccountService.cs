@@ -1,6 +1,7 @@
 ﻿using MusicStoreInfo.DAL.Repositories;
 using MusicStoreInfo.Domain.Entities;
 using MusicStoreInfo.Infrastructure;
+using MusicStoreInfo.Services.Services.ShoppingCartService;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,16 +14,19 @@ namespace MusicStoreInfo.Services.Services
     {
         private readonly IPasswordHasher _passwordHasher;
         private readonly IUserRepository _userRepository;
+        private readonly IShoppingCartService _shoppingCartService;
         private readonly IJwtProvider _jwtProvider;
 
         public AccountService(
             IPasswordHasher passwordHasher,
             IUserRepository userRepository,
-            IJwtProvider jwtProvider)
+            IJwtProvider jwtProvider,
+            IShoppingCartService shoppingCartService)
         {
             _passwordHasher = passwordHasher;
             _userRepository = userRepository;
             _jwtProvider = jwtProvider;
+            _shoppingCartService = shoppingCartService;
         }
 
         public async Task Register(string userName, string password)
@@ -41,6 +45,7 @@ namespace MusicStoreInfo.Services.Services
                 };
 
                 await _userRepository.Add(user);
+                await _shoppingCartService.AddAsync(new ShoppingCart { UserId = user.Id });
             }
         }
 

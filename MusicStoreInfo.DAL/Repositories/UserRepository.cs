@@ -23,15 +23,17 @@ namespace MusicStoreInfo.DAL.Repositories
             await _dbContext.SaveChangesAsync();
         }
 
-        public async Task<User> GetById(int id)
+        public async Task<User?> GetById(int id)
         {
             return await _dbContext.Users.Include(u => u.Role)
+                                         .Include(u => u.ShoppingCart)
                                          .FirstOrDefaultAsync(u => u.Id == id);
         }
 
-        public async Task<User> GetByUserName(string userName)
+        public async Task<User?> GetByUserName(string userName)
         {
             return await _dbContext.Users.Include(u => u.Role)
+                                         .Include(u => u.ShoppingCart)
                                          .FirstOrDefaultAsync(u => u.UserName.Equals(userName));
         }
 

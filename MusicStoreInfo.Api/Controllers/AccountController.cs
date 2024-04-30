@@ -102,7 +102,8 @@ namespace MusicStoreInfo.Api.Controllers
             {
                 new Claim("Demo","Value"),
                 new Claim(ClaimTypes.Name,model.UserName),
-                new Claim(ClaimTypes.Role, user.Role!.Name!)
+                new Claim(ClaimTypes.Role, user.Role!.Name!),
+                new Claim("ShoppingCartId", user.ShoppingCart.Id.ToString())
             };
 
             if (user.ImagePath != null)
@@ -120,7 +121,7 @@ namespace MusicStoreInfo.Api.Controllers
         [AllowAnonymous]
         public async Task<IActionResult> Register(LoginViewModel model)
         {
-
+            //TODO: При регистрации пользователя за ним привязывает Корзина.
             if (!ModelState.IsValid)
             {
                 return View(model);

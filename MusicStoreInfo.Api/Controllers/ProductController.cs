@@ -5,6 +5,7 @@ using MusicStoreInfo.DAL;
 using MusicStoreInfo.Domain.Entities;
 using MusicStoreInfo.Services.Services.DistrictService;
 using MusicStoreInfo.Services.Services.ProductService;
+using MusicStoreInfo.Services.Services.ShoppingCartService;
 
 namespace MusicStoreInfo.Api.Controllers
 {
@@ -12,12 +13,14 @@ namespace MusicStoreInfo.Api.Controllers
     public class ProductController : Controller
     {
         private readonly IProductService _service;
+        private readonly IShoppingCartService _shoppingCartService;
         private readonly MusicStoreDbContext _dbContext;
 
-        public ProductController(IProductService productService, MusicStoreDbContext dbContext)
+        public ProductController(IProductService productService, MusicStoreDbContext dbContext, IShoppingCartService shoppingCartService)
         {
             _service = productService;
             _dbContext = dbContext;
+            _shoppingCartService = shoppingCartService;
         }
 
         [HttpGet]
@@ -79,6 +82,14 @@ namespace MusicStoreInfo.Api.Controllers
         public async Task<IActionResult> Delete(int id)
         {
             await _service.DeleteAsync(id);
+
+            return RedirectToAction("Index");
+        }
+
+        [Authorize(Policy = "Manager")]
+        public async Task<IActionResult> AddInShoppingCart(int id)
+        {
+            await _shoppingCartService.AddProductAsync(int.Parse(User.Claims.FirstOrDefault(c => c.Type == "ShoppingCartId")?.Value!), id);
 
             return RedirectToAction("Index");
         }

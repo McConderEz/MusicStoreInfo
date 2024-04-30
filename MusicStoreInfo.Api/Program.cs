@@ -19,6 +19,7 @@ using MusicStoreInfo.Services.Services.ListenerTypeService;
 using MusicStoreInfo.Services.Services.MemberService;
 using MusicStoreInfo.Services.Services.OwnershipTypeService;
 using MusicStoreInfo.Services.Services.ProductService;
+using MusicStoreInfo.Services.Services.ShoppingCartService;
 using MusicStoreInfo.Services.Services.SongService;
 using MusicStoreInfo.Services.Services.SpecializationService;
 using MusicStoreInfo.Services.Services.StoreService;
@@ -103,6 +104,9 @@ builder.Services.AddScoped<IAccountService, AccountService>();
 builder.Services.AddScoped<IPasswordHasher, PasswordHasher>();
 
 builder.Services.AddScoped<IJwtProvider, JwtProvider>();
+
+builder.Services.AddScoped<IShoppingCartRepository, ShoppingCartRepository>();
+builder.Services.AddScoped<IShoppingCartService, ShoppingCartService>();
 #endregion
 
 var app = builder.Build();

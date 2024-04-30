@@ -23,5 +23,6 @@ namespace MusicStoreInfo.Domain.Entities
         public DateTime DateReceived { get; set; }  
         public int Quantity { get; set; }   
         public decimal Price { get;set; }
+        public virtual ICollection<ShoppingCart> ShoppingCarts { get; set; } = [];
     }
 }
