@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 using MusicStoreInfo.Domain.Entities;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
@@ -29,6 +30,14 @@ namespace MusicStoreInfo.DAL.Repositories
                 .ToListAsync();
         }
 
+        public async Task<List<Album>> GetByPage(int page,int pageSize)
+        {
+            return await _dbContext.Albums
+                .AsNoTracking()
+                .Skip((page - 1) * pageSize)
+                .Take(pageSize)
+                .ToListAsync();
+        }
 
         public async Task<Album?> GetById(int id)
         {

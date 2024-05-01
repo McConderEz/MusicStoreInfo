@@ -17,21 +17,13 @@ namespace MusicStoreInfo.Api.Controllers
     public class AlbumController : Controller
     {
 
-        //TODO: Добавить пагинацию по возможности
-        //TODO: Добавить красивый список вкладок(выполнено)
-        //TODO: Добавить аутентификацию/авторизацию и регистрацию(Выполнено)
-
-        //TODO: Добавить роли и политику(выполнено)
-        //TODO: Добавить админ-панель(выполнено)
-        //TODO: Добавить корзину товаров*
-
-        //TODO: Добавить возможность устанавливать фото в профиль(Изменить модель User)(выполнено)
-
-        //TODO: Сделать отдельным модулем генерацию записей для таблиц и справочников 
+        //TODO: Добавить пагинацию по возможности        
 
         //TODO: Сделать 5 и 6 лабу*(Запросы)
 
         //TODO: Сделать фильтрацию и поиск записей
+        //TODO: Добавить пагинацию по возможности
+        //TODO: Сделать отдельным модулем генерацию записей для таблиц и справочников 
 
         private readonly IAlbumService _service;
         private readonly IImageService _imageService;
@@ -50,9 +42,22 @@ namespace MusicStoreInfo.Api.Controllers
         }
 
         [HttpGet]
-        public IActionResult Index()
-        {            
-            return View(_service.GetAllAsync().Result);
+        public IActionResult Index(int page = 1)
+        {
+            //TODO: Сделать частичное представление, чтобы увеличить производительность
+            var albums = _service.GetAllAsync().Result;
+
+            const int pageSize = 10;
+            if (page < 1)
+                page = 1;
+
+            int recsCount = albums.Count;
+            var pager = new Pager(recsCount, page, pageSize);
+            int recSkip = (page - 1) * pageSize;
+            var data = albums.Skip(recSkip).Take(pageSize).ToList();
+            ViewBag.Pager = pager;
+
+            return View(data);
         }
 
         [HttpGet]

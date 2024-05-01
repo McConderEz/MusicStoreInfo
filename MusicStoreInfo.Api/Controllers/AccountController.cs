@@ -121,7 +121,6 @@ namespace MusicStoreInfo.Api.Controllers
         [AllowAnonymous]
         public async Task<IActionResult> Register(LoginViewModel model)
         {
-            //TODO: При регистрации пользователя за ним привязывает Корзина.
             if (!ModelState.IsValid)
             {
                 return View(model);
