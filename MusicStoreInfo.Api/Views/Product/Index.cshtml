@@ -8,7 +8,7 @@
 <h1>Продукты</h1>
 
 <p>
-    @if (User.IsInRole("Manager"))
+    @if (User.IsInRole("Manager") || User.IsInRole("Admin"))
     {
         <a asp-action="Create" class="btn btn-primary">Создать</a>
     }
@@ -65,16 +65,17 @@
                 @Html.DisplayFor(modelItem => item.Price)
             </td>
             <td>
-                @if (User.IsInRole("Manager")){
+                    @if (User.IsInRole("Manager") || User.IsInRole("Admin"))
+                    {
                     <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-primary btn-sm">Изменить</a>
                     <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-primary btn-sm">Подробнее</a>
                         <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger btn-sm">Удалить</a>
-                        <a asp-action="AddInShoppingCart" asp-route-id="@item.Id" class="btn btn-primary btn-sm">Добавить в корзину</a>
+                        <a asp-action="AddInShoppingCart" asp-route-storeId="@item.StoreId" asp-route-albumId="@item.AlbumId" class="btn btn-primary btn-sm">Добавить в корзину</a>
                     }
                     else
                     {
                         <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-primary btn-sm">Подробнее</a>
-                        <a asp-action="AddInShoppingCart" asp-route-id="@item.Id" class="btn btn-primary btn-sm">Добавить в корзину</a>
+                        <a asp-action="AddInShoppingCart" asp-route-storeId="@item.StoreId" asp-route-albumId="@item.AlbumId" class="btn btn-primary btn-sm">Добавить в корзину</a>
                     }
             </td>
         </tr>

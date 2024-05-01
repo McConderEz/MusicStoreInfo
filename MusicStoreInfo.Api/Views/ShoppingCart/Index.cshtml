@@ -36,7 +36,8 @@
                     @Html.DisplayFor(modelItem => item.Store.Name)
                 </td>
                 <td>
-                    
+                    <a asp-action="PayForTheProduct" asp-route-storeId="@item.StoreId" asp-route-albumId="@item.AlbumId" class="btn btn-primary btn-sm">Оплатить</a>
+                    <a asp-action="DeleteFromShoppingCart" asp-route-storeId="@item.StoreId" asp-route-albumId="@item.AlbumId" class="btn btn-danger btn-sm">Удалить из корзины</a>
                 </td>
             </tr>
         }

@@ -8,7 +8,7 @@
 <h1>Магазины</h1>
 
 <p>
-    @if (User.IsInRole("Manager"))
+    @if (User.IsInRole("Manager") || User.IsInRole("Admin"))
     {
         <a asp-action="Create" class="btn btn-primary">Создать</a>
     }
@@ -65,7 +65,7 @@
                 @Html.DisplayFor(modelItem => item.District.City.Name)
             </td>
             <td>
-                    @if (User.IsInRole("Manager"))
+                    @if (User.IsInRole("Manager") || User.IsInRole("Admin"))
                     {
                         <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-primary btn-sm">Изменить</a>
                         <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-primary btn-sm">Подробнее</a>

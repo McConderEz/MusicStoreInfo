@@ -87,9 +87,9 @@ namespace MusicStoreInfo.Api.Controllers
         }
 
         [Authorize(Policy = "Manager")]
-        public async Task<IActionResult> AddInShoppingCart(int id)
+        public async Task<IActionResult> AddInShoppingCart(int storeId, int albumId)
         {
-            await _shoppingCartService.AddProductAsync(int.Parse(User.Claims.FirstOrDefault(c => c.Type == "ShoppingCartId")?.Value!), id);
+            await _shoppingCartService.AddProductAsync(int.Parse(User.Claims.FirstOrDefault(c => c.Type == "ShoppingCartId")?.Value!), storeId,albumId);
 
             return RedirectToAction("Index");
         }

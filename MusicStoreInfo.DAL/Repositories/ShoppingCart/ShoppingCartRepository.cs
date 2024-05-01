@@ -21,7 +21,6 @@ namespace MusicStoreInfo.DAL.Repositories
         public async Task<ShoppingCart?> GetById(int id)
         {
             return await _dbContext.ShoppingCarts
-                .AsNoTracking()
                 .Include(s => s.Products)
                     .ThenInclude(p => p.Album)
                 .Include(s => s.Products)
@@ -33,7 +32,6 @@ namespace MusicStoreInfo.DAL.Repositories
         public async Task<ShoppingCart?> GetByUserName(string userName)
         {
             return await _dbContext.ShoppingCarts
-                .AsNoTracking()
                 .Include(s => s.Products)
                     .ThenInclude(p => p.Album)
                 .Include(s => s.Products)
@@ -48,10 +46,13 @@ namespace MusicStoreInfo.DAL.Repositories
             await _dbContext.SaveChangesAsync();
         }
 
-        public async Task AddProduct(int id, int productId)
+        public async Task AddProduct(int id, int storeId, int albumId)
         {
             var shoppingCart = await _dbContext.ShoppingCarts.FirstOrDefaultAsync(g => g.Id == id);
-            var product = await _dbContext.Products.FindAsync(productId);
+            var product = await _dbContext.Products.FindAsync(storeId, albumId);
+
+            if (shoppingCart.Products.FirstOrDefault(product) != null)
+                return;
 
             if (shoppingCart != null && product != null)
             {
@@ -60,10 +61,10 @@ namespace MusicStoreInfo.DAL.Repositories
             }
         }
 
-        public async Task DeleteProduct(int id, int productId)
+        public async Task DeleteProduct(int id, int storeId, int albumId)
         {
             var shoppingCart = await _dbContext.ShoppingCarts.Include(s => s.Products).FirstOrDefaultAsync(s => s.Id == id);
-            var product = shoppingCart.Products.FirstOrDefault(p => p.Id == productId);
+            var product = shoppingCart.Products.FirstOrDefault(p => p.StoreId == storeId && p.AlbumId == albumId);
             if (shoppingCart != null && product != null)
             {
                 shoppingCart.Products.Remove(product);

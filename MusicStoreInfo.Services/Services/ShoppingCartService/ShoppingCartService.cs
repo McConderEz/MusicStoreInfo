@@ -32,14 +32,14 @@ namespace MusicStoreInfo.Services.Services.ShoppingCartService
             await _shoppingCartRepository.Add(shoppingCart);
         }
 
-        public async Task AddProductAsync(int id, int productId)
+        public async Task AddProductAsync(int id, int storeId, int albumId)
         {
-            await _shoppingCartRepository.AddProduct(id, productId);
+            await _shoppingCartRepository.AddProduct(id, storeId,  albumId);
         }
 
-        public async Task DeleteProductAsync(int id, int productId)
+        public async Task DeleteProductAsync(int id, int storeId, int albumId)
         {
-            await _shoppingCartRepository.DeleteProduct(id, productId);
+            await _shoppingCartRepository.DeleteProduct(id, storeId, albumId);
         }
     }
 }
