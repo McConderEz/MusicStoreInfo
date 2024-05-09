@@ -3,6 +3,7 @@ using MusicStoreInfo.Domain.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection.Metadata.Ecma335;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -34,6 +35,14 @@ namespace MusicStoreInfo.DAL.Repositories
 
         public async Task Add(Song song)
         {
+            var album = await _dbContext.Albums.FindAsync(song.AlbumId);
+
+            if(album != null)
+            {
+                album.SongsCount++;
+                album.Duration += song.Duration;
+            }
+
             await _dbContext.AddAsync(song);
             await _dbContext.SaveChangesAsync();
         }
@@ -51,6 +60,19 @@ namespace MusicStoreInfo.DAL.Repositories
 
         public async Task Delete(int id)
         {
+            var song = await _dbContext.Songs.FindAsync(id);
+            var album = song != null ? await _dbContext.Albums.FindAsync(song.AlbumId) : null;
+
+            if(album != null)
+            {
+                album.SongsCount--;
+                album.Duration -= song.Duration;
+            }
+            else
+            {
+                return;
+            }
+
             await _dbContext.Songs
                 .Where(a => a.Id == id)
                 .ExecuteDeleteAsync();

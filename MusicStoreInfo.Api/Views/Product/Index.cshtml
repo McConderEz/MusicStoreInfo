@@ -1,8 +1,19 @@
-﻿@model IEnumerable<MusicStoreInfo.Domain.Entities.Product>
+﻿@using MusicStoreInfo.Domain.Entities
+@model IEnumerable<MusicStoreInfo.Domain.Entities.Product>
 
 @{
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
+
+    Pager pager = new Pager();
+
+    int pageNo = 0;
+
+    if (ViewBag.Pager != null)
+    {
+        pager = ViewBag.Pager;
+        pageNo = pager.CurrentPage;
+    }
 }
 
 <h1>Продукты</h1>
@@ -16,20 +27,29 @@
 <table class="table table-bordered">
     <thead>
         <tr>
-            <th>
-                Id
+            @if (User.IsInRole("Manager") || User.IsInRole("Admin"))
+            {
+                <th>
+                    Id
             </th>
+            }
             <th>
-                Магазин
+                Обложка
             </th>
             <th>
                 Альбом
             </th>
             <th>
-                Группа
+                Магазин
             </th>
             <th>
-                Дата поставки
+                Район
+            </th>
+            <th>
+                Город
+            </th>           
+            <th>
+                Группа
             </th>
             <th>
                 Количество
@@ -43,20 +63,28 @@
     <tbody>
 @foreach (var item in Model) {
         <tr>
+                @if (User.IsInRole("Manager") || User.IsInRole("Admin")){
             <td>
                 @Html.DisplayFor(modelItem => item.Id)
+            </td>
+                }
+            <td>
+                    <img src="@("~/image/" + item.Album.ImagePath)" asp-append-version="true" width="50px" height="50px" class="rounded-circle" />
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Album.Name)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Store.Name)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Album.Name)
+                @Html.DisplayFor(modelItem => item.Store.District.Name)
             </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Album.Group.Name)
-                </td>
             <td>
-                @Html.DisplayFor(modelItem => item.DateReceived)
+                @Html.DisplayFor(modelItem => item.Store.District.City.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Album.Group.Name)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Quantity)
@@ -75,10 +103,48 @@
                     else
                     {
                         <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-primary btn-sm">Подробнее</a>
-                        <a asp-action="AddInShoppingCart" asp-route-storeId="@item.StoreId" asp-route-albumId="@item.AlbumId" class="btn btn-primary btn-sm">Добавить в корзину</a>
+                        <a asp-action="AddInShoppingCart" asp-route-storeId="@item.StoreId" asp-route-albumId="@item.AlbumId" class="btn btn-primary btn-sm">Добавить в корзину</a>                       
                     }
             </td>
         </tr>
 }
     </tbody>
 </table>
+
+<div class="container">
+    @if (pager.TotalPages > 0)
+    {
+        <ul class="pagination justify-content-end">
+
+
+            @if (pager.CurrentPage > 1)
+            {
+                <li class="page-item">
+                    <a class="page-link" asp-controller="Product" asp-action="Index" asp-route-page="1">Первая</a>
+                </li>
+                <li>
+                    <a class="page-link" asp-controller="Product" asp-action="Index" asp-route-page="@(pager.CurrentPage - 1)">Пред.</a>
+                </li>
+            }
+
+
+            @for (var pge = pager.StartPage; pge <= pager.EndPage; pge++)
+            {
+                <li class="page-item @(pge == pager.CurrentPage ? "active" : "")">
+                    <a class="page-link" asp-controller="Product" asp-action="Index" asp-route-page="@pge">@pge</a>
+                </li>
+            }
+        </ul>
+    }
+
+    @if (pager.CurrentPage < pager.TotalPages)
+    {
+        <li class="page-item">
+            <a class="page-link" asp-controller="Product" asp-action="Index" asp-route-page="@(pager.CurrentPage + 1)">След.</a>
+        </li>
+        <li class="page-item">
+            <a class="page-link" asp-controller="Product" asp-action="Index" asp-route-page="@(pager.TotalPages)">Послед.</a>
+        </li>
+    }
+
+</div>

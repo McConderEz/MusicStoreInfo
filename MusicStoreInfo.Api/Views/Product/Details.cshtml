@@ -12,12 +12,6 @@
     <hr />
     <dl class="row">
         <dt class = "col-sm-2">
-            Id
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Id)
-        </dd>
-        <dt class = "col-sm-2">
             Магазин
         </dt>
         <dd class = "col-sm-10">
@@ -44,7 +38,7 @@
             Дата поставки
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.DateReceived)
+            @Model.DateReceived.ToString("dd.MM.yyyy")
         </dd>
         <dt class = "col-sm-2">
             Количество

@@ -51,6 +51,8 @@ namespace MusicStoreInfo.DAL.Repositories
             var shoppingCart = await _dbContext.ShoppingCarts.FirstOrDefaultAsync(g => g.Id == id);
             var product = await _dbContext.Products.FindAsync(storeId, albumId);
 
+
+            
             if (shoppingCart.Products.FirstOrDefault(product) != null)
                 return;
 

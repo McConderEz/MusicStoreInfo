@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using Azure;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using MusicStoreInfo.DAL;
@@ -24,9 +25,20 @@ namespace MusicStoreInfo.Api.Controllers
         }
 
         [HttpGet]
-        public IActionResult Index()
+        public IActionResult Index(int page = 1)
         {
-            return View(_service.GetAllAsync().Result);
+            var products = _service.GetAllAsync().Result;
+            const int pageSize = 10;
+            if (page < 1)
+                page = 1;
+
+            int recsCount = products.Count;
+            var pager = new Pager(recsCount, page, pageSize);
+            int recSkip = (page - 1) * pageSize;
+            var data = products.Skip(recSkip).Take(pageSize).ToList();
+            ViewBag.Pager = pager;
+
+            return View(data);
         }
 
         [HttpGet]
@@ -87,7 +99,7 @@ namespace MusicStoreInfo.Api.Controllers
         }
 
         [Authorize(Policy = "Manager")]
-        public async Task<IActionResult> AddInShoppingCart(int storeId, int albumId)
+        public async Task<IActionResult> AddInShoppingCart(int storeId, int albumId, int quantity)
         {
             await _shoppingCartService.AddProductAsync(int.Parse(User.Claims.FirstOrDefault(c => c.Type == "ShoppingCartId")?.Value!), storeId,albumId);
 

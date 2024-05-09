@@ -41,7 +41,7 @@ namespace MusicStoreInfo.Services.Services
                 {
                     UserName = userName,
                     PasswordHash = hashedPassword,
-                    RoleId = 1
+                    RoleId = 3
                 };
 
                 await _userRepository.Add(user);

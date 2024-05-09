@@ -10,10 +10,15 @@ namespace MusicStoreInfo.Services.Services.ImageService
 {
     public class ImageService : IImageService
     {
-        public async Task<string?> CreateImageAsync(IFormFile titleImage, string path)
+        public async Task<string?> CreateImageAsync(IFormFile? titleImage, string path)
         {
             try
             {
+                if(titleImage == null)
+                {
+                    return null;
+                }
+
                 var fileName = Path.GetFileName(titleImage.FileName);
                 var filePath = Path.Combine(path, fileName);
 

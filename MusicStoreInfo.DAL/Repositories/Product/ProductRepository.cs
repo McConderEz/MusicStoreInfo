@@ -25,6 +25,8 @@ namespace MusicStoreInfo.DAL.Repositories
                 .Include(a => a.Album)
                     .ThenInclude(a => a.Group)
                 .Include(a => a.Store)
+                    .ThenInclude(s => s.District)
+                        .ThenInclude(d => d.City)
                 .ToListAsync();
         }
 
@@ -40,6 +42,16 @@ namespace MusicStoreInfo.DAL.Repositories
 
         public async Task Add(Product product)
         {
+            var item = await _dbContext.Products.FindAsync(product.AlbumId, product.StoreId);
+
+            if(item != null)
+            {
+                item.Quantity += product.Quantity;
+                item.Price = product.Price;
+                await _dbContext.SaveChangesAsync();
+                return;
+            }
+
             await _dbContext.AddAsync(product);
             await _dbContext.SaveChangesAsync();
         }

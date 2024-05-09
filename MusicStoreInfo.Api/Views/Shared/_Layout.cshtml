@@ -25,12 +25,7 @@
         <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
             @if(User.IsInRole("Client"))
             {
-                <li><a asp-area="" asp-controller="Album" asp-action="Index" class="nav-link px-2">Альбомы</a></li>
-                <li><a asp-area="" asp-controller="Product" asp-action="Index" class="nav-link px-2 ">Продукты</a></li>
-                <li><a asp-area="" asp-controller="Store" asp-action="Index" class="nav-link px-2">Магазины</a></li>
-                <li><a asp-area="" asp-controller="Song" asp-action="Index" class="nav-link px-2">Песни</a></li>
-                <li><a asp-area="" asp-controller="Genre" asp-action="Index" class="nav-link px-2">Жанры</a></li>
-                <li><a asp-area="" asp-controller="Group" asp-action="Index" class="nav-link px-2">Группы</a></li>
+                <li><a asp-area="" asp-controller="Product" asp-action="Index" class="nav-link px-2 ">Альбомы</a></li>
             }
             else if(User.IsInRole("Manager") || User.IsInRole("Admin"))
             {

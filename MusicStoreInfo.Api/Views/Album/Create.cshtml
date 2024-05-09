@@ -31,23 +31,13 @@
                 <select asp-for="GroupId" asp-items="ViewBag.Groups" class="form-control"></select>
             </div>
             <div class="form-group">
-                <label asp-for="Duration" class="control-label">Длительность</label>
-                <input asp-for="Duration" class="form-control" />
-                <span asp-validation-for="Duration" class="text-danger"></span>
-            </div>
-            <div class="form-group">
                 <label asp-for="ReleaseDate" class="control-label">Дата выхода</label>
-                <input asp-for="ReleaseDate" class="form-control" />
+                <input asp-for="ReleaseDate" class="form-control" type="date"/>
                 <span asp-validation-for="ReleaseDate" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="SongsCount" class="control-label">Количество песен</label>
-                <input asp-for="SongsCount" class="form-control" />
-                <span asp-validation-for="SongsCount" class="text-danger"></span>
-            </div>
-            <div class="form-group">
                 <label asp-for="ImagePath" class="control-label">Обложка альбома</label>
-                <input asp-for="ImagePath" class="form-control" type="file" />
+                <input asp-for="ImagePath" class="form-control" type="file" accept="image/*" />
                 <span asp-validation-for="ImagePath" class="text-danger"></span>
             </div>
             <div class="form-group">

@@ -7,10 +7,10 @@ namespace MusicStoreInfo.Api.Contracts
         [Required][MaxLength(50)] string Name,
         [Required] int ListenerTypeId,
         [Required] int CompanyId,
-        [Required] int GroupId,
-        [Required] int Duration,
+        [Required] int GroupId,        
         [Required] DateTime ReleaseDate,
-        [Required] int SongsCount,
-        IFormFile ImagePath,
+        IFormFile? ImagePath,
+        [Required] int SongsCount = 0,
+        [Required] int Duration = 0,
         int Id = 0);
 }
