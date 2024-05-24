@@ -1,5 +1,7 @@
 ﻿@using Microsoft.CodeAnalysis
 @using MusicStoreInfo.Domain.Entities
+@using MusicStoreInfo.DAL
+@using Microsoft.EntityFrameworkCore;
 @model IEnumerable<MusicStoreInfo.Domain.Entities.Product>
 
 @{
@@ -102,23 +104,39 @@
                     }
                     else
                     {
-                        @* <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-primary btn-sm">Подробнее</a> *@
-                        @* <a id="add-to-cart" asp-action="AddInShoppingCart" asp-route-storeId="@item.StoreId" asp-route-albumId="@item.AlbumId" asp-route-quantity="1" class="btn btn-primary btn-sm">Добавить в корзину</a> *@
 
-                        <div class="container">
-                            <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-primary btn-sm details-button">Подробнее</a>
-                            <a class="add-to-cart btn btn-primary btn-sm" data-store-id="@item.StoreId" data-album-id="@item.AlbumId">Добавить в корзину</a>
-                            <div class="quantity-container" style="display: none;">
-                                <button class="btn btn-outline-secondary btn-sm minus-button" type="button" data-store-id="@item.StoreId" data-album-id="@item.AlbumId">-</button>
-                                <span class="quantity">1</span>
-                                <button class="btn btn-outline-secondary btn-sm plus-button" type="button" data-store-id="@item.StoreId" data-album-id="@item.AlbumId">+</button>
+                        var dbContext = new MusicStoreDbContext();
+                        var id = int.Parse(User.Claims.FirstOrDefault(c => c.Type == "ShoppingCartId")?.Value!);
+                        var shoppingCart = dbContext.ShoppingCarts.Include(sc => sc.ShoppingCartProducts).ThenInclude(scp => scp.Product).FirstOrDefault(sc => sc.Id == id);
+                        @if (shoppingCart.ShoppingCartProducts.FirstOrDefault(scp => scp.Product.AlbumId == item.AlbumId && scp.Product.StoreId == item.StoreId) != null && shoppingCart.ShoppingCartProducts.Count != 0)
+                        {
+                            var quantity = shoppingCart.ShoppingCartProducts.FirstOrDefault(scp => scp.Product.AlbumId == item.AlbumId && scp.Product.StoreId == item.StoreId).Quantity;    
+                            <div class="container">
+                                 <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-primary btn-sm details-button">Подробнее</a>
+                                <a class="add-to-cart btn btn-primary btn-sm" data-store-id="@item.StoreId" data-album-id="@item.AlbumId" style="display: none;"> Добавить в корзину</a>
+                                @if(quantity > 0){
+                                 <div class="quantity-container">
+                                     <button class="btn btn-outline-secondary btn-sm minus-button" type="button" data-store-id="@item.StoreId" data-album-id="@item.AlbumId">-</button>
+                                     <span class="quantity">@quantity</span>
+                                     <button class="btn btn-outline-secondary btn-sm plus-button" type="button" data-store-id="@item.StoreId" data-album-id="@item.AlbumId">+</button>
+                                 </div>
+                                 }
+                            </div>                    
+                        }
+                        else
+                        {
+                            <div class="container">
+                                <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-primary btn-sm details-button">Подробнее</a>
+                                <a class="add-to-cart btn btn-primary btn-sm" data-store-id="@item.StoreId" data-album-id="@item.AlbumId">Добавить в корзину</a>
+                                <div class="quantity-container" style="display: none;">
+                                    <button class="btn btn-outline-secondary btn-sm minus-button" type="button" data-store-id="@item.StoreId" data-album-id="@item.AlbumId">-</button>
+                                    <span class="quantity">1</span>
+                                    <button class="btn btn-outline-secondary btn-sm plus-button" type="button" data-store-id="@item.StoreId" data-album-id="@item.AlbumId">+</button>
+                                </div>
                             </div>
-                        </div>
-
-
-
+                        }
                     }
-            </td>
+                </td>
         </tr>
 }
     </tbody>

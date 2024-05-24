@@ -1,4 +1,5 @@
 ﻿@model MusicStoreInfo.Domain.Entities.ShoppingCart
+@using MusicStoreInfo.DAL
 
 @{
     ViewData["Title"] = "Index";
@@ -35,7 +36,7 @@
                 <td>
                     @Html.DisplayFor(modelItem => item.Product.Store.Name)
                 </td>
-                <td>
+                <td>                    
                     <div class="action-container">
                         <a asp-action="PayForTheProduct" asp-route-storeId="@item.Product.StoreId" asp-route-albumId="@item.Product.AlbumId" class="btn btn-primary btn-sm">Оплатить</a>
                         <div class="quantity-container">
