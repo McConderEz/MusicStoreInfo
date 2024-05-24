@@ -19,16 +19,13 @@
             <th>
                 Магазин
             </th>
-            <th>
-                Количество
-            </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
         @foreach (var item in Model.ShoppingCartProducts)
         {
-            <tr>
+            <tr id="product-@item.Product.StoreId-@item.Product.AlbumId">
                 <td>
                     @Html.DisplayFor(modelItem => item.Product.Album.Name)
                 </td>
@@ -39,13 +36,95 @@
                     @Html.DisplayFor(modelItem => item.Product.Store.Name)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Quantity)
-                </td>
-                <td>
-                    <a asp-action="PayForTheProduct" asp-route-storeId="@item.Product.StoreId" asp-route-albumId="@item.Product.AlbumId" class="btn btn-primary btn-sm">Оплатить</a>
-                    <a asp-action="DeleteFromShoppingCart" asp-route-storeId="@item.Product.StoreId" asp-route-albumId="@item.Product.AlbumId" class="btn btn-danger btn-sm">Удалить из корзины</a>
+                    <div class="action-container">
+                        <a asp-action="PayForTheProduct" asp-route-storeId="@item.Product.StoreId" asp-route-albumId="@item.Product.AlbumId" class="btn btn-primary btn-sm">Оплатить</a>
+                        <div class="quantity-container">
+                            <button class="btn btn-outline-secondary btn-sm minus-button" type="button" data-store-id="@item.Product.StoreId" data-album-id="@item.Product.AlbumId">-</button>
+                            <span class="quantity">@item.Quantity</span>
+                            <button class="btn btn-outline-secondary btn-sm plus-button" type="button" data-store-id="@item.Product.StoreId" data-album-id="@item.Product.AlbumId">+</button>
+                        </div>
+                    </div>
                 </td>
             </tr>
         }
     </tbody>
 </table>
+
+
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $('.minus-button').click(function () {
+            var button = $(this);
+            var quantitySpan = button.siblings('.quantity');
+            var value = parseInt(quantitySpan.text());
+            var storeId = button.data('store-id');
+            var albumId = button.data('album-id');
+
+            if (value > 1) {
+                quantitySpan.text(value - 1);
+                updateCart(storeId, albumId, value - 1);
+            } else {
+                updateCart(storeId, albumId, 0, function () {
+                    // Удаляем строку таблицы
+                    $('#product-' + storeId + '-' + albumId).remove();
+                });
+            }
+        });
+
+        $('.plus-button').click(function () {
+            var button = $(this);
+            var quantitySpan = button.siblings('.quantity');
+            var value = parseInt(quantitySpan.text());
+            var storeId = button.data('store-id');
+            var albumId = button.data('album-id');
+
+            quantitySpan.text(value + 1);
+            updateCart(storeId, albumId, value + 1);
+        });
+
+        function updateCart(storeId, albumId, quantity, callback) {
+            $.ajax({
+                url: '/Product/AddInShoppingCart',
+                type: 'POST',
+                data: {
+                    storeId: storeId,
+                    albumId: albumId,
+                    quantity: quantity
+                },
+                success: function (response) {
+                    if (response.success) {
+                        if (callback) {
+                            callback();
+                        }
+                    } else {
+                        console.error('Ошибка обновления корзины:', response.message);
+                    }
+                },
+                error: function (xhr, status, error) {
+                    console.error('Ошибка обновления корзины:', error);
+                    console.error('Response:', xhr.responseText);
+                }
+            });
+        }
+    });
+</script>
+
+<style>
+    .action-container {
+        display: flex;
+        align-items: center;
+    }
+
+    .quantity-container {
+        display: flex;
+        align-items: center;
+        margin-left: 10px; /* Отступ между кнопкой "Оплатить" и quantity-container */
+    }
+
+        .quantity-container button,
+        .quantity-container span {
+            margin: 0 5px;
+        }
+</style>
