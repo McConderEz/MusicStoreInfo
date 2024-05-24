@@ -1,4 +1,5 @@
-﻿@using MusicStoreInfo.Domain.Entities
+﻿@using Microsoft.CodeAnalysis
+@using MusicStoreInfo.Domain.Entities
 @model IEnumerable<MusicStoreInfo.Domain.Entities.Product>
 
 @{
@@ -92,24 +93,37 @@
             <td>
                 @Html.DisplayFor(modelItem => item.Price)
             </td>
-            <td>
+                <td>
                     @if (User.IsInRole("Manager") || User.IsInRole("Admin"))
                     {
-                    <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-primary btn-sm">Изменить</a>
-                    <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-primary btn-sm">Подробнее</a>
+                        <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-primary btn-sm">Изменить</a>
+                        <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-primary btn-sm">Подробнее</a>
                         <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger btn-sm">Удалить</a>
-                        <a asp-action="AddInShoppingCart" asp-route-storeId="@item.StoreId" asp-route-albumId="@item.AlbumId" class="btn btn-primary btn-sm">Добавить в корзину</a>
                     }
                     else
                     {
-                        <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-primary btn-sm">Подробнее</a>
-                        <a asp-action="AddInShoppingCart" asp-route-storeId="@item.StoreId" asp-route-albumId="@item.AlbumId" class="btn btn-primary btn-sm">Добавить в корзину</a>                       
+                        @* <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-primary btn-sm">Подробнее</a> *@
+                        @* <a id="add-to-cart" asp-action="AddInShoppingCart" asp-route-storeId="@item.StoreId" asp-route-albumId="@item.AlbumId" asp-route-quantity="1" class="btn btn-primary btn-sm">Добавить в корзину</a> *@
+
+                        <div class="container">
+                            <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-primary btn-sm details-button">Подробнее</a>
+                            <a class="add-to-cart btn btn-primary btn-sm" data-store-id="@item.StoreId" data-album-id="@item.AlbumId">Добавить в корзину</a>
+                            <div class="quantity-container" style="display: none;">
+                                <button class="btn btn-outline-secondary btn-sm minus-button" type="button" data-store-id="@item.StoreId" data-album-id="@item.AlbumId">-</button>
+                                <span class="quantity">1</span>
+                                <button class="btn btn-outline-secondary btn-sm plus-button" type="button" data-store-id="@item.StoreId" data-album-id="@item.AlbumId">+</button>
+                            </div>
+                        </div>
+
+
+
                     }
             </td>
         </tr>
 }
     </tbody>
 </table>
+
 
 <div class="container">
     @if (pager.TotalPages > 0)
@@ -148,3 +162,121 @@
     }
 
 </div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $('.add-to-cart').click(function (e) {
+            e.preventDefault();
+            var button = $(this);
+            var storeId = button.data('store-id');
+            var albumId = button.data('album-id');
+            var quantity = button.closest('.container').find('.quantity').text();
+
+            console.log('Store ID:', storeId);
+            console.log('Album ID:', albumId);
+            console.log('Quantity:', quantity);
+
+            $.ajax({
+                url: '/Product/AddInShoppingCart',
+                type: 'POST',
+                data: {
+                    storeId: storeId,
+                    albumId: albumId,
+                    quantity: quantity
+                },
+                success: function (response) {
+                    if (response.success) {
+                        console.log('Product added to cart successfully');
+                        button.hide(); // Скрываем кнопку
+                        button.closest('.container').find('.quantity-container').show(); // Показываем счетчик
+                    } else {
+                        console.error('Ошибка добавления в корзину:', response.message);
+                    }
+                },
+                error: function (xhr, status, error) {
+                    console.error('Ошибка добавления в корзину:', error);
+                    console.error('Response:', xhr.responseText);
+                }
+            });
+        });
+
+        $('.minus-button').click(function () {
+            var button = $(this);
+            var quantitySpan = button.siblings('.quantity');
+            var value = parseInt(quantitySpan.text());
+            var storeId = button.data('store-id');
+            var albumId = button.data('album-id');
+
+            if (value > 1) {
+                quantitySpan.text(value - 1);
+                updateCart(storeId, albumId, value - 1);
+            } else {
+                button.closest('.container').find('.add-to-cart').show();
+                button.parent('.quantity-container').hide();
+                updateCart(storeId, albumId, 0);
+            }
+        });
+
+        $('.plus-button').click(function () {
+            var button = $(this);
+            var quantitySpan = button.siblings('.quantity');
+            var value = parseInt(quantitySpan.text());
+            var storeId = button.data('store-id');
+            var albumId = button.data('album-id');
+
+            quantitySpan.text(value + 1);
+            updateCart(storeId, albumId, value + 1);
+        });
+
+        function updateCart(storeId, albumId, quantity) {
+            console.log('Updating cart:', storeId, albumId, quantity);
+
+            $.ajax({
+                url: '/Product/AddInShoppingCart',
+                type: 'POST',
+                data: {
+                    storeId: storeId,
+                    albumId: albumId,
+                    quantity: quantity
+                },
+                success: function (response) {
+                    if (response.success) {
+                        console.log('Cart updated successfully');
+                    } else {
+                        console.error('Ошибка обновления корзины:', response.message);
+                    }
+                },
+                error: function (xhr, status, error) {
+                    console.error('Ошибка обновления корзины:', error);
+                    console.error('Response:', xhr.responseText);
+                }
+            });
+        }
+    });
+</script>
+
+<head>
+    <meta charset="utf-8" />
+    <title>Пример страницы</title>
+    <style>
+        .container {
+            display: flex;
+            align-items: center;
+        }
+
+        .quantity-container {
+            display: flex;
+            align-items: center;
+        }
+
+            .quantity-container button,
+            .quantity-container span {
+                margin: 0 5px;
+            }
+
+        .details-button {
+            margin-right: 10px; /* Или любое другое значение отступа */
+        }
+    </style>
+</head>

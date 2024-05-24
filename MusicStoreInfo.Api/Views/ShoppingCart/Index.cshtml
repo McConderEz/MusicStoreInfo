@@ -19,25 +19,31 @@
             <th>
                 Магазин
             </th>
+            <th>
+                Количество
+            </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-        @foreach (var item in Model.Products)
+        @foreach (var item in Model.ShoppingCartProducts)
         {
             <tr>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Album.Name)
+                    @Html.DisplayFor(modelItem => item.Product.Album.Name)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Price)
+                    @Html.DisplayFor(modelItem => item.Product.Price)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Store.Name)
+                    @Html.DisplayFor(modelItem => item.Product.Store.Name)
                 </td>
                 <td>
-                    <a asp-action="PayForTheProduct" asp-route-storeId="@item.StoreId" asp-route-albumId="@item.AlbumId" class="btn btn-primary btn-sm">Оплатить</a>
-                    <a asp-action="DeleteFromShoppingCart" asp-route-storeId="@item.StoreId" asp-route-albumId="@item.AlbumId" class="btn btn-danger btn-sm">Удалить из корзины</a>
+                    @Html.DisplayFor(modelItem => item.Quantity)
+                </td>
+                <td>
+                    <a asp-action="PayForTheProduct" asp-route-storeId="@item.Product.StoreId" asp-route-albumId="@item.Product.AlbumId" class="btn btn-primary btn-sm">Оплатить</a>
+                    <a asp-action="DeleteFromShoppingCart" asp-route-storeId="@item.Product.StoreId" asp-route-albumId="@item.Product.AlbumId" class="btn btn-danger btn-sm">Удалить из корзины</a>
                 </td>
             </tr>
         }

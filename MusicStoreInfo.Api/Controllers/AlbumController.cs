@@ -16,6 +16,9 @@ namespace MusicStoreInfo.Api.Controllers
     [Authorize]
     public class AlbumController : Controller
     {
+        //TODO: Придумать, как регистрировать пользователей под ролями
+        //TODO: Проверять наличия ролей в бд
+
 
         //TODO: Добавить пагинацию на все страницы  
         //TODO: Сделать фильтрацию, поиск, сортировка записей(в том числе по категориям)
@@ -115,8 +118,6 @@ namespace MusicStoreInfo.Api.Controllers
             return View(model);
         }
 
-
-        //TODO:Сделать ограничения на картинки
 
         [HttpPost]
         [Authorize(Policy = "Manager")]

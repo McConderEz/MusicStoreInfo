@@ -18,9 +18,6 @@ namespace MusicStoreInfo.Api.Controllers
         public async Task<IActionResult> Index(int id)
         {
             var shoppingCart = await _shoppingCartService.GetByIdAsync(id);
-
-            //shoppingCart.Products = shoppingCart.Products is null ? new List<Product>() : shoppingCart.Products;
-
             return View(shoppingCart);
         }
 
@@ -33,7 +30,7 @@ namespace MusicStoreInfo.Api.Controllers
         public async Task<IActionResult> DeleteFromShoppingCart(int storeId,int albumId)
         {
             int id = int.Parse(User.Claims.FirstOrDefault(c => c.Type == "ShoppingCartId")?.Value!);
-            await _shoppingCartService.DeleteProductAsync(id, storeId, albumId);
+            await _shoppingCartService.DeleteProductAsync(id, albumId, storeId);
             return RedirectToAction("Index", new { id = id });
         }
     }

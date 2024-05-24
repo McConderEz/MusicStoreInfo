@@ -50,7 +50,6 @@ namespace MusicStoreInfo.Api.Controllers
         }
 
 
-        //TODO:Сделать ограничения на картинки
 
         [HttpPost]
         public async Task<IActionResult> Edit(UserDto model)

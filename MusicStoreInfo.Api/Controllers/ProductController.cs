@@ -98,12 +98,12 @@ namespace MusicStoreInfo.Api.Controllers
             return RedirectToAction("Index");
         }
 
-        [Authorize(Policy = "Manager")]
+        [Authorize(Policy = "Client")]
         public async Task<IActionResult> AddInShoppingCart(int storeId, int albumId, int quantity)
         {
-            await _shoppingCartService.AddProductAsync(int.Parse(User.Claims.FirstOrDefault(c => c.Type == "ShoppingCartId")?.Value!), storeId,albumId);
+            await _shoppingCartService.AddProductAsync(int.Parse(User.Claims.FirstOrDefault(c => c.Type == "ShoppingCartId")?.Value!), storeId,albumId, quantity);
 
-            return RedirectToAction("Index");
+            return Json(new { success = true });
         }
     }
 }
