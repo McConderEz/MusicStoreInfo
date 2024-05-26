@@ -42,6 +42,10 @@ builder.Services.AddAuthentication("Cookie")
 //builder.Services.AddAuthorization();
 
 
+string[] roleNames = { "Admin", "Manager", "Client" };
+
+builder.Services.EnsureRolesExist(configuration.GetConnectionString("DefaultConnection"), roleNames);
+
 builder.Services.AddControllersWithViews();
 builder.Services.AddDbContext<MusicStoreDbContext>(options =>
 {

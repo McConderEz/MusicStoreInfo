@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using MusicStoreInfo.Infrastructure;
@@ -58,6 +59,74 @@ namespace MusicStoreInfo.Api.Extensions
                     policy.RequireClaim(ClaimTypes.Role, "Client");
                 });
             });
+        }
+
+        public static bool DoesRoleExist(string connectionString, string roleName)
+        {
+            string checkRoleSql = $@"
+                SELECT COUNT(*) 
+                FROM musicStores 
+                WHERE type = 'R' AND name = @roleName";
+
+
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                try
+                {
+                    connection.Open();
+
+                    using (SqlCommand command = new SqlCommand(checkRoleSql, connection))
+                    {
+                        command.Parameters.AddWithValue("@roleName", roleName);
+                        int roleCount = (int)command.ExecuteScalar();
+                        return roleCount > 0;
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"An error occurred: {ex.Message}");
+                    return false;
+                }
+            }
+        }
+
+        public static void CreateRole(string connectionString, string roleName)
+        {
+            string createRoleSql = $@"
+                    CREATE ROLE {roleName};";
+
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                try
+                {
+                    connection.Open();
+
+                    using (SqlCommand command = new SqlCommand(createRoleSql, connection))
+                    {
+                        command.ExecuteNonQuery();
+                        Console.WriteLine($"Role '{roleName}' created successfully.");
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"An error occurred: {ex.Message}");
+                }
+            }
+        }
+
+        public static void EnsureRolesExist(this IServiceCollection services,string connectionString, string[] roleNames)
+        {
+            foreach (var roleName in roleNames)
+            {
+                if (!DoesRoleExist(connectionString, roleName))
+                {
+                    CreateRole(connectionString, roleName);
+                }
+                else
+                {
+                    Console.WriteLine($"Role '{roleName}' already exists.");
+                }
+            }
         }
     }
 }

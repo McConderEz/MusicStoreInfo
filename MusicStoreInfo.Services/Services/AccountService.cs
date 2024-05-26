@@ -1,4 +1,6 @@
-﻿using MusicStoreInfo.DAL.Repositories;
+﻿using Microsoft.Data.SqlClient;
+using MusicStoreInfo.DAL;
+using MusicStoreInfo.DAL.Repositories;
 using MusicStoreInfo.Domain.Entities;
 using MusicStoreInfo.Infrastructure;
 using MusicStoreInfo.Services.Services.ShoppingCartService;
@@ -35,8 +37,30 @@ namespace MusicStoreInfo.Services.Services
 
             var user = await _userRepository.GetByUserName(userName);
 
-            if(user == null)
+            string createUserSql = $@"
+                                 CREATE LOGIN {userName} WITH PASSWORD = '{hashedPassword}';
+                                 CREATE USER {userName} FOR LOGIN {userName};";
+
+            if (user == null)
             {
+                using (SqlConnection connection = new SqlConnection(MusicStoreDbContext.CONNECTION_STRING))
+                {
+                    try
+                    {
+                        connection.Open();
+                        using (SqlCommand command = new SqlCommand(createUserSql, connection))
+                        {
+                            command.ExecuteNonQuery();
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+
+                    }
+                }
+
+                AssignRoleToUser(MusicStoreDbContext.CONNECTION_STRING, userName, "Client");
+
                 user = new User
                 {
                     UserName = userName,
@@ -46,6 +70,31 @@ namespace MusicStoreInfo.Services.Services
 
                 await _userRepository.Add(user);
                 await _shoppingCartService.AddAsync(new ShoppingCart { UserId = user.Id });
+            }
+        }
+
+        public void AssignRoleToUser(string connectionString, string userName, string roleName)
+        {
+            string assignRoleSql = $@"
+                         ALTER ROLE [{roleName}] ADD MEMBER [{userName}];
+                                                                        ";
+
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                try
+                {
+                    connection.Open();
+
+                    using (SqlCommand command = new SqlCommand(assignRoleSql, connection))
+                    {
+                        command.ExecuteNonQuery();
+                        Console.WriteLine($"User '{userName}' assigned to role '{roleName}' successfully.");
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"An error occurred: {ex.Message}");
+                }
             }
         }
 

@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/MusicStoreInfo.Api.styles.css" asp-append-version="true" />
 </head>
-<body>
+@* <body>
     <header class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 mb-4 border-bottom">
         <div class="col-md-3 mb-2 mb-md-0">
             <a href="/" class="d-inline-flex link-body-emphasis text-decoration-none">
@@ -107,5 +107,123 @@
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
     @await RenderSectionAsync("Scripts", required: false)
+</body> *@
+
+<body>
+    <header class="d-flex flex-wrap align-items-center justify-content-between py-3 mb-4 border-bottom">
+        <div class="col-md-3 mb-2 mb-md-0">
+            <a href="/" class="d-inline-flex link-body-emphasis text-decoration-none">
+                <svg class="bi" width="40" height="32" role="img" aria-label="Bootstrap"><use xlink:href="#bootstrap"></use></svg>
+            </a>
+        </div>
+
+        <ul class="nav ms-auto">
+            <li class="nav-item">
+                <a asp-area="" asp-controller="Home" asp-action="Index" class="nav-link px-2 link-secondary">Главная</a>
+            </li>
+        </ul>
+
+        <ul class="nav mx-auto">
+            @if (User.IsInRole("Client"))
+            {
+                <li><a asp-area="" asp-controller="Product" asp-action="Index" class="nav-link px-2">Альбомы</a></li>
+            }
+            else if (User.IsInRole("Manager") || User.IsInRole("Admin"))
+            {
+                <div class="d-flex align-items-center">
+                    <div class="dropdown text-end me-3">
+                        <a href="#" class="d-inline-flex align-items-center link-body-emphasis text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                            <span>Справочники</span>
+                        </a>
+                        <ul class="dropdown-menu text-small">
+                            <li><a class="dropdown-item" asp-controller="Gender" asp-action="Index">Гендеры</a></li>
+                            <li><a class="dropdown-item" asp-controller="Specialization" asp-action="Index">Специализации</a></li>
+                            <li><a class="dropdown-item" asp-controller="OwnershipType" asp-action="Index">Типы собственности</a></li>
+                            <li><a class="dropdown-item" asp-controller="ListenerType" asp-action="Index">Типы прослушивателей</a></li>
+                            <li><a class="dropdown-item" asp-controller="City" asp-action="Index">Города</a></li>
+                            <li><a class="dropdown-item" asp-controller="District" asp-action="Index">Район</a></li>
+                        </ul>
+                    </div>
+                    <div class="dropdown text-end me-3">
+                        <a href="#" class="d-inline-flex align-items-center link-body-emphasis text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                            <span>Таблицы</span>
+                        </a>
+                        <ul class="dropdown-menu text-small">
+                            <li><a class="dropdown-item" asp-controller="Album" asp-action="Index">Альбомы</a></li>
+                            <li><a class="dropdown-item" asp-controller="Product" asp-action="Index">Продукты</a></li>
+                            <li><a class="dropdown-item" asp-controller="Store" asp-action="Index">Магазины</a></li>
+                            <li><a class="dropdown-item" asp-controller="Song" asp-action="Index">Песни</a></li>
+                            <li><a class="dropdown-item" asp-controller="Genre" asp-action="Index">Жанры</a></li>
+                            <li><a class="dropdown-item" asp-controller="Group" asp-action="Index">Группы</a></li>
+                            <li><a class="dropdown-item" asp-controller="Company" asp-action="Index">Компании</a></li>
+                            <li><a class="dropdown-item" asp-controller="Member" asp-action="Index">Исполнители</a></li>
+                        </ul>
+                    </div>
+
+                    @if (User.IsInRole("Admin"))
+                    {
+                        <div class="nav">
+                    <li><a asp-area="" asp-controller="Admin" asp-action="Index" class="nav-link px-2">Админ-панель</a></li>
+                    </div>
+                    }
+                </div>
+            }
+        </ul>
+
+        <div class="col-md-3 text-end">
+            @if (!User.Identity!.IsAuthenticated)
+            {
+                <a class="btn btn-outline-primary me-2" asp-controller="Account" asp-action="Index">Войти</a>
+                <a class="btn btn-primary" asp-controller="Account" asp-action="Register" asp-route-returnUrl="/Account">Регистрация</a>
+            }
+            else
+            {
+                <div class="dropdown text-end">
+                    <a href="#" class="d-inline-flex align-items-center link-body-emphasis text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                        <img src="@Url.Content("~/image/" + User.Claims.FirstOrDefault(c => c.Type == "ImagePath")?.Value)" alt="User Image" width="32" height="32" class="rounded-circle me-2">
+                        <span>@User.Identity.Name</span>
+                    </a>
+                    <ul class="dropdown-menu text-small">
+                        <li><a class="dropdown-item" asp-controller="ShoppingCart" asp-action="Index" asp-route-id="@int.Parse(User.Claims.FirstOrDefault(c => c.Type == "ShoppingCartId")?.Value)">Корзина</a></li>
+                        <li><a class="dropdown-item" asp-controller="Account" asp-action="Profile">Профиль</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item" asp-controller="Account" asp-action="Logout" asp-route-returnUrl="/Account">Выйти</a></li>
+                    </ul>
+                </div>
+            }
+        </div>
+    </header>
+    <div class="container">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+
+    <footer class="border-top footer text-muted">
+        <div class="container">
+            &copy; 2024 - MusicStoreInfo - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+        </div>
+    </footer>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>
+
+<style>
+    header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .nav.ms-auto {
+        margin-left: 0;
+    }
+
+    .nav.mx-auto {
+        margin-left: auto;
+        margin-right: auto;
+    }
+</style>

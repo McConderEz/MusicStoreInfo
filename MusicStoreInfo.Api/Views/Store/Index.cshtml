@@ -53,7 +53,7 @@
                 @Html.DisplayFor(modelItem => item.Name)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.YearOpened.Date)
+                    @item.YearOpened.ToString("dd.MM.yyyy")
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.OwnershipType.Name)

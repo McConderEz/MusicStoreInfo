@@ -8,9 +8,14 @@
 
 <h1>Корзина</h1>
 
+<h4>Всего товаров: @Model.ShoppingCartProducts.Count</h4>
+
 <table class="table table-bordered">
     <thead>
         <tr>
+            <th>
+                Обложка
+            </th>
             <th>
                Название
             </th>
@@ -27,6 +32,9 @@
         @foreach (var item in Model.ShoppingCartProducts)
         {
             <tr id="product-@item.Product.StoreId-@item.Product.AlbumId">
+                <td>
+                    <img src="@("~/image/" + item.Product.Album.ImagePath)" asp-append-version="true" width="50px" height="50px" class="rounded-circle" />
+                </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.Product.Album.Name)
                 </td>
