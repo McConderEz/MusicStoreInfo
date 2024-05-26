@@ -16,7 +16,8 @@ namespace MusicStoreInfo.Domain.Entities
         public int Id { get; set; }
         [MaxLength(50)]
         public string Name { get; set; } = string.Empty;
-
         public virtual ICollection<User>? Users { get; set; } = [];
+
+        public int PrincipalId { get; set; }
     }
 }

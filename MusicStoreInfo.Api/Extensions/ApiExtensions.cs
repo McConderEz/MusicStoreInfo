@@ -2,6 +2,8 @@
 using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
+using MusicStoreInfo.DAL;
+using MusicStoreInfo.Domain.Entities;
 using MusicStoreInfo.Infrastructure;
 using System.Security.Claims;
 using System.Text;
@@ -106,11 +108,40 @@ namespace MusicStoreInfo.Api.Extensions
                         command.ExecuteNonQuery();
                         Console.WriteLine($"Role '{roleName}' created successfully.");
                     }
-                }
+
+                    string getPrincipalIdSql = $@"
+                             SELECT principal_id 
+                             FROM sys.database_principals 
+                             WHERE name = @roleName";
+
+                    using(SqlCommand command = new SqlCommand(getPrincipalIdSql, connection))
+                    {
+                        command.Parameters.AddWithValue("@roleName", roleName);
+                        var principalId = (int)command.ExecuteScalar();
+
+                        var role = new Role
+                        {
+                            Name = roleName,
+                            PrincipalId = principalId
+                        };
+
+                        SaveRoleToDatabase(role);
+                    }
+
+                }                
                 catch (Exception ex)
                 {
                     Console.WriteLine($"An error occurred: {ex.Message}");
                 }
+            }
+        }
+
+        private static void SaveRoleToDatabase(Role role)
+        {
+            using (var context = new MusicStoreDbContext())
+            {
+                context.Roles.Add(role);
+                context.SaveChanges();
             }
         }
 

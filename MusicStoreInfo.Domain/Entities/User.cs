@@ -26,7 +26,7 @@ namespace MusicStoreInfo.Domain.Entities
 
         public int ShoppingCartId { get; set; }
         public virtual ShoppingCart ShoppingCart { get; set; } = null!;
-
+        public int PrincipalId { get; set; }  
         public int RoleId { get; set; }
         public virtual Role? Role { get; set; }
     }

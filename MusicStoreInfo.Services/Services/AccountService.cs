@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
 namespace MusicStoreInfo.Services.Services
 {
@@ -57,19 +58,30 @@ namespace MusicStoreInfo.Services.Services
                     {
 
                     }
+
+                    string getPrincipalIdSql = $@"
+                    SELECT principal_id 
+                    FROM sys.server_principals 
+                    WHERE name = @userName";
+
+                    AssignRoleToUser(MusicStoreDbContext.CONNECTION_STRING, userName, "Client");
+
+                    using (SqlCommand command = new SqlCommand(getPrincipalIdSql, connection))
+                    {
+                        command.Parameters.AddWithValue("@userName", userName);
+                        var principalId = (int)command.ExecuteScalar();
+                        user = new User
+                        {
+                            UserName = userName,
+                            PasswordHash = hashedPassword,
+                            RoleId = 3,
+                            PrincipalId = principalId
+                        };
+
+                        await _userRepository.Add(user);
+                        await _shoppingCartService.AddAsync(new ShoppingCart { UserId = user.Id });
+                    }
                 }
-
-                AssignRoleToUser(MusicStoreDbContext.CONNECTION_STRING, userName, "Client");
-
-                user = new User
-                {
-                    UserName = userName,
-                    PasswordHash = hashedPassword,
-                    RoleId = 3
-                };
-
-                await _userRepository.Add(user);
-                await _shoppingCartService.AddAsync(new ShoppingCart { UserId = user.Id });
             }
         }
 
@@ -101,7 +113,7 @@ namespace MusicStoreInfo.Services.Services
         public async Task<(string, User)> Login(string userName, string password)
         {
             var user = await _userRepository.GetByUserName(userName);
-
+            
             //TODO: Добавить уведомление, что неверные данные 
 
             var result = _passwordHasher.Verify(password, user.PasswordHash);
