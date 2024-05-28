@@ -69,7 +69,8 @@ namespace MusicStoreInfo.Api.Controllers
                 Email = model.Email,
                 PhoneNumber = model.PhoneNumber,
                 ImagePath = image,
-                RoleId = model.RoleId
+                RoleId = model.RoleId,
+                IsBlocked = model.IsBlocked,
             };
 
             await _accountService.EditAsync(user.Id, user);
@@ -95,14 +96,26 @@ namespace MusicStoreInfo.Api.Controllers
 
 
             (string token, User user) = await _accountService.Login(model.UserName, model.Password);
-            
 
+            if(user == null)
+            {
+                ModelState.AddModelError(string.Empty, "Неверные данные пользователя");
+                return View(model);
+            }
+
+            if (user.IsBlocked)
+            {
+                ModelState.AddModelError(string.Empty, "Аккаунт заблокирован!");
+                return View(model);
+            }
+                                     
             var claims = new List<Claim>
             {
                 new Claim("Demo","Value"),
                 new Claim(ClaimTypes.Name,model.UserName),
                 new Claim(ClaimTypes.Role, user.Role!.Name!),
-                new Claim("ShoppingCartId", user.ShoppingCart.Id.ToString())
+                new Claim("ShoppingCartId", user.ShoppingCart.Id.ToString()),
+                new Claim("StoreId", (user.StoreId == null ? 0 : user.StoreId).ToString())
             };
 
             if (user.ImagePath != null)
@@ -123,7 +136,7 @@ namespace MusicStoreInfo.Api.Controllers
             if (!ModelState.IsValid)
             {
                 return View(model);
-            }
+            }            
 
             await _accountService.Register(model.UserName, model.Password);
             return Redirect(model.ReturnUrl);

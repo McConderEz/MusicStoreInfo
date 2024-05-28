@@ -19,17 +19,20 @@ namespace MusicStoreInfo.Services.Services
         private readonly IUserRepository _userRepository;
         private readonly IShoppingCartService _shoppingCartService;
         private readonly IJwtProvider _jwtProvider;
+        private readonly MusicStoreDbContext _dbContext;
 
         public AccountService(
             IPasswordHasher passwordHasher,
             IUserRepository userRepository,
             IJwtProvider jwtProvider,
-            IShoppingCartService shoppingCartService)
+            IShoppingCartService shoppingCartService,
+            MusicStoreDbContext dbContext)
         {
             _passwordHasher = passwordHasher;
             _userRepository = userRepository;
             _jwtProvider = jwtProvider;
             _shoppingCartService = shoppingCartService;
+            _dbContext = dbContext;
         }
 
         public async Task Register(string userName, string password)
@@ -60,9 +63,9 @@ namespace MusicStoreInfo.Services.Services
                     }
 
                     string getPrincipalIdSql = $@"
-                    SELECT principal_id 
-                    FROM sys.server_principals 
-                    WHERE name = @userName";
+                                                  SELECT principal_id 
+                                                  FROM sys.server_principals 
+                                                  WHERE name = @userName";
 
                     AssignRoleToUser(MusicStoreDbContext.CONNECTION_STRING, userName, "Client");
 
@@ -78,8 +81,12 @@ namespace MusicStoreInfo.Services.Services
                             PrincipalId = principalId
                         };
 
-                        await _userRepository.Add(user);
-                        await _shoppingCartService.AddAsync(new ShoppingCart { UserId = user.Id });
+                        await _userRepository.Add(user);                        
+                        ShoppingCart shoppingCart = new ShoppingCart { UserId = user.Id };
+                        await _shoppingCartService.AddAsync(shoppingCart);
+                        user.ShoppingCartId = shoppingCart.Id;
+                        user.ShoppingCart = shoppingCart;
+                        await _dbContext.SaveChangesAsync();
                     }
                 }
             }
@@ -120,7 +127,7 @@ namespace MusicStoreInfo.Services.Services
 
             if(result == false)
             {
-                throw new Exception("Failed to login");
+                return (null, null);
             }
 
             var token = _jwtProvider.GenerateToken(user);
@@ -146,7 +153,7 @@ namespace MusicStoreInfo.Services.Services
         public async Task EditAsync(int id, User model)
         {
             await _userRepository.Update(id, model.UserName, model.PasswordHash,
-                model.Email, model.PhoneNumber, model.ImagePath, model.RoleId);
+                model.Email, model.PhoneNumber, model.ImagePath, model.RoleId, model.StoreId, model.IsBlocked);
         }
     }
 }

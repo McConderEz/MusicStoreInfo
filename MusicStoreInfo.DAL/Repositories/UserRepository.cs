@@ -33,6 +33,7 @@ namespace MusicStoreInfo.DAL.Repositories
         public async Task<User?> GetByUserName(string userName)
         {
             return await _dbContext.Users.Include(u => u.Role)
+                                         .Include(u => u.Store)  
                                          .Include(u => u.ShoppingCart)
                                          .FirstOrDefaultAsync(u => u.UserName.Equals(userName));
         }
@@ -42,9 +43,10 @@ namespace MusicStoreInfo.DAL.Repositories
             return await _dbContext.Users
                                    .AsNoTracking()
                                    .Include(u => u.Role)
+                                   .Include(u => u.Store)
                                    .ToListAsync();
         }
-        public async Task Update(int id, string userName, string passwordHash, string? email, string? phoneNumber, string? imagePath,int roleId)
+        public async Task Update(int id, string userName, string passwordHash, string? email, string? phoneNumber, string? imagePath,int roleId, int? storeId, bool isBlocked)
         {
             await _dbContext.Users
                 .Where(a => a.Id == id)
@@ -54,7 +56,9 @@ namespace MusicStoreInfo.DAL.Repositories
                     .SetProperty(a => a.Email, email)
                     .SetProperty(a => a.PhoneNumber, phoneNumber)
                     .SetProperty(a => a.ImagePath, imagePath)
-                    .SetProperty(a => a.RoleId, roleId));
+                    .SetProperty(a => a.RoleId, roleId)
+                    .SetProperty(a => a.StoreId, storeId)
+                    .SetProperty(a => a.IsBlocked, isBlocked));
             await _dbContext.SaveChangesAsync();
         }
     }

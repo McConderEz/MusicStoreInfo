@@ -1,16 +1,16 @@
 ﻿@model MusicStoreInfo.Domain.Entities.User
 
 @{
-    ViewData["Title"] = "EditRole";
+    ViewData["Title"] = "EditUserStore";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Смена роли пользователя</h1>
+<h1>Смена места работы пользователя</h1>
 
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="EditRole" enctype="multipart/form-data">
+        <form asp-action="EditUserStore" enctype="multipart/form-data">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="Id" />
             <input type="hidden" asp-for="UserName" />
@@ -18,12 +18,12 @@
             <input type="hidden" asp-for="ImagePath" />
             <input type="hidden" asp-for="Email" />
             <input type="hidden" asp-for="PhoneNumber" />
-            <input type="hidden" asp-for="StoreId" />
+            <input type="hidden" asp-for="RoleId" />
             <input type="hidden" asp-for="ShoppingCart" />
             <input type="hidden" asp-for="ShoppingCartId" />
             <div class="form-group">
-                <label asp-for="RoleId" class="control-label">Роль</label>
-                <select asp-for="RoleId" asp-items="ViewBag.Roles" class="form-control"></select>
+                <label asp-for="StoreId" class="control-label">Место работы</label>
+                <select asp-for="StoreId" asp-items="ViewBag.Stores" class="form-control"></select>
             </div>
             <div class="form-group">
                 <input type="submit" value="Сохранить" class="btn btn-primary" />
@@ -41,3 +41,4 @@
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
 }
+

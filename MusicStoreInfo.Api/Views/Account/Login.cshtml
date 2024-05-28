@@ -1,28 +1,8 @@
 ﻿@model LoginViewModel
 
 
+
 <div class="d-flex justify-content-center">
-   @*  <form asp-controller="Account" asp-action="Login" method="post" class="col-md-4">
-        <h1>Авторизация</h1>
-        <input type="hidden" asp-for="ReturnUrl" />
-
-        <div class="form-group">
-            <label asp-for="UserName" class="control-label">Имя пользователя</label>
-            <input asp-for="UserName" class="form-control" />
-            <span asp-validation-for="UserName" class="text-danger"></span>
-        </div>
-
-        <div class="form-group">
-            <label asp-for="Password" class="control-label">Пароль</label>
-            <input asp-for="Password" type="password" class="form-control" />
-            <span asp-validation-for="Password" class="text-danger"></span>
-        </div>
-
-        <div class="form-group">
-            <br />
-            <button type="submit" class="btn btn-primary">Войти</button>
-        </div>
-    </form> *@
     <form asp-controller="Account" asp-action="Login" method="post">
         <h1 class="h3 mb-3 fw-normal">Авторизация</h1>
         <input type="hidden" asp-for="ReturnUrl" />
@@ -33,6 +13,12 @@
         <div class="form-floating">
             <input asp-for="Password" type="password" class="form-control" id="floatingPassword" placeholder="Пароль">
             <label for="floatingPassword">Пароль</label>
+        </div>
+        <div class="text-danger">
+            @foreach (var error in ViewData.ModelState.Values.SelectMany(v => v.Errors))
+            {
+                <p>@error.ErrorMessage</p>
+            }
         </div>
         <br />
         <button class="btn btn-primary w-100 py-2" type="submit">Войти</button>

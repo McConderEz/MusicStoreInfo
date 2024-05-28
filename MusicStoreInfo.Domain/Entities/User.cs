@@ -23,9 +23,12 @@ namespace MusicStoreInfo.Domain.Entities
         public string? Email { get; set; } = null;
         [RegularExpression(@"(^\+\d{1,3}\d{10}$|^$)", ErrorMessage = "Несоответствие формату")]
         public string? PhoneNumber { get; set; } = null;
+        public bool IsBlocked { get; set; } = false;
 
+        public int? StoreId { get; set; }
+        public virtual Store? Store { get; set; }
         public int ShoppingCartId { get; set; }
-        public virtual ShoppingCart ShoppingCart { get; set; } = null!;
+        public virtual ShoppingCart? ShoppingCart { get; set; }
         public int PrincipalId { get; set; }  
         public int RoleId { get; set; }
         public virtual Role? Role { get; set; }

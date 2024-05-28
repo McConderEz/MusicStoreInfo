@@ -96,7 +96,7 @@
                 @Html.DisplayFor(modelItem => item.Price)
             </td>
                 <td>
-                    @if (User.IsInRole("Manager") || User.IsInRole("Admin"))
+                    @if ((User.IsInRole("Manager") || User.IsInRole("Admin")) && int.Parse(User.Claims.FirstOrDefault(c => c.Type == "StoreId")?.Value) == item.StoreId)
                     {
                         <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-primary btn-sm">Изменить</a>
                         <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-primary btn-sm">Подробнее</a>

@@ -8,6 +8,8 @@ namespace MusicStoreInfo.Api.Contracts
                                 string? PhoneNumber,
                                 IFormFile? ImagePath,
                                 int Id = 0,
-                                int RoleId = 0);
+                                int RoleId = 0,
+                                int? StoreId = 0,
+                                bool IsBlocked = false);
 
 }

@@ -25,6 +25,9 @@
             </th>
             <th>
                 Роль
+            </th>                  
+            <th>
+                Место работы
             </th>
             <th></th>
         </tr>
@@ -48,9 +51,76 @@
                 @Html.DisplayFor(modelItem => item.Role.Name)
             </td>
             <td>
-                <a asp-action="EditRole" class="btn btn-primary btn-sm" asp-route-id="@item.Id">Изменить роль</a>
+                 @if (item.Role.Name.Equals("Manager") || item.Role.Name.Equals("Admin"))
+                 {
+                      
+                     @Html.DisplayFor(modelItem => item.Store.Name)
+                      
+                 }
             </td>
+            <td>
+                    @if (User.IsInRole("Admin") && !item.Role.Name.Equals("Admin"))
+                    {
+                        @if (item.Role.Name.Equals("Manager"))
+                        {
+                            <a asp-action="EditRole" class="btn btn-primary btn-sm" asp-route-id="@item.Id">Изменить роль</a>
+                            <a asp-action="EditUserStore" class="btn btn-primary btn-sm" asp-route-id="@item.Id">Изменить место работы</a>
+                            <a asp-action="BlockUser" asp-route-id="@item.Id" class="btn btn-primary btn-sm block-user" data-id="@item.Id" data-action="BlockUser" style="display: @(item.IsBlocked ? "none" : "inline-block")">Заблокировать</a>
+                            <a asp-action="BlockUser" asp-route-id="@item.Id" class="btn btn-primary btn-sm unblock-user" data-id="@item.Id" data-action="UnblockUser" style="display: @(item.IsBlocked ? "inline-block" : "none")">Разблокировать</a>
+                        }
+                        else
+                        {
+                            <a asp-action="EditRole" class="btn btn-primary btn-sm" asp-route-id="@item.Id">Изменить роль</a>
+                            <a asp-action="BlockUser" asp-route-id="@item.Id" class="btn btn-primary btn-sm block-user" data-id="@item.Id" data-action="BlockUser" style="display: @(item.IsBlocked ? "none" : "inline-block")">Заблокировать</a>
+                            <a asp-action="BlockUser" asp-route-id="@item.Id" class="btn btn-primary btn-sm unblock-user" data-id="@item.Id" data-action="UnblockUser" style="display: @(item.IsBlocked ? "inline-block" : "none")">Разблокировать</a>
+                        }
+                    }
+            </td>
+
         </tr>
 }
     </tbody>
 </table>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $('.block-user, .unblock-user').click(function (e) {
+            e.preventDefault();
+            var button = $(this);
+            var userId = button.data('id');
+            var action = button.data('action');
+            var url = button.attr('href');
+
+            $.ajax({
+                url: url,
+                type: 'POST',
+                data: JSON.stringify({ id: userId }),
+                contentType: 'application/json',
+                headers: {
+                    'RequestVerificationToken': $('input[name="__RequestVerificationToken"]').val()
+                },
+                success: function (response) {
+                    if (response.success) {
+                        var blockButton = $(`.block-user[data-id="${userId}"]`);
+                        var unblockButton = $(`.unblock-user[data-id="${userId}"]`);
+
+                        if (action === 'BlockUser') {
+                            blockButton.hide();
+                            unblockButton.show();
+                        } else {
+                            blockButton.show();
+                            unblockButton.hide();
+                        }
+                    } else {
+                        alert('Ошибка: ' + response.message);
+                    }
+                },
+                error: function (xhr, status, error) {
+                    console.error('Ошибка:', error);
+                    console.error('Response:', xhr.responseText);
+                }
+            });
+        });
+    });
+</script>
