@@ -2,7 +2,8 @@
 @using MusicStoreInfo.Domain.Entities
 @using MusicStoreInfo.DAL
 @using Microsoft.EntityFrameworkCore;
-@model IEnumerable<MusicStoreInfo.Domain.Entities.Product>
+@* @model IEnumerable<MusicStoreInfo.Domain.Entities.Product> *@
+@model MusicStoreInfo.Api.Models.ProductViewModel
 
 @{
     ViewData["Title"] = "Index";
@@ -27,6 +28,197 @@
         <a asp-action="Create" class="btn btn-primary">Создать</a>
     }
 </p>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Products</title>
+    <style>
+        .filter-sidebar {
+            position: fixed;
+            left: -300px;
+            top: 0;
+            width: 300px;
+            height: 100%;
+            background-color: #f8f9fa;
+            box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+            padding: 20px;
+            overflow-y: auto;
+            transition: left 0.3s ease;
+            z-index: 1000;
+        }
+
+            .filter-sidebar.open {
+                left: 0;
+            }
+
+            .filter-sidebar h4 {
+                margin-top: 20px;
+            }
+
+            .filter-sidebar input[type="checkbox"] {
+                margin-right: 10px;
+            }
+
+            .filter-sidebar .filter-group {
+                margin-bottom: 20px;
+            }
+
+        .filter-button {
+            position: fixed;
+            top: 80px;
+            left: 20px;
+            z-index: 999;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+            transition: background-color 0.3s ease;
+        }
+
+            .filter-button:hover {
+                background-color: #0056b3;
+            }
+
+        .filter-group input[type="number"] {
+            width: calc(50% - 10px);
+            padding: 5px;
+            margin: 5px;
+            border: 1px solid #ced4da;
+            border-radius: 4px;
+            display: inline-block;
+        }
+
+        .filter-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        .filter-group input[type="number"]::placeholder {
+            color: #6c757d;
+        }
+
+        .checkbox-container {
+            max-height: 150px;
+            overflow-y: auto;
+            border: 1px solid #ced4da;
+            border-radius: 4px;
+            padding: 10px;
+        }
+
+        .close-button {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background-color: #dc3545;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+            transition: background-color 0.3s ease;
+        }
+
+            .close-button:hover {
+                background-color: #c82333;
+            }
+    </style>
+</head>
+
+<form method="get" action="@Url.Action("Index")" class="form-inline mb-3 d-flex">
+    <input type="text" name="searchString" class="form-control mr-2" placeholder="Поиск по названиям" value="@ViewBag.CurrentFilter">
+    <button type="submit" class="btn btn-outline-success">Поиск</button>
+</form>
+
+<body>
+    <div class="dropdown">
+        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Сортировка
+        </button>
+        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+            <a class="dropdown-item" href="@Url.Action("Index", new { sortOrder = "price_asc" })">Сначала недорогие</a>
+            <a class="dropdown-item" href="@Url.Action("Index", new { sortOrder = "price_desc" })">Сначала дорогие</a>
+            <a class="dropdown-item" href="@Url.Action("Index", new { sortOrder = "quantity" })">По количеству альбомов</a>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+
+<body>
+    <button class="filter-button" onclick="toggleFilterSidebar()">Фильтры</button>
+    <div class="filter-sidebar" id="filter-sidebar">
+        <button class="close-button" onclick="toggleFilterSidebar()">×</button>
+        <h3>Фильтры</h3>
+        <form id="filter-form" method="get" action="/Product">
+            <div class="filter-group">
+                <h4>Цена</h4>
+                <label for="minPrice">от</label>
+                <input type="number" name="minPrice" id="minPrice" min="0" placeholder="@(Model.Products.Any() ? @Model.Products.Min(p => p.Price).ToString() : 0)">
+                <label for="maxPrice">до</label>
+                <input type="number" name="maxPrice" id="maxPrice" min="0" placeholder="@(Model.Products.Any() ? @Model.Products.Max(p => p.Price).ToString() :  0)">
+            </div>
+            <div class="filter-group">
+                <h4>Количество</h4>
+                <label for="minQuantity">от</label>
+                <input type="number" name="minQuantity" id="minQuantity" min="0" placeholder="@(Model.Products.Any() ? @Model.Products.Min(p => p.Quantity).ToString() :  0)">
+                <label for="maxQuantity">до</label>
+                <input type="number" name="maxQuantity" id="maxQuantity" min="0" placeholder="@(Model.Products.Any() ? @Model.Products.Max(p => p.Quantity).ToString() :  0)">
+            </div>
+            <div class="filter-group">
+                <h4>Магазин</h4>
+                <div class="checkbox-container">
+                    @foreach (var store in Model.Stores)
+                    {
+                        <div>
+                            <input type="checkbox" name="storeIds" value="@store.Id"> @store.Name
+                        </div>
+                    }
+                </div>
+            </div>
+            <div class="filter-group">
+                <h4>Группа</h4>
+                <div class="checkbox-container">
+                    @foreach (var group in Model.Groups)
+                    {
+                        <div>
+                            <input type="checkbox" name="groupIds" value="@group.Id"> @group.Name
+                        </div>
+                    }
+                </div>
+            </div>
+            <div class="filter-group">
+                <h4>Жанр</h4>
+                <div class="checkbox-container">
+                    @foreach (var genre in Model.Genres)
+                    {
+                        <div>
+                            <input type="checkbox" name="genreIds" value="@genre.Id"> @genre.Name
+                        </div>
+                    }
+                </div>
+            </div>
+            <button type="submit" class="btn btn-primary">Применить фильтры</button>
+        </form>
+    </div>
+
+    <script>
+        function toggleFilterSidebar() {
+            var sidebar = document.getElementById('filter-sidebar');
+            sidebar.classList.toggle('open');
+        }
+    </script>
+</body>
+
+
+<body>
 <table class="table table-bordered">
     <thead>
         <tr>
@@ -64,7 +256,7 @@
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
+@foreach (var item in Model.Products) {
         <tr>
                 @if (User.IsInRole("Manager") || User.IsInRole("Admin")){
             <td>
@@ -141,7 +333,7 @@
 }
     </tbody>
 </table>
-
+</body>
 
 <div class="container">
     @if (pager.TotalPages > 0)

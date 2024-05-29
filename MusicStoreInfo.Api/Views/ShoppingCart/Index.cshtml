@@ -10,6 +10,8 @@
 
 <h4>Всего товаров: @Model.ShoppingCartProducts.Count</h4>
 
+<h5>Общая стоимость: @Model.ShoppingCartProducts.Sum(p => p.Product.Price)</h5>
+
 <table class="table table-bordered">
     <thead>
         <tr>
