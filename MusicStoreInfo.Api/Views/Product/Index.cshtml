@@ -285,7 +285,7 @@
                 @Html.DisplayFor(modelItem => item.Quantity)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Price)
+                        @Html.DisplayFor(modelItem => item.Price)
             </td>
                 <td>
                     @if ((User.IsInRole("Manager") || User.IsInRole("Admin")) && int.Parse(User.Claims.FirstOrDefault(c => c.Type == "StoreId")?.Value) == item.StoreId)

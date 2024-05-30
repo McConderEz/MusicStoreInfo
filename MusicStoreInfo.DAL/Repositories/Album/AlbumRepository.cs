@@ -26,6 +26,9 @@ namespace MusicStoreInfo.DAL.Repositories
             return await _dbContext.Albums
                 .AsNoTracking()
                 .Include(a => a.Group)
+                    .ThenInclude(g => g.Genres)
+                .Include(a => a.ListenerType)
+                .Include(a => a.Songs)
                 .OrderBy(a => a.Id)
                 .ToListAsync();
         }

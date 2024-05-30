@@ -1,8 +1,18 @@
-﻿@model IEnumerable<MusicStoreInfo.Domain.Entities.Store>
+﻿@using MusicStoreInfo.Domain.Entities
+@model MusicStoreInfo.Api.Models.StoreViewModel
 
 @{
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    Pager pager = new Pager();
+
+    int pageNo = 0;
+
+    if (ViewBag.Pager != null)
+    {
+        pager = ViewBag.Pager;
+        pageNo = pager.CurrentPage;
+    }
 }
 
 <h1>Магазины</h1>
@@ -13,6 +23,198 @@
         <a asp-action="Create" class="btn btn-primary">Создать</a>
     }
 </p>
+
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Products</title>
+    <style>
+        .filter-sidebar {
+            position: fixed;
+            left: -300px;
+            top: 0;
+            width: 300px;
+            height: 100%;
+            background-color: #f8f9fa;
+            box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+            padding: 20px;
+            overflow-y: auto;
+            transition: left 0.3s ease;
+            z-index: 1000;
+        }
+
+            .filter-sidebar.open {
+                left: 0;
+            }
+
+            .filter-sidebar h4 {
+                margin-top: 20px;
+            }
+
+            .filter-sidebar input[type="checkbox"] {
+                margin-right: 10px;
+            }
+
+            .filter-sidebar .filter-group {
+                margin-bottom: 20px;
+            }
+
+        .filter-button {
+            position: fixed;
+            top: 80px;
+            left: 20px;
+            z-index: 999;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+            transition: background-color 0.3s ease;
+        }
+
+            .filter-button:hover {
+                background-color: #0056b3;
+            }
+
+        .filter-group input[type="number"] {
+            width: calc(50% - 10px);
+            padding: 5px;
+            margin: 5px;
+            border: 1px solid #ced4da;
+            border-radius: 4px;
+            display: inline-block;
+        }
+
+        .filter-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        .filter-group input[type="number"]::placeholder {
+            color: #6c757d;
+        }
+
+        .checkbox-container {
+            max-height: 150px;
+            overflow-y: auto;
+            border: 1px solid #ced4da;
+            border-radius: 4px;
+            padding: 10px;
+        }
+
+        .close-button {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background-color: #dc3545;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+            transition: background-color 0.3s ease;
+        }
+
+            .close-button:hover {
+                background-color: #c82333;
+            }
+    </style>
+</head>
+
+<form method="get" action="@Url.Action("Index")" class="form-inline mb-3 d-flex">
+    <input type="text" name="searchString" class="form-control mr-2" placeholder="Поиск по названиям" value="@ViewBag.CurrentFilter">
+    <button type="submit" class="btn btn-outline-success">Поиск</button>
+</form>
+
+<body>
+    <div class="dropdown">
+        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Сортировка
+        </button>
+        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+            <a class="dropdown-item" href="@Url.Action("Index", new { sortOrder = "date_desc" })">Дата(по убыванию)</a>
+            <a class="dropdown-item" href="@Url.Action("Index", new { sortOrder = "date_asc" })">Дата(по возрастанию)</a>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+
+<body>
+    <button class="filter-button" onclick="toggleFilterSidebar()">Фильтры</button>
+    <div class="filter-sidebar" id="filter-sidebar">
+        <button class="close-button" onclick="toggleFilterSidebar()">×</button>
+        <h3>Фильтры</h3>
+        <form id="filter-form" method="get" action="/Store">
+            <div class="filter-group">
+                <h4>Дата открытия</h4>
+                <label for="minDate">от</label>
+                <input type="date" name="minDate" id="minDate" min="01.01.1860" placeholder="@(Model.Stores.Any() ? @Model.Stores.Min(a => a.YearOpened).ToString() :  0)">
+                <label for="date">до</label>
+                <input type="date" name="maxDate" id="maxDate" min="01.01.1860" placeholder="@(Model.Stores.Any() ? @Model.Stores.Max(a => a.YearOpened).ToString() :  0)">
+            </div>
+            <div class="filter-group">
+                <h4>Тип собственности</h4>
+                <div class="checkbox-container">
+                    @foreach (var ownershipStype in Model.OwnershipTypes)
+                    {
+                        <div>
+                            <input type="checkbox" name="ownershipStypeIds" value="@ownershipStype.Id"> @ownershipStype.Name
+                        </div>
+                    }
+                </div>
+            </div>
+            <div class="filter-group">
+                <h4>Город</h4>
+                <div class="checkbox-container">
+                    @foreach (var city in Model.Cities)
+                    {
+                        <div>
+                            <input type="checkbox" name="cityIds" value="@city.Id" class="city-checkbox"> @city.Name
+                            <div class="district-container" data-city-id="@city.Id" style="display: none;">
+                                <h4>Район</h4>
+                                <div class="checkbox-container">
+                                    @foreach (var district in city.Districts)
+                                    {
+                                        <div>
+                                            <input type="checkbox" name="districtIds" value="@district.Id"> @district.Name
+                                        </div>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+            <button type="submit" class="btn btn-primary">Применить фильтры</button>
+        </form>
+    </div>
+    <script>
+        document.querySelectorAll('.city-checkbox').forEach(function (checkbox) {
+            checkbox.addEventListener('change', function () {
+                var cityId = this.value;
+                var districtContainer = document.querySelector('.district-container[data-city-id="' + cityId + '"]');
+                if (districtContainer) {
+                    districtContainer.style.display = this.checked ? 'block' : 'none';
+                }
+            });
+        });
+    </script>
+    <script>
+        function toggleFilterSidebar() {
+            var sidebar = document.getElementById('filter-sidebar');
+            sidebar.classList.toggle('open');
+        }
+    </script>
+</body>
+
 <table class="table table-bordered">
     <thead>
         <tr>
@@ -41,7 +243,7 @@
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
+@foreach (var item in Model.Stores) {
         <tr>
             <td>
                 @Html.DisplayFor(modelItem => item.Id)
@@ -80,3 +282,41 @@
 }
     </tbody>
 </table>
+
+<div class="container">
+    @if (pager.TotalPages > 0)
+    {
+        <ul class="pagination justify-content-end">
+
+
+            @if (pager.CurrentPage > 1)
+            {
+                <li class="page-item">
+                    <a class="page-link" asp-controller="Product" asp-action="Index" asp-route-page="1">Первая</a>
+                </li>
+                <li>
+                    <a class="page-link" asp-controller="Product" asp-action="Index" asp-route-page="@(pager.CurrentPage - 1)">Пред.</a>
+                </li>
+            }
+
+
+            @for (var pge = pager.StartPage; pge <= pager.EndPage; pge++)
+            {
+                <li class="page-item @(pge == pager.CurrentPage ? "active" : "")">
+                    <a class="page-link" asp-controller="Product" asp-action="Index" asp-route-page="@pge">@pge</a>
+                </li>
+            }
+        </ul>
+    }
+
+    @if (pager.CurrentPage < pager.TotalPages)
+    {
+        <li class="page-item">
+            <a class="page-link" asp-controller="Product" asp-action="Index" asp-route-page="@(pager.CurrentPage + 1)">След.</a>
+        </li>
+        <li class="page-item">
+            <a class="page-link" asp-controller="Product" asp-action="Index" asp-route-page="@(pager.TotalPages)">Послед.</a>
+        </li>
+    }
+
+</div>

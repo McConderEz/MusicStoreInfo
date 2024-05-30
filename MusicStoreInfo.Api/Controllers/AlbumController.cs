@@ -46,10 +46,24 @@ namespace MusicStoreInfo.Api.Controllers
         }
 
         [HttpGet]
-        public IActionResult Index(int page = 1)
+        public IActionResult Index(int page = 1,int? minSongsCount = null, int? maxSongsCount = null,
+                                   int? minDuration = null, int? maxDuration = null,DateTime? minDate = null, DateTime? maxDate = null, List<int> listenerTypeIds = null,
+                                   List<int> groupIds = null, List<int> genreIds = null, string sortOrder = null, string searchString = null)
         {
             //TODO: Сделать частичное представление, чтобы увеличить производительность
             var albums = _service.GetAllAsync().Result;
+
+
+            albums = Filter(minSongsCount, maxSongsCount, minDuration, maxDuration, minDate, maxDate, listenerTypeIds, groupIds, genreIds, albums);
+
+            if (!string.IsNullOrEmpty(searchString))
+            {
+                albums = albums.Where(p => p.Name.Contains(searchString, StringComparison.OrdinalIgnoreCase)
+                                        || p.Group.Name.Contains(searchString, StringComparison.OrdinalIgnoreCase)
+                                        || p.Songs.Any(s => s.Name.Contains(searchString, StringComparison.OrdinalIgnoreCase))).ToList();
+            }
+
+            albums = Sort(sortOrder, albums);
 
             const int pageSize = 10;
             if (page < 1)
@@ -60,8 +74,67 @@ namespace MusicStoreInfo.Api.Controllers
             int recSkip = (page - 1) * pageSize;
             var data = albums.Skip(recSkip).Take(pageSize).ToList();
             ViewBag.Pager = pager;
+            ViewBag.CurrentFilter = searchString;
 
-            return View(data);
+            var albumIndexViewModel = new AlbumIndexViewModel
+            {
+                Albums = data,
+                ListenerTypes = _dbContext.ListenerTypes.ToList(),
+                Groups = _dbContext.Groups.ToList(),
+                Genres = _dbContext.Genres.ToList()
+            };
+
+            return View(albumIndexViewModel);
+        }
+
+        private static List<Album>? Sort(string sortOrder, List<Album>? albums)
+        {
+            switch (sortOrder)
+            {
+                case "duration_asc":
+                    albums = albums.OrderBy(p => p.Duration).ToList();
+                    break;
+                case "duration_desc":
+                    albums = albums.OrderByDescending(p => p.Duration).ToList();
+                    break;
+                case "songCount":
+                    albums = albums.OrderBy(p => p.SongsCount).ToList();
+                    break;
+                case "date_asc":
+                    albums = albums.OrderBy(p => p.ReleaseDate.Date).ToList();
+                    break;
+                case "date_desc":
+                    albums = albums.OrderByDescending(p => p.ReleaseDate.Date).ToList();
+                    break;
+                default:
+                    break;
+            }
+
+            return albums;
+        }
+
+        //TODO: Перенести в DAL и упростить
+        private static List<Album>? Filter(int? minSongsCount, int? maxSongsCount, int? minDuration, int? maxDuration, DateTime? minDate, DateTime? maxDate,List<int> listenerTypeIds , List<int> groupIds, List<int> genreIds, List<Album> albums)
+        {
+            if (minSongsCount.HasValue)
+                albums = albums.Where(a => a.SongsCount >= minSongsCount.Value).ToList();
+            if (maxSongsCount.HasValue)
+                albums = albums.Where(a => a.SongsCount <= maxSongsCount.Value).ToList();
+            if (minDuration.HasValue)
+                albums = albums.Where(a => a.Duration >= minDuration.Value).ToList();
+            if (maxDuration.HasValue)
+                albums = albums.Where(a => a.Duration <= maxDuration.Value).ToList();
+            if (minDate.HasValue)
+                albums = albums.Where(a => a.ReleaseDate.Date >= minDate.Value).ToList();
+            if (maxDate.HasValue)
+                albums = albums.Where(a => a.ReleaseDate.Date <= maxDate.Value).ToList();
+            if (listenerTypeIds != null && listenerTypeIds.Any())
+                albums = albums.Where(a => listenerTypeIds.Contains(a.ListenerTypeId)).ToList();
+            if (groupIds != null && groupIds.Any())
+                albums = albums.Where(a => groupIds.Contains(a.GroupId)).ToList();
+            if (genreIds != null && genreIds.Any())
+                albums = albums.Where(a => a.Group.Genres.Any(a => genreIds.Contains(a.Id))).ToList();
+            return albums;
         }
 
         [HttpGet]

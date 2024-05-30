@@ -1,10 +1,12 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using MusicStoreInfo.Api.Models;
 using MusicStoreInfo.DAL;
 using MusicStoreInfo.Domain.Entities;
 using MusicStoreInfo.Services.Services.DistrictService;
 using MusicStoreInfo.Services.Services.StoreService;
+using Microsoft.EntityFrameworkCore;
 
 namespace MusicStoreInfo.Api.Controllers
 {
@@ -21,9 +23,73 @@ namespace MusicStoreInfo.Api.Controllers
         }
 
         [HttpGet]
-        public IActionResult Index()
+        public IActionResult Index(int page = 1, DateTime? minDate = null, DateTime? maxDate = null, List<int> ownershipTypeIds = null,
+                                   List<int> cityIds = null, List<int> districtIds = null, string sortOrder = null, string searchString = null)
         {
-            return View(_service.GetAllAsync().Result);
+            var stores = _service.GetAllAsync().Result;
+
+
+            stores = Filter(minDate, maxDate, ownershipTypeIds, cityIds, districtIds, stores);
+
+            if (!string.IsNullOrEmpty(searchString))
+            {
+                stores = stores.Where(p => p.Name.Contains(searchString, StringComparison.OrdinalIgnoreCase)).ToList();
+            }
+
+            stores = Sort(sortOrder, stores);
+
+            const int pageSize = 10;
+            if (page < 1)
+                page = 1;
+
+            int recsCount = stores.Count;
+            var pager = new Pager(recsCount, page, pageSize);
+            int recSkip = (page - 1) * pageSize;
+            var data = stores.Skip(recSkip).Take(pageSize).ToList();
+            ViewBag.Pager = pager;
+            ViewBag.CurrentFilter = searchString;
+
+            var storeViewModel = new StoreViewModel
+            {
+                Stores = data,
+                OwnershipTypes = _dbContext.OwnershipTypes.ToList(),
+                Cities = _dbContext.Cities.Include(c => c.Districts).ToList()
+            };
+
+            return View(storeViewModel);
+        }
+
+        private static List<Store>? Sort(string sortOrder, List<Store>? stores)
+        {
+            switch (sortOrder)
+            {
+                case "date_asc":
+                    stores = stores.OrderBy(p => p.YearOpened.Date).ToList();
+                    break;
+                case "date_desc":
+                    stores = stores.OrderByDescending(p => p.YearOpened.Date).ToList();
+                    break;
+                default:
+                    break;
+            }
+
+            return stores;
+        }
+
+        //TODO: Перенести в DAL и упростить
+        private static List<Store>? Filter(DateTime? minDate, DateTime? maxDate, List<int> ownershipTypeIds, List<int> cityIds, List<int> districtIds, List<Store> stores)
+        {
+            if (minDate.HasValue)
+                stores = stores.Where(a => a.YearOpened.Date >= minDate.Value).ToList();
+            if (maxDate.HasValue)
+                stores = stores.Where(a => a.YearOpened.Date <= maxDate.Value).ToList();
+            if (ownershipTypeIds != null && ownershipTypeIds.Any())
+                stores = stores.Where(a => ownershipTypeIds.Contains(a.OwnershipTypeId)).ToList();
+            if (cityIds != null && cityIds.Any())
+                stores = stores.Where(a => cityIds.Contains(a.District.CityId)).ToList();
+            if (districtIds != null && districtIds.Any())
+                stores = stores.Where(a => districtIds.Contains(a.DistrictId)).ToList();
+            return stores;
         }
 
         [HttpGet]
