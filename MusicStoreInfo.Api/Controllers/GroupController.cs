@@ -9,6 +9,7 @@ using MusicStoreInfo.Services.Services.DistrictService;
 using MusicStoreInfo.Services.Services.GroupService;
 using MusicStoreInfo.Services.Services.ImageService;
 
+
 namespace MusicStoreInfo.Api.Controllers
 {
     [Authorize]
@@ -31,9 +32,62 @@ namespace MusicStoreInfo.Api.Controllers
         }
 
         [HttpGet]
-        public IActionResult Index()
+        public IActionResult Index(int page = 1, List<int> genreIds = null,
+                                   string sortOrder = null, string searchString = null)
         {
-            return View(_service.GetAllAsync().Result);
+
+            var groups = _service.GetAllAsync().Result;
+
+
+            groups = Filter(genreIds, groups);
+
+            if (!string.IsNullOrEmpty(searchString))
+            {
+                groups = groups.Where(p => p.Name.Contains(searchString, StringComparison.OrdinalIgnoreCase)).ToList();
+            }
+
+            groups = Sort(sortOrder, groups);
+
+            const int pageSize = 10;
+            if (page < 1)
+                page = 1;
+
+            int recsCount = groups.Count;
+            var pager = new Pager(recsCount, page, pageSize);
+            int recSkip = (page - 1) * pageSize;
+            var data = groups.Skip(recSkip).Take(pageSize).ToList();
+            ViewBag.Pager = pager;
+            ViewBag.CurrentFilter = searchString;
+
+            var groupViewModel = new GroupIndexViewModel
+            {
+                Groups = data,
+                Genres = _dbContext.Genres.ToList()
+            };
+
+            return View(groupViewModel);
+        }
+
+        private static List<Group>? Sort(string sortOrder, List<Group>? groups)
+        {
+            switch (sortOrder)
+            {
+                case "name_asc":
+                    groups = groups.OrderBy(p => p.Name).ToList();
+                    break;
+                default:
+                    break;
+            }
+
+            return groups;
+        }
+
+        //TODO: Перенести в DAL и упростить
+        private static List<Group>? Filter(List<int> genreIds, List<Group> groups)
+        {
+            if (genreIds != null && genreIds.Any())
+                groups = groups.Where(p => p.Genres.Any(g => genreIds.Contains(g.Id))).ToList();
+            return groups;
         }
 
         [HttpGet]

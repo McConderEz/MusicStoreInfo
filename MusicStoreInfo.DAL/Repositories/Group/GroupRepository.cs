@@ -22,18 +22,20 @@ namespace MusicStoreInfo.DAL.Repositories
             return await _dbContext.Groups
                 .AsNoTracking()
                 .OrderBy(a => a.Id)
+                .Include(g => g.Genres)
                 .ToListAsync();
         }
 
         public async Task<Group?> GetById(int id)
         {
             return await _dbContext.Groups
+                .Include(a => a.Albums)
+                    .ThenInclude(a => a.ListenerType)
                 .Include(a => a.Genres)
                 .Include(a => a.Members)
                      .ThenInclude(a => a.Gender)
                 .Include(a => a.Members)
                      .ThenInclude(a => a.Specializations)
-                .Include(a => a.Albums)
                 .AsNoTracking().FirstOrDefaultAsync(a => a.Id == id);
         }
 

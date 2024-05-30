@@ -26,7 +26,7 @@ namespace MusicStoreInfo.Api.Controllers
         //3
         //TODO: Сделать фильтрацию, поиск, сортировка записей(в том числе по категориям)
 
-        //TODO: Сделать 5 и 6 лабу*(Запросы)
+        //TODO: Сделать 5,6,7,8
         //TODO: Сделать отдельным модулем генерацию записей для таблиц и справочников 
 
         private readonly IAlbumService _service;
