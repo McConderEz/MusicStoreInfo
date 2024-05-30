@@ -24,7 +24,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Albums</title>
+    <title>Member</title>
     <style>
         .filter-sidebar {
             position: fixed;
@@ -133,11 +133,10 @@
             Сортировка
         </button>
         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-            <a class="dropdown-item" href="@Url.Action("Index", new { sortOrder = "duration_asc" })">Сначала меньшей длительности</a>
-            <a class="dropdown-item" href="@Url.Action("Index", new { sortOrder = "duration_desc" })">Сначала большей длительности</a>
-            <a class="dropdown-item" href="@Url.Action("Index", new { sortOrder = "songCount" })">По количеству песен</a>
-            <a class="dropdown-item" href="@Url.Action("Index", new { sortOrder = "date_desc" })">Дата(по убыванию)</a>
-            <a class="dropdown-item" href="@Url.Action("Index", new { sortOrder = "date_asc" })">Дата(по возрастанию)</a>
+            <a class="dropdown-item" href="@Url.Action("Index", new { sortOrder = "age_asc" })">Возраст(по возрастанию)</a>
+            <a class="dropdown-item" href="@Url.Action("Index", new { sortOrder = "age_desc" })">Возраст(по убыванию)</a>
+            <a class="dropdown-item" href="@Url.Action("Index", new { sortOrder = "name_asc" })">Имя(по возрастанию)</a>
+            <a class="dropdown-item" href="@Url.Action("Index", new { sortOrder = "name_desc" })">Имя(по убыванию)</a>
         </div>
     </div>
 
