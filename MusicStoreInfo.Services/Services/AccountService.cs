@@ -81,7 +81,7 @@ namespace MusicStoreInfo.Services.Services
                             PrincipalId = principalId
                         };
 
-                        await _userRepository.Add(user);                        
+                        await _userRepository.Add(user);
                         ShoppingCart shoppingCart = new ShoppingCart { UserId = user.Id };
                         await _shoppingCartService.AddAsync(shoppingCart);
                         user.ShoppingCartId = shoppingCart.Id;

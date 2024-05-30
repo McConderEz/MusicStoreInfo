@@ -24,9 +24,86 @@ namespace MusicStoreInfo.Api.Controllers
         }
 
         [HttpGet]
-        public IActionResult Index()
+        public IActionResult Index(int page = 1, List<int> genderIds = null, List<int> specializationIds = null,
+                                   List<int> groupIds = null, List<int> genreIds = null,
+                                   string sortOrder = null, string searchString = null)
         {
-            return View(_service.GetAllAsync().Result);
+            var members = _service.GetAllAsync().Result;
+
+
+            members = Filter(genderIds, specializationIds,groupIds, genreIds, members);
+
+            if (!string.IsNullOrEmpty(searchString))
+            {
+                members = members.Where(p => p.Name.Contains(searchString, StringComparison.OrdinalIgnoreCase)
+                                        || p.SecondName.Contains(searchString, StringComparison.OrdinalIgnoreCase)).ToList();
+            }
+
+            members = Sort(sortOrder, members);
+
+            const int pageSize = 10;
+            if (page < 1)
+                page = 1;
+
+            int recsCount = members.Count;
+            var pager = new Pager(recsCount, page, pageSize);
+            int recSkip = (page - 1) * pageSize;
+            var data = members.Skip(recSkip).Take(pageSize).ToList();
+            ViewBag.Pager = pager;
+            ViewBag.CurrentFilter = searchString;
+
+            var memberIndexViewModel = new MemberIndexViewModel
+            {
+                Members = data,
+                Genders = _dbContext.Genders.ToList(),
+                Groups = _dbContext.Groups.ToList(),
+                Genres = _dbContext.Genres.ToList(),
+                Specializations = _dbContext.Specializations.ToList()
+            };
+
+            return View(memberIndexViewModel);
+        }
+
+        private static List<Member>? Sort(string sortOrder, List<Member>? members)
+        {
+            switch (sortOrder)
+            {
+                case "age_asc":
+                    members = members.OrderBy(p => p.Age).ToList();
+                    break;
+                case "age_desc":
+                    members = members.OrderByDescending(p => p.Age).ToList();
+                    break;
+                case "name_asc":
+                    members = members.OrderBy(p => p.Name).ToList();
+                    break;
+                case "name_desc":
+                    members = members.OrderByDescending(p => p.Name).ToList();
+                    break;
+                default:
+                    break;
+            }
+
+            return members;
+        }
+
+        //TODO: Перенести в DAL и упростить
+        private static List<Member>? Filter(List<int>? genderIds, List<int>? specializationIds,
+                                    List<int>? groupIds, List<int>? genreIds, List<Member> members)
+        {
+            if (genderIds != null && genderIds.Any())
+                members = members.Where(m => genderIds.Contains(m.GenderId)).ToList();
+
+            if (specializationIds != null && specializationIds.Any())
+                members = members.Where(m => m.Specializations.Any(s => specializationIds.Contains(s.Id))).ToList();
+
+            if (groupIds != null && groupIds.Any())
+                members = members.Where(m => m.Groups.Any(g => groupIds.Contains(g.Id))).ToList();
+
+            if (genreIds != null && genreIds.Any())
+                members = members.Where(m => m.Groups.Any(g => g.Genres.Any(gen => genreIds.Contains(gen.Id)))).ToList();
+
+            return members;
         }
 
         [HttpGet]
@@ -53,6 +130,7 @@ namespace MusicStoreInfo.Api.Controllers
         public async Task<IActionResult> Edit(int id)
         {
             var model = await _service.GetByIdAsync(id);
+            ViewBag.Genders = new SelectList(_dbContext.Genders, "Id", "Name");
             return View(model);
         }
 

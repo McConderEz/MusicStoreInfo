@@ -63,6 +63,7 @@ namespace MusicStoreInfo.Api.Extensions
             });
         }
 
+
         public static bool DoesRoleExist(string connectionString, string roleName)
         {
             string checkRoleSql = $@"
