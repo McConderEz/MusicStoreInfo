@@ -222,10 +222,10 @@
             @if (pager.CurrentPage > 1)
             {
                 <li class="page-item">
-                    <a class="page-link" asp-controller="Product" asp-action="Index" asp-route-page="1">Первая</a>
+                    <a class="page-link" asp-controller="Group" asp-action="Index" asp-route-page="1">Первая</a>
                 </li>
                 <li>
-                    <a class="page-link" asp-controller="Product" asp-action="Index" asp-route-page="@(pager.CurrentPage - 1)">Пред.</a>
+                    <a class="page-link" asp-controller="Group" asp-action="Index" asp-route-page="@(pager.CurrentPage - 1)">Пред.</a>
                 </li>
             }
 
@@ -233,7 +233,7 @@
             @for (var pge = pager.StartPage; pge <= pager.EndPage; pge++)
             {
                 <li class="page-item @(pge == pager.CurrentPage ? "active" : "")">
-                    <a class="page-link" asp-controller="Product" asp-action="Index" asp-route-page="@pge">@pge</a>
+                    <a class="page-link" asp-controller="Group" asp-action="Index" asp-route-page="@pge">@pge</a>
                 </li>
             }
         </ul>
@@ -242,10 +242,10 @@
     @if (pager.CurrentPage < pager.TotalPages)
     {
         <li class="page-item">
-            <a class="page-link" asp-controller="Product" asp-action="Index" asp-route-page="@(pager.CurrentPage + 1)">След.</a>
+            <a class="page-link" asp-controller="Group" asp-action="Index" asp-route-page="@(pager.CurrentPage + 1)">След.</a>
         </li>
         <li class="page-item">
-            <a class="page-link" asp-controller="Product" asp-action="Index" asp-route-page="@(pager.TotalPages)">Послед.</a>
+            <a class="page-link" asp-controller="Group" asp-action="Index" asp-route-page="@(pager.TotalPages)">Послед.</a>
         </li>
     }
 
