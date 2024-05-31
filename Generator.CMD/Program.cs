@@ -2,6 +2,6 @@
 
 NotesGenerator notesGenerator = new NotesGenerator();
 
-
+notesGenerator.GenAll();
 
 

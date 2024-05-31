@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 
 namespace Generator.CMD
 {
@@ -13,9 +14,23 @@ namespace Generator.CMD
         private readonly MusicStoreDbContext _dbContext = new MusicStoreDbContext();
         private readonly Parser _parser = new Parser();
 
+
+        public void GenAll()
+        {
+            GenGenres();
+            GenSpecialization();
+            GenOwnershipType();
+            GenListenerType();
+            //GenCity();
+            //GenDistrict();
+            GenGender();
+            GenGroup();
+            GenGroupToGenreAttitude();
+        }
+
         public void GenGenres()
         {
-            var list = _parser.Parse("C:\\Users\\lenka\\Source\\Repos\\MusicStoreInfo\\Generator.CMD\\Dataset\\Genre.txt");
+            var list = _parser.Parse("C:\\Users\\rusta\\source\\repos\\MusicStoreInfo.Web\\Generator.CMD\\Dataset\\Genre.txt");
             for(var i = 0;i < list.Count;i++)
             {
                 _dbContext.Add(new Genre { Name = list[i] });
@@ -25,7 +40,7 @@ namespace Generator.CMD
 
         public void GenSpecialization()
         {
-            var list = _parser.Parse("C:\\Users\\lenka\\Source\\Repos\\MusicStoreInfo\\Generator.CMD\\Dataset\\Specialization.txt");
+            var list = _parser.Parse("C:\\Users\\rusta\\source\\repos\\MusicStoreInfo.Web\\Generator.CMD\\Dataset\\Specialization.txt");
             for(var i = 0;i < list.Count; i++)
             {
                 _dbContext.Add(new Specialization { Name = list[i] });
@@ -35,7 +50,7 @@ namespace Generator.CMD
         
         public void GenOwnershipType()
         {
-            var list = _parser.Parse("C:\\Users\\lenka\\Source\\Repos\\MusicStoreInfo\\Generator.CMD\\Dataset\\OwnershipType.txt");
+            var list = _parser.Parse("C:\\Users\\rusta\\source\\repos\\MusicStoreInfo.Web\\Generator.CMD\\Dataset\\OwnershipType.txt");
             for(var i = 0;i < list.Count; i++)
             {
                 _dbContext.Add(new OwnershipType { Name = list[i] });
@@ -45,7 +60,7 @@ namespace Generator.CMD
 
         public void GenListenerType()
         {
-            var list = _parser.Parse("C:\\Users\\lenka\\Source\\Repos\\MusicStoreInfo\\Generator.CMD\\Dataset\\ListenerType.txt");
+            var list = _parser.Parse("C:\\Users\\rusta\\source\\repos\\MusicStoreInfo.Web\\Generator.CMD\\Dataset\\ListenerType.txt");
             for(var i = 0;i < list.Count; i++)
             {
                 _dbContext.Add(new ListenerType { Name = list[i] });
@@ -55,7 +70,7 @@ namespace Generator.CMD
 
         public void GenCity()
         {
-            var list = _parser.Parse("C:\\Users\\lenka\\Source\\Repos\\MusicStoreInfo\\Generator.CMD\\Dataset\\City.txt");
+            var list = _parser.Parse("C:\\Users\\rusta\\source\\repos\\MusicStoreInfo.Web\\Generator.CMD\\Dataset\\City.txt");
             for(var i = 0;i < list.Count; i++)
             {
                 _dbContext.Add(new City { Name = list[i] });
@@ -65,7 +80,7 @@ namespace Generator.CMD
 
         public void GenDistrict()
         {
-            var list = _parser.ParseCSV("C:\\Users\\lenka\\Source\\Repos\\MusicStoreInfo\\Generator.CMD\\Dataset\\District.csv");
+            var list = _parser.ParseCSV("C:\\Users\\rusta\\source\\repos\\MusicStoreInfo.Web\\Generator.CMD\\Dataset\\District.csv");
             for (var i = 0; i < list.Count; i++)
             {
                 var city = _dbContext.Cities.First(c => c.Name.Equals(list[i].Item1));
@@ -79,7 +94,7 @@ namespace Generator.CMD
 
         public void GenGender()
         {
-            var list = _parser.Parse("C:\\Users\\lenka\\Source\\Repos\\MusicStoreInfo\\Generator.CMD\\Dataset\\Gender.txt");
+            var list = _parser.Parse("C:\\Users\\rusta\\source\\repos\\MusicStoreInfo.Web\\Generator.CMD\\Dataset\\Gender.txt");
             for (var i = 0; i < list.Count; i++)
             {
                 _dbContext.Add(new Gender { Name = list[i] });
@@ -89,17 +104,14 @@ namespace Generator.CMD
 
         public void GenGroup()
         {
-            var list = _parser.Parse("C:\\Users\\lenka\\Source\\Repos\\MusicStoreInfo\\Generator.CMD\\Dataset\\Group.txt");
+            var list = _parser.Parse("C:\\Users\\rusta\\source\\repos\\MusicStoreInfo.Web\\Generator.CMD\\Dataset\\Group.txt");
 
-            // Загрузим существующие группы из базы данных
             var existingGroups = _dbContext.Groups.Select(g => g.Name).ToHashSet(StringComparer.OrdinalIgnoreCase);
 
-            // Используем HashSet для удаления дубликатов в новом списке
             var uniqueList = new HashSet<string>(list, StringComparer.OrdinalIgnoreCase);
 
             foreach (var groupName in uniqueList)
             {
-                // Добавляем только те группы, которые не существуют в базе данных
                 if (!existingGroups.Contains(groupName))
                 {
                     _dbContext.Add(new Group { Name = groupName });
@@ -111,7 +123,7 @@ namespace Generator.CMD
 
         public void GenGroupToGenreAttitude()
         {
-            var list = _parser.ParseCSV("C:\\Users\\lenka\\Source\\Repos\\MusicStoreInfo\\Generator.CMD\\Dataset\\GroupGenre.csv");
+            var list = _parser.ParseCSV("C:\\Users\\rusta\\source\\repos\\MusicStoreInfo.Web\\Generator.CMD\\Dataset\\GroupGenre.csv");
 
             // Загрузим все группы и жанры в память для оптимизации
             var groups = _dbContext.Groups.ToList();
@@ -141,6 +153,30 @@ namespace Generator.CMD
                     }
                 }
             }
+            _dbContext.SaveChanges();
+        }
+
+        public void GenMember()
+        {
+            var list = _parser.ParseCSVMember("C:\\Users\\rusta\\source\\repos\\MusicStoreInfo.Web\\Generator.CMD\\Dataset\\Member.csv");
+
+            var existingMembers = _dbContext.Members.Include(m => m.Gender).Select(m => new { m.Name, m.SecondName, m.Age, Gender = m.Gender.Name }).ToList();
+
+
+            foreach (var member in list)
+            {
+                int gen = 1;
+                if (!existingMembers.Contains(member))
+                {
+                    if (member.Item4 == "Мужской")
+                        gen = 1;
+                    else
+                        gen = 2;
+
+                    _dbContext.Add(new Member { Name = member.Item1, SecondName = member.Item2, Age = member.Item3, GenderId = gen});
+                }
+            }
+
             _dbContext.SaveChanges();
         }
 

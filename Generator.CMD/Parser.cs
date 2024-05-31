@@ -55,5 +55,31 @@ namespace Generator.CMD
 
             return null;
         }
+
+        public List<(string,string,int,string)> ParseCSVMember(string path)
+        {
+            var list = new List<(string, string, int, string)>();
+
+            try
+            {
+                using (var sr = new StreamReader(path))
+                {
+                    while (!sr.EndOfStream)
+                    {
+                        var row = sr.ReadLine();
+                        var columns = row.Split(';').ToList();
+                        list.Add((columns[0], columns[1], int.Parse(columns[2]) , columns[3]));
+                    }
+                }
+
+                return list;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+
+            return null;
+        }
     }
 }
