@@ -23,6 +23,9 @@ namespace MusicStoreInfo.DAL.Repositories
                 .AsNoTracking()
                 .OrderBy(a => a.Id)
                 .Include(a => a.Gender)
+                .Include(a => a.Specializations)
+                .Include(a => a.Groups)
+                    .ThenInclude(g => g.Genres)
                 .ToListAsync();
         }
 

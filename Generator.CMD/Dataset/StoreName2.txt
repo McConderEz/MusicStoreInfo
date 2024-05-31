@@ -1,0 +1,15 @@
+﻿Zone
+Haven
+World
+Emporium
+Paradise
+Center
+House
+Shop
+Station
+Studio
+Den
+Plaza
+Boutique
+Hub
+Corner

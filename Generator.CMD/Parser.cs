@@ -68,6 +68,14 @@ namespace Generator.CMD
                     {
                         var row = sr.ReadLine();
                         var columns = row.Split(';').ToList();
+                        if (string.IsNullOrWhiteSpace(columns[1]))
+                            columns[1] = "null";
+                        if (columns[2] == "-")
+                            columns[2] = new Random().Next(20, 70).ToString();
+                        if (columns[3] == null)
+
+                        if(list.Count == 47)
+                            Console.WriteLine();
                         list.Add((columns[0], columns[1], int.Parse(columns[2]) , columns[3]));
                     }
                 }

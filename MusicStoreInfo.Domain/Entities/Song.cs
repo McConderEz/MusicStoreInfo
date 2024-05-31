@@ -15,7 +15,7 @@ namespace MusicStoreInfo.Domain.Entities
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
         public int AlbumId { get; set; }
-        [MaxLength(50)]
+        [MaxLength(150)]
         public string Name { get; set; } = string.Empty;
         public int Duration { get; set; }        
 

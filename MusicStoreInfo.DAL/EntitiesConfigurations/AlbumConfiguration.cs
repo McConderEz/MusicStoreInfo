@@ -13,8 +13,8 @@ namespace MusicStoreInfo.DAL.EntitiesConfigurations
     {
         public void Configure(EntityTypeBuilder<Album> builder)
         {
-            builder.ToTable<Album>(t => t.HasCheckConstraint("Duration", "Duration >= 0"))
-                   .ToTable<Album>(t => t.HasCheckConstraint("SongsCount", "SongsCount >= 0"))
+            builder.ToTable<Album>(t => t.HasCheckConstraint("SongsCountConstraint", "SongsCount >= 0"))
+                   .ToTable<Album>(t => t.HasCheckConstraint("DurationAlbum", "Duration >= 0"))
                    .ToTable<Album>(t => t.HasCheckConstraint("ReleaseDate", $"YEAR(ReleaseDate) <= YEAR(GETDATE())"));
 
             builder.HasIndex(a => a.GroupId);

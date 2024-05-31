@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace MusicStoreInfo.DAL.Migrations
 {
     /// <inheritdoc />
-    public partial class Migrationver17 : Migration
+    public partial class generator : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -96,7 +96,8 @@ namespace MusicStoreInfo.DAL.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false)
+                    Name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    PrincipalId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -179,27 +180,6 @@ namespace MusicStoreInfo.DAL.Migrations
                         name: "FK_GroupGenreLink_Groups_GroupsId",
                         column: x => x.GroupsId,
                         principalTable: "Groups",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Users",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(25)", maxLength: 25, nullable: false),
-                    Password = table.Column<string>(type: "nvarchar(25)", maxLength: 25, nullable: false),
-                    RoleId = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Users", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Users_Roles_RoleId",
-                        column: x => x.RoleId,
-                        principalTable: "Roles",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -309,7 +289,7 @@ namespace MusicStoreInfo.DAL.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(150)", maxLength: 150, nullable: false),
                     ListenerTypeId = table.Column<int>(type: "int", nullable: false),
                     CompanyId = table.Column<int>(type: "int", nullable: false),
                     GroupId = table.Column<int>(type: "int", nullable: false),
@@ -321,9 +301,9 @@ namespace MusicStoreInfo.DAL.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Albums", x => x.Id);
-                    table.CheckConstraint("Duration", "Duration > 0");
+                    table.CheckConstraint("DurationAlbum", "Duration >= 0");
                     table.CheckConstraint("ReleaseDate", "YEAR(ReleaseDate) <= YEAR(GETDATE())");
-                    table.CheckConstraint("SongsCount", "SongsCount > 0");
+                    table.CheckConstraint("SongsCountConstraint", "SongsCount >= 0");
                     table.ForeignKey(
                         name: "FK_Albums_Companies_CompanyId",
                         column: x => x.CompanyId,
@@ -342,6 +322,39 @@ namespace MusicStoreInfo.DAL.Migrations
                         principalTable: "ListenerTypes",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Users",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    UserName = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    PasswordHash = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ImagePath = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Email = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    PhoneNumber = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    IsBlocked = table.Column<bool>(type: "bit", nullable: false),
+                    StoreId = table.Column<int>(type: "int", nullable: true),
+                    ShoppingCartId = table.Column<int>(type: "int", nullable: false),
+                    PrincipalId = table.Column<int>(type: "int", nullable: false),
+                    RoleId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Users", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Users_Roles_RoleId",
+                        column: x => x.RoleId,
+                        principalTable: "Roles",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Users_Stores_StoreId",
+                        column: x => x.StoreId,
+                        principalTable: "Stores",
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -389,11 +402,57 @@ namespace MusicStoreInfo.DAL.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Songs", x => x.Id);
-                    table.CheckConstraint("Duration1", "Duration > 0");
+                    table.CheckConstraint("DurationSong", "Duration > 0");
                     table.ForeignKey(
                         name: "FK_Songs_Albums_AlbumId",
                         column: x => x.AlbumId,
                         principalTable: "Albums",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "ShoppingCarts",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    UserId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ShoppingCarts", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_ShoppingCarts_Users_UserId",
+                        column: x => x.UserId,
+                        principalTable: "Users",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "ShoppingCartProductLinks",
+                columns: table => new
+                {
+                    ShoppingCartId = table.Column<int>(type: "int", nullable: false),
+                    ProductId = table.Column<int>(type: "int", nullable: false),
+                    Quantity = table.Column<int>(type: "int", nullable: false),
+                    ProductStoreId = table.Column<int>(type: "int", nullable: false),
+                    ProductAlbumId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ShoppingCartProductLinks", x => new { x.ShoppingCartId, x.ProductId });
+                    table.ForeignKey(
+                        name: "FK_ShoppingCartProductLinks_Product_ProductStoreId_ProductAlbumId",
+                        columns: x => new { x.ProductStoreId, x.ProductAlbumId },
+                        principalTable: "Product",
+                        principalColumns: new[] { "StoreId", "AlbumId" },
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_ShoppingCartProductLinks_ShoppingCarts_ShoppingCartId",
+                        column: x => x.ShoppingCartId,
+                        principalTable: "ShoppingCarts",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -464,6 +523,17 @@ namespace MusicStoreInfo.DAL.Migrations
                 column: "Id");
 
             migrationBuilder.CreateIndex(
+                name: "IX_ShoppingCartProductLinks_ProductStoreId_ProductAlbumId",
+                table: "ShoppingCartProductLinks",
+                columns: new[] { "ProductStoreId", "ProductAlbumId" });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ShoppingCarts_UserId",
+                table: "ShoppingCarts",
+                column: "UserId",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Songs_AlbumId",
                 table: "Songs",
                 column: "AlbumId");
@@ -492,6 +562,11 @@ namespace MusicStoreInfo.DAL.Migrations
                 name: "IX_Users_RoleId",
                 table: "Users",
                 column: "RoleId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Users_StoreId",
+                table: "Users",
+                column: "StoreId");
         }
 
         /// <inheritdoc />
@@ -507,13 +582,10 @@ namespace MusicStoreInfo.DAL.Migrations
                 name: "MemberSpecializationLink");
 
             migrationBuilder.DropTable(
-                name: "Product");
+                name: "ShoppingCartProductLinks");
 
             migrationBuilder.DropTable(
                 name: "Songs");
-
-            migrationBuilder.DropTable(
-                name: "Users");
 
             migrationBuilder.DropTable(
                 name: "Genres");
@@ -525,19 +597,19 @@ namespace MusicStoreInfo.DAL.Migrations
                 name: "Specializations");
 
             migrationBuilder.DropTable(
-                name: "Stores");
+                name: "Product");
 
             migrationBuilder.DropTable(
-                name: "Albums");
-
-            migrationBuilder.DropTable(
-                name: "Roles");
+                name: "ShoppingCarts");
 
             migrationBuilder.DropTable(
                 name: "Genders");
 
             migrationBuilder.DropTable(
-                name: "OwnershipTypes");
+                name: "Albums");
+
+            migrationBuilder.DropTable(
+                name: "Users");
 
             migrationBuilder.DropTable(
                 name: "Companies");
@@ -549,7 +621,16 @@ namespace MusicStoreInfo.DAL.Migrations
                 name: "ListenerTypes");
 
             migrationBuilder.DropTable(
+                name: "Roles");
+
+            migrationBuilder.DropTable(
+                name: "Stores");
+
+            migrationBuilder.DropTable(
                 name: "Districts");
+
+            migrationBuilder.DropTable(
+                name: "OwnershipTypes");
 
             migrationBuilder.DropTable(
                 name: "Cities");

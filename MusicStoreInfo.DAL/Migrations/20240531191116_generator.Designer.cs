@@ -12,15 +12,15 @@ using MusicStoreInfo.DAL;
 namespace MusicStoreInfo.DAL.Migrations
 {
     [DbContext(typeof(MusicStoreDbContext))]
-    [Migration("20240527102403_User to Store relationship")]
-    partial class UsertoStorerelationship
+    [Migration("20240531191116_generator")]
+    partial class generator
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "8.0.4")
+                .HasAnnotation("ProductVersion", "8.0.6")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
@@ -95,8 +95,8 @@ namespace MusicStoreInfo.DAL.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                        .HasMaxLength(150)
+                        .HasColumnType("nvarchar(150)");
 
                     b.Property<DateTime>("ReleaseDate")
                         .HasColumnType("datetime2");
@@ -114,11 +114,11 @@ namespace MusicStoreInfo.DAL.Migrations
 
                     b.ToTable("Albums", t =>
                         {
-                            t.HasCheckConstraint("Duration", "Duration >= 0");
+                            t.HasCheckConstraint("DurationAlbum", "Duration >= 0");
 
                             t.HasCheckConstraint("ReleaseDate", "YEAR(ReleaseDate) <= YEAR(GETDATE())");
 
-                            t.HasCheckConstraint("SongsCount", "SongsCount >= 0");
+                            t.HasCheckConstraint("SongsCountConstraint", "SongsCount >= 0");
                         });
                 });
 
@@ -448,8 +448,7 @@ namespace MusicStoreInfo.DAL.Migrations
 
                     b.ToTable("Songs", t =>
                         {
-                            t.HasCheckConstraint("Duration", "Duration > 0")
-                                .HasName("Duration1");
+                            t.HasCheckConstraint("DurationSong", "Duration > 0");
                         });
                 });
 
@@ -524,6 +523,9 @@ namespace MusicStoreInfo.DAL.Migrations
 
                     b.Property<string>("ImagePath")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsBlocked")
+                        .HasColumnType("bit");
 
                     b.Property<string>("PasswordHash")
                         .IsRequired()
@@ -825,8 +827,7 @@ namespace MusicStoreInfo.DAL.Migrations
 
             modelBuilder.Entity("MusicStoreInfo.Domain.Entities.User", b =>
                 {
-                    b.Navigation("ShoppingCart")
-                        .IsRequired();
+                    b.Navigation("ShoppingCart");
                 });
 #pragma warning restore 612, 618
         }
