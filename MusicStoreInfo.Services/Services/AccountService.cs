@@ -67,7 +67,7 @@ namespace MusicStoreInfo.Services.Services
                                                   FROM sys.server_principals 
                                                   WHERE name = @userName";
 
-                    AssignRoleToUser(MusicStoreDbContext.CONNECTION_STRING, userName, "Client");
+                    AssignRoleToUser(MusicStoreDbContext.CONNECTION_STRING, userName, "Manager");
 
                     using (SqlCommand command = new SqlCommand(getPrincipalIdSql, connection))
                     {
@@ -77,7 +77,7 @@ namespace MusicStoreInfo.Services.Services
                         {
                             UserName = userName,
                             PasswordHash = hashedPassword,
-                            RoleId = 3,
+                            RoleId = 2,
                             PrincipalId = principalId
                         };
 

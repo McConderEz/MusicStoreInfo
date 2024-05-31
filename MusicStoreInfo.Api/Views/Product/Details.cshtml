@@ -54,6 +54,42 @@
         </dd>
     </dl>
 </div>
+
+<h2>Песни альбома</h2>
+<table class="table table-bordered">
+    <tr>
+        <th>
+            Id
+        </th>
+        <th>
+            Название
+        </th>
+        <th>
+            Длительность
+        </th>
+        <th>
+            Альбом
+        </th>
+    </tr>
+    @foreach (var item in Model.Album.Songs)
+    {
+        <tr>
+            <td>
+                @item.Id
+            </td>
+            <td>
+                @item.Name
+            </td>
+            <td>
+                @item.Duration
+            </td>
+            <td>
+                @item.Album.Name
+            </td>
+        </tr>
+    }
+</table>
+
 <div>
     @if (User.IsInRole("Manager"))
     {

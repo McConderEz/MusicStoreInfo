@@ -394,6 +394,8 @@ namespace Generator.CMD
 
                         _dbContext.Songs.Add(song);
                         album.Songs.Add(song);
+                        album.Duration += song.Duration;
+                        album.SongsCount++;
                     }
                 }
             }

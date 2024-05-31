@@ -20,12 +20,12 @@ namespace MusicStoreInfo.Api.Controllers
         //TODO: Возможность ставить рейтинг и отзывы
         //TODO: Добавить пагинацию на все страницы
         //TODO: Оплатить 
-
-
         //TODO: Исправить пагинацию и добавить везде
+        //TODO: Уравнять кнопки
+        //TODO: Добавить стилей
 
-        //TODO: Сделать 5,6,7,8
-        //TODO: Сделать отдельным модулем генерацию записей для таблиц и справочников 
+
+        //TODO: Сделать 5,6,7,8 + график и экспорт в эксель
 
         private readonly IAlbumService _service;
         private readonly IImageService _imageService;
