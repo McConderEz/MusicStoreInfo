@@ -49,6 +49,9 @@ namespace MusicStoreInfo.Api.Controllers
             var data = companies.Skip(recSkip).Take(pageSize).ToList();
             ViewBag.Pager = pager;
             ViewBag.CurrentFilter = searchString;
+            ViewBag.CityIds = cityIds ?? new List<int>();
+            ViewBag.DistrictIds = districtIds ?? new List<int>();
+            ViewBag.SortOrder = sortOrder;
 
             var companyViewModel = new CompanyViewModel
             {

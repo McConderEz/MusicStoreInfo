@@ -27,7 +27,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Companis</title>
+    <title>Companies</title>
     <style>
         .filter-sidebar {
             position: fixed;
@@ -59,11 +59,7 @@
                 margin-bottom: 20px;
             }
 
-        .filter-button {
-            position: fixed;
-            top: 80px;
-            left: 20px;
-            z-index: 999;
+        .filter-button, .search-button {
             background-color: #007bff;
             color: white;
             border: none;
@@ -72,9 +68,12 @@
             cursor: pointer;
             box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
             transition: background-color 0.3s ease;
+            margin-left: 10px;
+            flex: 0 0 auto; /* Prevent flex-grow */
+            white-space: nowrap; /* Prevent text wrapping */
         }
 
-            .filter-button:hover {
+            .filter-button:hover, .search-button:hover {
                 background-color: #0056b3;
             }
 
@@ -122,31 +121,25 @@
             .close-button:hover {
                 background-color: #c82333;
             }
+
+        .form-inline {
+            display: flex;
+            align-items: center;
+        }
+
+        .form-control {
+            flex: 1;
+        }
     </style>
 </head>
 
-<form method="get" action="@Url.Action("Index")" class="form-inline mb-3 d-flex">
-    <input type="text" name="searchString" class="form-control mr-2" placeholder="Поиск по названиям" value="@ViewBag.CurrentFilter">
-    <button type="submit" class="btn btn-outline-success">Поиск</button>
-</form>
-
 <body>
-    <div class="dropdown">
-        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            Сортировка
-        </button>
-        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-            <a class="dropdown-item" href="@Url.Action("Index", new { sortOrder = "name_asc" })">По имени</a>
-        </div>
-    </div>
+    <form method="get" action="@Url.Action("Index")" class="form-inline mb-3 d-flex">
+        <input type="text" name="searchString" class="form-control mr-2" placeholder="Поиск по названиям" value="@ViewBag.CurrentFilter">
+        <button type="submit" class="btn btn-outline-success search-button">Поиск</button>
+        <button type="button" class="filter-button" onclick="toggleFilterSidebar()">Фильтры</button>
+    </form>
 
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-</body>
-
-<body>
-    <button class="filter-button" onclick="toggleFilterSidebar()">Фильтры</button>
     <div class="filter-sidebar" id="filter-sidebar">
         <button class="close-button" onclick="toggleFilterSidebar()">×</button>
         <h3>Фильтры</h3>
@@ -176,6 +169,7 @@
             <button type="submit" class="btn btn-primary">Применить фильтры</button>
         </form>
     </div>
+
     <script>
         document.querySelectorAll('.city-checkbox').forEach(function (checkbox) {
             checkbox.addEventListener('change', function () {
@@ -186,14 +180,30 @@
                 }
             });
         });
-    </script>
-    <script>
+
         function toggleFilterSidebar() {
             var sidebar = document.getElementById('filter-sidebar');
             sidebar.classList.toggle('open');
         }
     </script>
 </body>
+
+<body>
+    <div class="dropdown">
+        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Сортировка
+        </button>
+        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+            <a class="dropdown-item" href="@Url.Action("Index", new { sortOrder = "name_asc" })">По имени</a>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+
+
 
 <table class="table table-bordered">
     <thead>
@@ -254,36 +264,57 @@
     @if (pager.TotalPages > 0)
     {
         <ul class="pagination justify-content-end">
-
-
             @if (pager.CurrentPage > 1)
             {
                 <li class="page-item">
-                    <a class="page-link" asp-controller="Product" asp-action="Index" asp-route-page="1">Первая</a>
+                    <a class="page-link" asp-controller="Company" asp-action="Index"
+                       asp-route-page="1"
+                       asp-route-cityIds="@ViewBag.CityIds != null ? string.Join(" ,", ViewBag.CityIds) : null"
+                       asp-route-districtIds="@ViewBag.DistrictIds != null ? string.Join(" ,", ViewBag.DistrictIds) : null"
+                       asp-route-sortOrder="@ViewBag.SortOrder"
+                       asp-route-searchString="@ViewBag.CurrentFilter">Первая</a>
                 </li>
                 <li>
-                    <a class="page-link" asp-controller="Product" asp-action="Index" asp-route-page="@(pager.CurrentPage - 1)">Пред.</a>
+                    <a class="page-link" asp-controller="Company" asp-action="Index"
+                       asp-route-page="@(pager.CurrentPage - 1)"
+                       asp-route-cityIds="@ViewBag.CityIds != null ? string.Join(" ,", ViewBag.CityIds) : null"
+                       asp-route-districtIds="@ViewBag.DistrictIds != null ? string.Join(" ,", ViewBag.DistrictIds) : null"
+                       asp-route-sortOrder="@ViewBag.SortOrder"
+                       asp-route-searchString="@ViewBag.CurrentFilter">Пред.</a>
                 </li>
             }
-
 
             @for (var pge = pager.StartPage; pge <= pager.EndPage; pge++)
             {
                 <li class="page-item @(pge == pager.CurrentPage ? "active" : "")">
-                    <a class="page-link" asp-controller="Product" asp-action="Index" asp-route-page="@pge">@pge</a>
+                    <a class="page-link" asp-controller="Company" asp-action="Index"
+                       asp-route-page="@pge"
+                       asp-route-cityIds="@ViewBag.CityIds != null ? string.Join(" ,", ViewBag.CityIds) : null"
+                       asp-route-districtIds="@ViewBag.DistrictIds != null ? string.Join(" ,", ViewBag.DistrictIds) : null"
+                       asp-route-sortOrder="@ViewBag.SortOrder"
+                       asp-route-searchString="@ViewBag.CurrentFilter">@pge</a>
+                </li>
+            }
+
+            @if (pager.CurrentPage < pager.TotalPages)
+            {
+                <li class="page-item">
+                    <a class="page-link" asp-controller="Company" asp-action="Index"
+                       asp-route-page="@(pager.CurrentPage + 1)"
+                       asp-route-cityIds="@ViewBag.CityIds != null ? string.Join(" ,", ViewBag.CityIds) : null"
+                       asp-route-districtIds="@ViewBag.DistrictIds != null ? string.Join(" ,", ViewBag.DistrictIds) : null"
+                       asp-route-sortOrder="@ViewBag.SortOrder"
+                       asp-route-searchString="@ViewBag.CurrentFilter">След.</a>
+                </li>
+                <li class="page-item">
+                    <a class="page-link" asp-controller="Company" asp-action="Index"
+                       asp-route-page="@(pager.TotalPages)"
+                       asp-route-cityIds="@ViewBag.CityIds != null ? string.Join(" ,", ViewBag.CityIds) : null"
+                       asp-route-districtIds="@ViewBag.DistrictIds != null ? string.Join(" ,", ViewBag.DistrictIds) : null"
+                       asp-route-sortOrder="@ViewBag.SortOrder"
+                       asp-route-searchString="@ViewBag.CurrentFilter">Послед.</a>
                 </li>
             }
         </ul>
     }
-
-    @if (pager.CurrentPage < pager.TotalPages)
-    {
-        <li class="page-item">
-            <a class="page-link" asp-controller="Product" asp-action="Index" asp-route-page="@(pager.CurrentPage + 1)">След.</a>
-        </li>
-        <li class="page-item">
-            <a class="page-link" asp-controller="Product" asp-action="Index" asp-route-page="@(pager.TotalPages)">Послед.</a>
-        </li>
-    }
-
 </div>

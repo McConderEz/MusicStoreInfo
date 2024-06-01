@@ -57,6 +57,15 @@ namespace MusicStoreInfo.Api.Controllers
             ViewBag.Pager = pager;
             ViewBag.CurrentFilter = searchString;
 
+            ViewBag.MinPrice = minPrice;
+            ViewBag.MaxPrice = maxPrice;
+            ViewBag.MinQuantity = minQuantity;
+            ViewBag.MaxQuantity = maxQuantity;
+            ViewBag.StoreIds = storeIds ?? new List<int>();
+            ViewBag.GroupIds = groupIds ?? new List<int>();
+            ViewBag.GenreIds = genreIds ?? new List<int>();
+            ViewBag.SortOrder = sortOrder;
+
             var productViewModel = new ProductViewModel
             {
                 Products = data,

@@ -61,11 +61,7 @@
                 margin-bottom: 20px;
             }
 
-        .filter-button {
-            position: fixed;
-            top: 80px;
-            left: 20px;
-            z-index: 999;
+        .filter-button, .search-button {
             background-color: #007bff;
             color: white;
             border: none;
@@ -74,9 +70,12 @@
             cursor: pointer;
             box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
             transition: background-color 0.3s ease;
+            margin-left: 10px;
+            flex: 0 0 auto; /* Prevent flex-grow */
+            white-space: nowrap; /* Prevent text wrapping */
         }
 
-            .filter-button:hover {
+            .filter-button:hover, .search-button:hover {
                 background-color: #0056b3;
             }
 
@@ -124,35 +123,25 @@
             .close-button:hover {
                 background-color: #c82333;
             }
+
+        .form-inline {
+            display: flex;
+            align-items: center;
+        }
+
+        .form-control {
+            flex: 1;
+        }
     </style>
 </head>
 
-<form method="get" action="@Url.Action("Index")" class="form-inline mb-3 d-flex">
-    <input type="text" name="searchString" class="form-control mr-2" placeholder="Поиск по названиям" value="@ViewBag.CurrentFilter">
-    <button type="submit" class="btn btn-outline-success">Поиск</button>
-</form>
-
 <body>
-    <div class="dropdown">
-        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            Сортировка
-        </button>
-        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-            <a class="dropdown-item" href="@Url.Action("Index", new { sortOrder = "duration_asc" })">Сначала меньшей длительности</a>
-            <a class="dropdown-item" href="@Url.Action("Index", new { sortOrder = "duration_desc" })">Сначала большей длительности</a>
-            <a class="dropdown-item" href="@Url.Action("Index", new { sortOrder = "songCount" })">По количеству песен</a>
-            <a class="dropdown-item" href="@Url.Action("Index", new { sortOrder = "date_desc" })">Дата(по убыванию)</a>
-            <a class="dropdown-item" href="@Url.Action("Index", new { sortOrder = "date_asc" })">Дата(по возрастанию)</a>
-        </div>
-    </div>
+    <form method="get" action="@Url.Action("Index")" class="form-inline mb-3 d-flex">
+        <input type="text" name="searchString" class="form-control mr-2" placeholder="Поиск по названиям" value="@ViewBag.CurrentFilter">
+        <button type="submit" class="btn btn-outline-success search-button">Поиск</button>
+        <button type="button" class="btn btn-outline-primary filter-button" onclick="toggleFilterSidebar()">Фильтры</button>
+    </form>
 
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-</body>
-
-<body>
-    <button class="filter-button" onclick="toggleFilterSidebar()">Фильтры</button>
     <div class="filter-sidebar" id="filter-sidebar">
         <button class="close-button" onclick="toggleFilterSidebar()">×</button>
         <h3>Фильтры</h3>
@@ -174,9 +163,9 @@
             <div class="filter-group">
                 <h4>Дата выхода альбома</h4>
                 <label for="minDate">от</label>
-                <input type="date" name="minDate" id="minDate" min="01.01.1860" placeholder="@(Model.Albums.Any() ? @Model.Albums.Min(a => a.ReleaseDate).ToString() :  0)">
-                <label for="date">до</label>
-                <input type="date" name="maxDate" id="maxDate" min="01.01.1860" placeholder="@(Model.Albums.Any() ? @Model.Albums.Max(a => a.ReleaseDate).ToString() :  0)">
+                <input type="date" name="minDate" id="minDate" min="1860-01-01" placeholder="@(Model.Albums.Any() ? @Model.Albums.Min(a => a.ReleaseDate).ToString() :  0)">
+                <label for="maxDate">до</label>
+                <input type="date" name="maxDate" id="maxDate" min="1860-01-01" placeholder="@(Model.Albums.Any() ? @Model.Albums.Max(a => a.ReleaseDate).ToString() :  0)">
             </div>
             <div class="filter-group">
                 <h4>Тип среды</h4>
@@ -222,6 +211,27 @@
         }
     </script>
 </body>
+
+<body>
+    <div class="dropdown">
+        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Сортировка
+        </button>
+        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+            <a class="dropdown-item" href="@Url.Action("Index", new { sortOrder = "duration_asc" })">Сначала меньшей длительности</a>
+            <a class="dropdown-item" href="@Url.Action("Index", new { sortOrder = "duration_desc" })">Сначала большей длительности</a>
+            <a class="dropdown-item" href="@Url.Action("Index", new { sortOrder = "songCount" })">По количеству песен</a>
+            <a class="dropdown-item" href="@Url.Action("Index", new { sortOrder = "date_desc" })">Дата(по убыванию)</a>
+            <a class="dropdown-item" href="@Url.Action("Index", new { sortOrder = "date_asc" })">Дата(по возрастанию)</a>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+
+
 
 
 <table class="table table-bordered">
@@ -285,39 +295,96 @@
 </table>
 
 <div class="container">
-    @if (pager.TotalPages > 0)
+    @if (ViewBag.Pager.TotalPages > 0)
     {
         <ul class="pagination justify-content-end">
-
-
-            @if (pager.CurrentPage > 1)
+            @if (ViewBag.Pager.CurrentPage > 1)
             {
                 <li class="page-item">
-                    <a class="page-link" asp-controller="Product" asp-action="Index" asp-route-page="1">Первая</a>
+                    <a class="page-link" asp-controller="Album" asp-action="Index"
+                       asp-route-page="1"
+                       asp-route-minSongsCount="@ViewBag.MinSongsCount"
+                       asp-route-maxSongsCount="@ViewBag.MaxSongsCount"
+                       asp-route-minDuration="@ViewBag.MinDuration"
+                       asp-route-maxDuration="@ViewBag.MaxDuration"
+                       asp-route-minDate="@ViewBag.MinDate"
+                       asp-route-maxDate="@ViewBag.MaxDate"
+                       asp-route-listenerTypeIds="@(ViewBag.ListenerTypeIds != null ? string.Join(",", ViewBag.ListenerTypeIds) : null)"
+                       asp-route-groupIds="@(ViewBag.GroupIds != null ? string.Join(",", ViewBag.GroupIds) : null)"
+                       asp-route-genreIds="@(ViewBag.GenreIds != null ? string.Join(",", ViewBag.GenreIds) : null)"
+                       asp-route-sortOrder="@ViewBag.SortOrder"
+                       asp-route-searchString="@ViewBag.CurrentFilter">Первая</a>
                 </li>
-                <li>
-                    <a class="page-link" asp-controller="Product" asp-action="Index" asp-route-page="@(pager.CurrentPage - 1)">Пред.</a>
+                <li class="page-item">
+                    <a class="page-link" asp-controller="Album" asp-action="Index"
+                       asp-route-page="@(ViewBag.Pager.CurrentPage - 1)"
+                       asp-route-minSongsCount="@ViewBag.MinSongsCount"
+                       asp-route-maxSongsCount="@ViewBag.MaxSongsCount"
+                       asp-route-minDuration="@ViewBag.MinDuration"
+                       asp-route-maxDuration="@ViewBag.MaxDuration"
+                       asp-route-minDate="@ViewBag.MinDate"
+                       asp-route-maxDate="@ViewBag.MaxDate"
+                       asp-route-listenerTypeIds="@(ViewBag.ListenerTypeIds != null ? string.Join(",", ViewBag.ListenerTypeIds) : null)"
+                       asp-route-groupIds="@(ViewBag.GroupIds != null ? string.Join(",", ViewBag.GroupIds) : null)"
+                       asp-route-genreIds="@(ViewBag.GenreIds != null ? string.Join(",", ViewBag.GenreIds) : null)"
+                       asp-route-sortOrder="@ViewBag.SortOrder"
+                       asp-route-searchString="@ViewBag.CurrentFilter">Пред.</a>
                 </li>
             }
 
-
-            @for (var pge = pager.StartPage; pge <= pager.EndPage; pge++)
+            @for (var pge = ViewBag.Pager.StartPage; pge <= ViewBag.Pager.EndPage; pge++)
             {
-                <li class="page-item @(pge == pager.CurrentPage ? "active" : "")">
-                    <a class="page-link" asp-controller="Product" asp-action="Index" asp-route-page="@pge">@pge</a>
+                <li class="page-item @(pge == ViewBag.Pager.CurrentPage ? "active" : "")">
+                    <a class="page-link" asp-controller="Album" asp-action="Index"
+                       asp-route-page="@pge"
+                       asp-route-minSongsCount="@ViewBag.MinSongsCount"
+                       asp-route-maxSongsCount="@ViewBag.MaxSongsCount"
+                       asp-route-minDuration="@ViewBag.MinDuration"
+                       asp-route-maxDuration="@ViewBag.MaxDuration"
+                       asp-route-minDate="@ViewBag.MinDate"
+                       asp-route-maxDate="@ViewBag.MaxDate"
+                       asp-route-listenerTypeIds="@(ViewBag.ListenerTypeIds != null ? string.Join(",", ViewBag.ListenerTypeIds) : null)"
+                       asp-route-groupIds="@(ViewBag.GroupIds != null ? string.Join(",", ViewBag.GroupIds) : null)"
+                       asp-route-genreIds="@(ViewBag.GenreIds != null ? string.Join(",", ViewBag.GenreIds) : null)"
+                       asp-route-sortOrder="@ViewBag.SortOrder"
+                       asp-route-searchString="@ViewBag.CurrentFilter">@pge</a>
+                </li>
+            }
+
+            @if (ViewBag.Pager.CurrentPage < ViewBag.Pager.TotalPages)
+            {
+                <li class="page-item">
+                    <a class="page-link" asp-controller="Album" asp-action="Index"
+                       asp-route-page="@(ViewBag.Pager.CurrentPage + 1)"
+                       asp-route-minSongsCount="@ViewBag.MinSongsCount"
+                       asp-route-maxSongsCount="@ViewBag.MaxSongsCount"
+                       asp-route-minDuration="@ViewBag.MinDuration"
+                       asp-route-maxDuration="@ViewBag.MaxDuration"
+                       asp-route-minDate="@ViewBag.MinDate"
+                       asp-route-maxDate="@ViewBag.MaxDate"
+                       asp-route-listenerTypeIds="@(ViewBag.ListenerTypeIds != null ? string.Join(",", ViewBag.ListenerTypeIds) : null)"
+                       asp-route-groupIds="@(ViewBag.GroupIds != null ? string.Join(",", ViewBag.GroupIds) : null)"
+                       asp-route-genreIds="@(ViewBag.GenreIds != null ? string.Join(",", ViewBag.GenreIds) : null)"
+                       asp-route-sortOrder="@ViewBag.SortOrder"
+                       asp-route-searchString="@ViewBag.CurrentFilter">След.</a>
+                </li>
+                <li class="page-item">
+                    <a class="page-link" asp-controller="Album" asp-action="Index"
+                       asp-route-page="@(ViewBag.Pager.TotalPages)"
+                       asp-route-minSongsCount="@ViewBag.MinSongsCount"
+                       asp-route-maxSongsCount="@ViewBag.MaxSongsCount"
+                       asp-route-minDuration="@ViewBag.MinDuration"
+                       asp-route-maxDuration="@ViewBag.MaxDuration"
+                       asp-route-minDate="@ViewBag.MinDate"
+                       asp-route-maxDate="@ViewBag.MaxDate"
+                       asp-route-listenerTypeIds="@(ViewBag.ListenerTypeIds != null ? string.Join(",", ViewBag.ListenerTypeIds) : null)"
+                       asp-route-groupIds="@(ViewBag.GroupIds != null ? string.Join(",", ViewBag.GroupIds) : null)"
+                       asp-route-genreIds="@(ViewBag.GenreIds != null ? string.Join(",", ViewBag.GenreIds) : null)"
+                       asp-route-sortOrder="@ViewBag.SortOrder"
+                       asp-route-searchString="@ViewBag.CurrentFilter">Послед.</a>
                 </li>
             }
         </ul>
     }
-
-    @if (pager.CurrentPage < pager.TotalPages)
-    {
-        <li class="page-item">
-            <a class="page-link" asp-controller="Product" asp-action="Index" asp-route-page="@(pager.CurrentPage + 1)">След.</a>
-        </li>
-        <li class="page-item">
-            <a class="page-link" asp-controller="Product" asp-action="Index" asp-route-page="@(pager.TotalPages)">Послед.</a>
-        </li>
-    }
-
 </div>
+

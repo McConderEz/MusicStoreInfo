@@ -24,10 +24,9 @@ namespace MusicStoreInfo.Api.Controllers
 
         [HttpGet]
         public IActionResult Index(int page = 1, DateTime? minDate = null, DateTime? maxDate = null, List<int> ownershipTypeIds = null,
-                                   List<int> cityIds = null, List<int> districtIds = null, string sortOrder = null, string searchString = null)
+                           List<int> cityIds = null, List<int> districtIds = null, string sortOrder = null, string searchString = null)
         {
             var stores = _service.GetAllAsync().Result;
-
 
             stores = Filter(minDate, maxDate, ownershipTypeIds, cityIds, districtIds, stores);
 
@@ -48,6 +47,13 @@ namespace MusicStoreInfo.Api.Controllers
             var data = stores.Skip(recSkip).Take(pageSize).ToList();
             ViewBag.Pager = pager;
             ViewBag.CurrentFilter = searchString;
+
+            ViewBag.MinDate = minDate;
+            ViewBag.MaxDate = maxDate;
+            ViewBag.OwnershipTypeIds = ownershipTypeIds ?? new List<int>();
+            ViewBag.CityIds = cityIds ?? new List<int>();
+            ViewBag.DistrictIds = districtIds ?? new List<int>();
+            ViewBag.SortOrder = sortOrder;
 
             var storeViewModel = new StoreViewModel
             {

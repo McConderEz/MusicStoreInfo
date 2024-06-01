@@ -58,6 +58,8 @@ namespace MusicStoreInfo.Api.Controllers
             var data = groups.Skip(recSkip).Take(pageSize).ToList();
             ViewBag.Pager = pager;
             ViewBag.CurrentFilter = searchString;
+            ViewBag.GenreIds = genreIds ?? new List<int>();
+            ViewBag.SortOrder = sortOrder;
 
             var groupViewModel = new GroupIndexViewModel
             {

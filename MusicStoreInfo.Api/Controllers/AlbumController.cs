@@ -25,6 +25,7 @@ namespace MusicStoreInfo.Api.Controllers
         //TODO: Добавить стилей
 
 
+        //TODO: Исправлен вид пагинации, но не исправлено запоминание контекста фильтрации
         //TODO: Сделать 5,6,7,8 + график и экспорт в эксель
 
         private readonly IAlbumService _service;
@@ -74,6 +75,16 @@ namespace MusicStoreInfo.Api.Controllers
             ViewBag.Pager = pager;
             ViewBag.CurrentFilter = searchString;
 
+            ViewBag.MinSongsCount = minSongsCount;
+            ViewBag.MaxSongsCount = maxSongsCount;
+            ViewBag.MinDuration = minDuration;
+            ViewBag.MaxDuration = maxDuration;
+            ViewBag.MinDate = minDate;
+            ViewBag.MaxDate = maxDate;
+            ViewBag.ListenerTypeIds = listenerTypeIds ?? new List<int>();
+            ViewBag.GroupIds = groupIds ?? new List<int>();
+            ViewBag.GenreIds = genreIds ?? new List<int>();
+            ViewBag.SortOrder = sortOrder;
             var albumIndexViewModel = new AlbumIndexViewModel
             {
                 Albums = data,

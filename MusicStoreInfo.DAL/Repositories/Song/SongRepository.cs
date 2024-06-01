@@ -24,6 +24,7 @@ namespace MusicStoreInfo.DAL.Repositories
                 .AsNoTracking()
                 .OrderBy(a => a.Id)
                 .Include(a => a.Album)
+                    .ThenInclude(a => a.Group)
                 .ToListAsync();
         }
 

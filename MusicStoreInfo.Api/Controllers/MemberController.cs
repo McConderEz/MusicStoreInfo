@@ -30,28 +30,39 @@ namespace MusicStoreInfo.Api.Controllers
         {
             var members = _service.GetAllAsync().Result;
 
+            // Фильтрация участников
+            members = Filter(genderIds, specializationIds, groupIds, genreIds, members);
 
-            members = Filter(genderIds, specializationIds,groupIds, genreIds, members);
-
+            // Поиск по строке
             if (!string.IsNullOrEmpty(searchString))
             {
                 members = members.Where(p => p.Name.Contains(searchString, StringComparison.OrdinalIgnoreCase)
                                         || p.SecondName.Contains(searchString, StringComparison.OrdinalIgnoreCase)).ToList();
             }
 
+            // Сортировка участников
             members = Sort(sortOrder, members);
 
             const int pageSize = 10;
             if (page < 1)
                 page = 1;
 
+            // Пагинация
             int recsCount = members.Count;
             var pager = new Pager(recsCount, page, pageSize);
             int recSkip = (page - 1) * pageSize;
             var data = members.Skip(recSkip).Take(pageSize).ToList();
+
+            // Сохранение параметров в ViewBag
             ViewBag.Pager = pager;
             ViewBag.CurrentFilter = searchString;
+            ViewBag.GenderIds = genderIds ?? new List<int>();
+            ViewBag.SpecializationIds = specializationIds ?? new List<int>();
+            ViewBag.GroupIds = groupIds ?? new List<int>();
+            ViewBag.GenreIds = genreIds ?? new List<int>();
+            ViewBag.SortOrder = sortOrder;
 
+            // Формирование ViewModel
             var memberIndexViewModel = new MemberIndexViewModel
             {
                 Members = data,

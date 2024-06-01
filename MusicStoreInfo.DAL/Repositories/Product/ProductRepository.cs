@@ -24,6 +24,7 @@ namespace MusicStoreInfo.DAL.Repositories
                 .OrderBy(a => a.Id)
                 .Include(a => a.Album)
                     .ThenInclude(a => a.Group)
+                        .ThenInclude(g => g.Genres)
                 .Include(a => a.Store)
                     .ThenInclude(s => s.District)
                         .ThenInclude(d => d.City)
@@ -36,6 +37,8 @@ namespace MusicStoreInfo.DAL.Repositories
                 .AsNoTracking()
                 .Include(a => a.Album)
                     .ThenInclude(a => a.Group)
+                .Include(a => a.Album)
+                    .ThenInclude(a => a.Songs)
                 .Include(a => a.Store)
                 .FirstOrDefaultAsync(a => a.Id == id);
         }

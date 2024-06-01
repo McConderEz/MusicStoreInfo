@@ -47,7 +47,9 @@ namespace MusicStoreInfo.Api.Controllers
             var data = songs.Skip(recSkip).Take(pageSize).ToList();
             ViewBag.Pager = pager;
             ViewBag.CurrentFilter = searchString;
-
+            ViewBag.MinDuration = minDuration;
+            ViewBag.MaxDuration = maxDuration;
+            ViewBag.SortOrder = sortOrder;
             return View(data);
         }
 
