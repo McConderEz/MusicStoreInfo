@@ -15,7 +15,7 @@ namespace Generator.CMD
         private readonly MusicStoreDbContext _dbContext = new MusicStoreDbContext();
         private readonly Parser _parser = new Parser();
 
-        private const string PATH = "C:\\Users\\lenka\\source\\repos\\MusicStoreInfo";
+        private const string PATH = "C:\\Users\\rusta\\source\\repos\\MusicStoreInfo.Web";
       
         public void GenAll()
         {

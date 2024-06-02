@@ -13,7 +13,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MusicStoreInfo.Api", "Music
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MusicStoreInfo.Infrastructure", "MusicStoreInfo.Infrastructure\MusicStoreInfo.Infrastructure.csproj", "{2262BDC2-DC41-498D-BAFF-7A8010844EFC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Generator.CMD", "Generator.CMD\Generator.CMD.csproj", "{F4099D13-757F-416D-842D-C7684E4705D2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Generator.CMD", "Generator.CMD\Generator.CMD.csproj", "{F4099D13-757F-416D-842D-C7684E4705D2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GenToPostresqlJsonData", "GenToPostresqlJsonData\GenToPostresqlJsonData.csproj", "{3E37A572-B21F-4316-A24A-431BD8BCA0EA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -45,6 +47,10 @@ Global
 		{F4099D13-757F-416D-842D-C7684E4705D2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F4099D13-757F-416D-842D-C7684E4705D2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F4099D13-757F-416D-842D-C7684E4705D2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3E37A572-B21F-4316-A24A-431BD8BCA0EA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3E37A572-B21F-4316-A24A-431BD8BCA0EA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3E37A572-B21F-4316-A24A-431BD8BCA0EA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3E37A572-B21F-4316-A24A-431BD8BCA0EA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

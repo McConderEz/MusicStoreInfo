@@ -2,7 +2,7 @@
 
 NotesGenerator notesGenerator = new NotesGenerator();
 
-notesGenerator.GenProduct();
-//notesGenerator.GenAll();
+//notesGenerator.GenProduct();
+notesGenerator.GenAll();
 
 
