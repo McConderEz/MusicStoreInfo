@@ -1,0 +1,66 @@
+﻿@model IEnumerable<MusicStoreInfo.Api.Controllers.TopGenreViewModel>
+
+@{
+    ViewData["Title"] = "Top 10 Most Favourite Genres";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>10 Самых популярных жанров</h1>
+<a asp-action="ExportTop10MostFavouriteGenreToExcel" class="btn btn-primary">Экспорт в Excel</a>
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>
+                Название
+            </th>
+            <th>
+                Количество альбомов
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.GenreName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.AlbumCount)
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<canvas id="genreChart" width="400" height="200"></canvas>
+
+<script>
+    var ctx = document.getElementById('genreChart').getContext('2d');
+    var chartData = {
+        labels: @Html.Raw(Json.Serialize(Model.Select(m => m.GenreName))),
+        datasets: [{
+            label: 'Количество альбомов',
+            data: @Html.Raw(Json.Serialize(Model.Select(m => m.AlbumCount))),
+            backgroundColor: 'rgba(54, 162, 235, 0.2)',
+            borderColor: 'rgba(54, 162, 235, 1)',
+            borderWidth: 1
+        }]
+    };
+
+    var genreChart = new Chart(ctx, {
+        type: 'bar',
+        data: chartData,
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+</script>

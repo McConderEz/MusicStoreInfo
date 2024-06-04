@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Conventions;
 using MusicStoreInfo.DAL;
@@ -48,6 +49,42 @@ namespace MusicStoreInfo.Api.Controllers
             if (!ModelState.IsValid)
             {
                 return View();
+            }
+
+            var oldUser = await _dbContext.Users.Include(u => u.Role).FirstOrDefaultAsync(u => u.Id == model.Id);
+            var role = await _dbContext.Roles.FirstOrDefaultAsync(r => r.Id == model.RoleId);
+
+            string removeFromRoleSql = $@"
+                         ALTER ROLE [{oldUser.Role.Name}] DROP MEMBER [{model.UserName}];
+                                                                            ";
+
+            string assignToRoleSql = $@"
+                        ALTER ROLE [{role.Name}] ADD MEMBER [{model.UserName}];
+                                                                           ";
+
+
+            using (SqlConnection connection = new SqlConnection(MusicStoreDbContext.CONNECTION_STRING))
+            {
+                try
+                {
+
+                    connection.Open();
+                    using (SqlCommand command = new SqlCommand(removeFromRoleSql, connection))
+                    {
+                        command.ExecuteNonQuery();
+                        Console.WriteLine($"User '{model.UserName}' removed from role '{role.Name}' successfully.");
+                    }
+
+                    using (SqlCommand command = new SqlCommand(assignToRoleSql, connection))
+                    {
+                        command.ExecuteNonQuery();
+                        Console.WriteLine($"User '{model.UserName}' assigned to role '{role.Name}' successfully.");
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"An error occurred: {ex.Message}");
+                }
             }
 
             var user = new User

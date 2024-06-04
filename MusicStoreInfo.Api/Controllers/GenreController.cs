@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using ClosedXML.Excel;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using MusicStoreInfo.Api.Models;
 using MusicStoreInfo.DAL;
@@ -8,6 +9,12 @@ using MusicStoreInfo.Services.Services.GenreService;
 
 namespace MusicStoreInfo.Api.Controllers
 {
+    public class TopGenreViewModel
+    {
+        public string GenreName { get; set; } = string.Empty;
+        public int AlbumCount { get; set; }
+    }
+
     [Authorize]
     public class GenreController : Controller
     {
@@ -27,6 +34,59 @@ namespace MusicStoreInfo.Api.Controllers
         }
 
         [HttpGet]
+        public IActionResult Top10MostFavouriteGenre()
+        {
+            using (var context = new MusicStoreDbContext())
+            {
+                var topGenres = context.Genres
+                    .Select(g => new TopGenreViewModel
+                    {
+                        GenreName = g.Name,
+                        AlbumCount = g.Groups.SelectMany(gr => gr.Albums).Count()
+                    })
+                    .OrderByDescending(g => g.AlbumCount)
+                    .Take(10)
+                    .ToList();
+
+                return View(topGenres);
+            }
+        }
+
+        public IActionResult ExportTop10MostFavouriteGenreToExcel()
+        {
+            var topGenres = _dbContext.Genres
+                .Select(g => new TopGenreViewModel
+                {
+                    GenreName = g.Name,
+                    AlbumCount = g.Groups.SelectMany(gr => gr.Albums).Count()
+                })
+                .OrderByDescending(g => g.AlbumCount)
+                .Take(10)
+                .ToList();
+
+            using (var workbook = new XLWorkbook())
+            {
+                var worksheet = workbook.Worksheets.Add("Top 10 Genres");
+                worksheet.Cell(1, 1).Value = "Жанр";
+                worksheet.Cell(1, 2).Value = "Количество альбомов";
+
+                for (int i = 0; i < topGenres.Count; i++)
+                {
+                    worksheet.Cell(i + 2, 1).Value = topGenres[i].GenreName;
+                    worksheet.Cell(i + 2, 2).Value = topGenres[i].AlbumCount;
+                }
+
+                using (var stream = new MemoryStream())
+                {
+                    workbook.SaveAs(stream);
+                    var content = stream.ToArray();
+                    return File(content, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "Top10MostFavouriteGenres.xlsx");
+                }
+            }
+        }
+    
+
+    [HttpGet]
         [Authorize(Policy = "Manager")]
         public IActionResult Create()
         {

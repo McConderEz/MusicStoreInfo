@@ -2,12 +2,17 @@
 @using MusicStoreInfo.Domain.Entities
 @using MusicStoreInfo.DAL
 @using Microsoft.EntityFrameworkCore;
+@using MusicStoreInfo.DAL.Contexts;
 @* @model IEnumerable<MusicStoreInfo.Domain.Entities.Product> *@
 @model MusicStoreInfo.Api.Models.ProductViewModel
 
 @{
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
+
+    var _dbContext = new MusicStoreDbContext();
+
+    var currentUser = _dbContext.Users.Include(u => u.Store).FirstOrDefault(u => u.UserName.Equals(User.Identity.Name));
 
     Pager pager = new Pager();
 
@@ -265,7 +270,7 @@
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model.Products) {
+@foreach (var item in Model.Products.Where(p => p.Store.Name.Equals(currentUser.Store?.Name))) {
         <tr>
                 @if (User.IsInRole("Manager") || User.IsInRole("Admin")){
             <td>
@@ -302,6 +307,10 @@
                     <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-primary btn-sm">Изменить</a>
                     <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-primary btn-sm">Подробнее</a>
                     <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger btn-sm">Удалить</a>
+                }
+                else if (User.IsInRole("Manager"))
+                {
+                    <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-primary btn-sm details-button">Подробнее</a>
                 }
                 else
                 {
