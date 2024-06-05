@@ -1,7 +1,10 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using Azure;
+using DocumentFormat.OpenXml.Wordprocessing;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using MusicStoreInfo.Api.Models;
 using MusicStoreInfo.DAL;
 using MusicStoreInfo.Domain.Entities;
 using MusicStoreInfo.Services.Services.CompanySerivce;
@@ -23,9 +26,43 @@ namespace MusicStoreInfo.Api.Controllers
         }
 
         [HttpGet]
-        public IActionResult Index()
+        public async Task<IActionResult> Index(int page = 1, List<int> cityIds = null, string searchString = null)
         {
-            return View(_service.GetAllAsync().Result);
+            var districts = await _service.GetAllAsync();
+
+            districts = Filter(cityIds, districts);
+
+            const int pageSize = 10;
+            if (page < 1)
+                page = 1;
+
+            if (!string.IsNullOrEmpty(searchString))
+            {
+                districts = districts.Where(p => p.Name.Contains(searchString, StringComparison.OrdinalIgnoreCase)).ToList();
+            }
+
+            int recsCount = districts.Count;
+            var pager = new Pager(recsCount, page, pageSize);
+            int recSkip = (page - 1) * pageSize;
+            var data = districts.Skip(recSkip).Take(pageSize).ToList();
+            ViewBag.Pager = pager;
+            ViewBag.CurrentFilter = searchString;
+            ViewBag.CityIds = cityIds ?? new List<int>();
+
+            var cityDistrictViewModel = new CityDistrictViewModel
+            {
+                Cities = _dbContext.Cities.Include(c => c.Districts).ToList(),
+                Districts = data
+            };
+
+            return View(cityDistrictViewModel);
+        }
+
+        private static List<District>? Filter(List<int> cityIds, List<District> districts)
+        {
+            if (cityIds != null && cityIds.Any())
+                districts = districts.Where(a => cityIds.Contains(a.CityId)).ToList();
+            return districts;
         }
 
         [HttpGet]

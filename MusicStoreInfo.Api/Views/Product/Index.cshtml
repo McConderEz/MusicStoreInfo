@@ -270,86 +270,176 @@
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model.Products.Where(p => p.Store.Name.Equals(currentUser.Store?.Name))) {
-        <tr>
-                @if (User.IsInRole("Manager") || User.IsInRole("Admin")){
-            <td>
-                @Html.DisplayFor(modelItem => item.Id)
-            </td>
-                }
-            <td>
-                    <img src="@("~/image/" + item.Album.ImagePath)" asp-append-version="true" width="50px" height="50px" class="rounded-circle" />
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Album.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Store.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Store.District.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Store.District.City.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Album.Group.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Quantity)
-            </td>
-            <td>
-                        @Html.DisplayFor(modelItem => item.Price)
-            </td>
-            <td>
-                @if ((User.IsInRole("Manager") || User.IsInRole("Admin")) && int.Parse(User.Claims.FirstOrDefault(c => c.Type == "StoreId")?.Value) == item.StoreId)
-                {
-                    <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-primary btn-sm">Изменить</a>
-                    <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-primary btn-sm">Подробнее</a>
-                    <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger btn-sm">Удалить</a>
-                }
-                else if (User.IsInRole("Manager"))
-                {
-                    <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-primary btn-sm details-button">Подробнее</a>
-                }
-                else
-                {
-                    var dbContext = new MusicStoreDbContext();
-                    var id = int.Parse(User.Claims.FirstOrDefault(c => c.Type == "ShoppingCartId")?.Value!);
-                    var shoppingCart = dbContext.ShoppingCarts.Include(sc => sc.ShoppingCartProducts).ThenInclude(scp => scp.Product).FirstOrDefault(sc => sc.Id == id);
-                    @if (shoppingCart.ShoppingCartProducts.FirstOrDefault(scp => scp.Product.AlbumId == item.AlbumId && scp.Product.StoreId == item.StoreId) != null && shoppingCart.ShoppingCartProducts.Count != 0)
-                    {
-                        var quantity = shoppingCart.ShoppingCartProducts.FirstOrDefault(scp => scp.Product.AlbumId == item.AlbumId && scp.Product.StoreId == item.StoreId).Quantity;
-                        <div class="container">
-                            <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-primary btn-sm details-button">Подробнее</a>
-                            <a class="add-to-cart btn btn-primary btn-sm" data-store-id="@item.StoreId" data-album-id="@item.AlbumId" style="display: none;">Добавить в корзину</a>
-                            @if (quantity > 0)
-                            {
-                                <div class="quantity-container">
-                                    <button class="btn btn-outline-secondary btn-sm minus-button" type="button" data-store-id="@item.StoreId" data-album-id="@item.AlbumId">-</button>
-                                    <span class="quantity">@quantity</span>
-                                    <button class="btn btn-outline-secondary btn-sm plus-button" type="button" data-store-id="@item.StoreId" data-album-id="@item.AlbumId">+</button>
-                                </div>
+    @if(User.IsInRole("Manager"))
+    {
+            @foreach (var item in Model.Products.Where(p => p.Store.Name.Equals(currentUser.Store?.Name))) {
+                    <tr>
+                            @if (User.IsInRole("Manager") || User.IsInRole("Admin")){
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Id)
+                        </td>
                             }
-                        </div>
-                    }
-                    else
-                    {
-                        <div class="container">
-                            <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-primary btn-sm details-button">Подробнее</a>
-                            <a class="add-to-cart btn btn-primary btn-sm" data-store-id="@item.StoreId" data-album-id="@item.AlbumId">Добавить в корзину</a>
-                            <div class="quantity-container" style="display: none;">
-                                <button class="btn btn-outline-secondary btn-sm minus-button" type="button" data-store-id="@item.StoreId" data-album-id="@item.AlbumId">-</button>
-                                <span class="quantity">1</span>
-                                <button class="btn btn-outline-secondary btn-sm plus-button" type="button" data-store-id="@item.StoreId" data-album-id="@item.AlbumId">+</button>
-                            </div>
-                        </div>
-                    }
+                        <td>
+                                <img src="@("~/image/" + item.Album.ImagePath)" asp-append-version="true" width="50px" height="50px" class="rounded-circle" />
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Album.Name)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Store.Name)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Store.District.Name)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Store.District.City.Name)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Album.Group.Name)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Quantity)
+                        </td>
+                        <td>
+                                    @Html.DisplayFor(modelItem => item.Price)
+                        </td>
+                        <td>
+                            @if ((User.IsInRole("Manager") || User.IsInRole("Admin")) && int.Parse(User.Claims.FirstOrDefault(c => c.Type == "StoreId")?.Value) == item.StoreId)
+                            {
+                                <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-primary btn-sm">Изменить</a>
+                                <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-primary btn-sm">Подробнее</a>
+                                <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger btn-sm">Удалить</a>
+                            }
+                            else if (User.IsInRole("Manager"))
+                            {
+                                <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-primary btn-sm details-button">Подробнее</a>
+                            }
+                            else
+                            {
+                                var dbContext = new MusicStoreDbContext();
+                                var id = int.Parse(User.Claims.FirstOrDefault(c => c.Type == "ShoppingCartId")?.Value!);
+                                var shoppingCart = dbContext.ShoppingCarts.Include(sc => sc.ShoppingCartProducts).ThenInclude(scp => scp.Product).FirstOrDefault(sc => sc.Id == id);
+                                @if (shoppingCart.ShoppingCartProducts.FirstOrDefault(scp => scp.Product.AlbumId == item.AlbumId && scp.Product.StoreId == item.StoreId) != null && shoppingCart.ShoppingCartProducts.Count != 0)
+                                {
+                                    var quantity = shoppingCart.ShoppingCartProducts.FirstOrDefault(scp => scp.Product.AlbumId == item.AlbumId && scp.Product.StoreId == item.StoreId).Quantity;
+                                    <div class="container">
+                                        <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-primary btn-sm details-button">Подробнее</a>
+                                        <a class="add-to-cart btn btn-primary" data-store-id="@item.StoreId" data-album-id="@item.AlbumId" style="display: none;">Добавить в корзину</a>
+                                        @if (quantity > 0)
+                                        {
+                                            <div class="quantity-container">
+                                                <button class="btn btn-outline-secondary btn-sm minus-button" type="button" data-store-id="@item.StoreId" data-album-id="@item.AlbumId">-</button>
+                                                <span class="quantity">@quantity</span>
+                                                <button class="btn btn-outline-secondary btn-sm plus-button" type="button" data-store-id="@item.StoreId" data-album-id="@item.AlbumId">+</button>
+                                            </div>
+                                        }
+                                    </div>
+                                }
+                                else
+                                {
+                                    <div class="container">
+                                        <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-primary btn-sm details-button">Подробнее</a>
+                                        <a class="add-to-cart btn btn-primary" data-store-id="@item.StoreId" data-album-id="@item.AlbumId">Добавить в корзину</a>
+                                        <div class="quantity-container" style="display: none;">
+                                            <button class="btn btn-outline-secondary btn-sm minus-button" type="button" data-store-id="@item.StoreId" data-album-id="@item.AlbumId">-</button>
+                                            <span class="quantity">1</span>
+                                            <button class="btn btn-outline-secondary btn-sm plus-button" type="button" data-store-id="@item.StoreId" data-album-id="@item.AlbumId">+</button>
+                                        </div>
+                                    </div>
+                                }
+                            }
+                        </td>
+                    </tr>
+
                 }
-            </td>
-        </tr>
-}
-    </tbody>
+            }
+            else
+            {
+                @foreach (var item in Model.Products)
+                {
+                    <tr>
+                        @if (User.IsInRole("Manager") || User.IsInRole("Admin"))
+                        {
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Id)
+                            </td>
+                        }
+                        <td>
+                            <img src="@("~/image/" + item.Album.ImagePath)" asp-append-version="true" width="50px" height="50px" class="rounded-circle" />
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Album.Name)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Store.Name)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Store.District.Name)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Store.District.City.Name)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Album.Group.Name)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Quantity)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Price)
+                        </td>
+                        <td>
+                            @if ((User.IsInRole("Manager") || User.IsInRole("Admin")) && int.Parse(User.Claims.FirstOrDefault(c => c.Type == "StoreId")?.Value) == item.StoreId)
+                            {
+                                <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-primary btn-sm">Изменить</a>
+                                <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-primary btn-sm">Подробнее</a>
+                                <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger btn-sm">Удалить</a>
+                            }
+                            else if (User.IsInRole("Manager"))
+                            {
+                                <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-primary btn-sm details-button">Подробнее</a>
+                            }
+                            else
+                            {
+                                var dbContext = new MusicStoreDbContext();
+                                var id = int.Parse(User.Claims.FirstOrDefault(c => c.Type == "ShoppingCartId")?.Value!);
+                                var shoppingCart = dbContext.ShoppingCarts.Include(sc => sc.ShoppingCartProducts).ThenInclude(scp => scp.Product).FirstOrDefault(sc => sc.Id == id);
+                                @if (shoppingCart.ShoppingCartProducts.FirstOrDefault(scp => scp.Product.AlbumId == item.AlbumId && scp.Product.StoreId == item.StoreId) != null && shoppingCart.ShoppingCartProducts.Count != 0)
+                                {
+                                    var quantity = shoppingCart.ShoppingCartProducts.FirstOrDefault(scp => scp.Product.AlbumId == item.AlbumId && scp.Product.StoreId == item.StoreId).Quantity;
+                                    <div class="container">
+                                        <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-primary btn-sm details-button">Подробнее</a>
+                                        <a class="add-to-cart btn btn-primary btn-sm details-button" data-store-id="@item.StoreId" data-album-id="@item.AlbumId" style="display: none;">Добавить в корзину</a>
+                                        @if (quantity > 0)
+                                        {
+                                            <div class="quantity-container">
+                                                <button class="btn btn-outline-secondary btn-sm minus-button" type="button" data-store-id="@item.StoreId" data-album-id="@item.AlbumId">-</button>
+                                                <span class="quantity">@quantity</span>
+                                                <button class="btn btn-outline-secondary btn-sm plus-button" type="button" data-store-id="@item.StoreId" data-album-id="@item.AlbumId">+</button>
+                                            </div>
+                                        }
+                                    </div>
+                                }
+                                else
+                                {
+                                    <div class="container">
+                                        <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-primary btn-sm details-button">Подробнее</a>
+                                        <a class="add-to-cart btn btn-primary btn-sm details-button" data-store-id="@item.StoreId" data-album-id="@item.AlbumId">Добавить в корзину</a>
+                                        <div class="quantity-container" style="display: none;">
+                                            <button class="btn btn-outline-secondary btn-sm minus-button" type="button" data-store-id="@item.StoreId" data-album-id="@item.AlbumId">-</button>
+                                            <span class="quantity">1</span>
+                                            <button class="btn btn-outline-secondary btn-sm plus-button" type="button" data-store-id="@item.StoreId" data-album-id="@item.AlbumId">+</button>
+                                        </div>
+                                    </div>
+                                }
+                            }
+                        </td>
+                    </tr>
+
+                }
+            }
+        </tbody>
+    
 </table>
 </body>
 
@@ -551,6 +641,15 @@
 
         .details-button {
             margin-right: 10px; /* Или любое другое значение отступа */
+        }
+
+        .btn {
+            padding: 10px 15px;
+            font-size: 14px;
+            margin: 2px;
+            border-radius: 4px;
+            text-align: center;
+            white-space: nowrap; /* Prevent text wrapping */
         }
     </style>
 </head>

@@ -1,8 +1,18 @@
-﻿@model IEnumerable<MusicStoreInfo.Domain.Entities.Genre>
+﻿@using MusicStoreInfo.Domain.Entities
+@model IEnumerable<MusicStoreInfo.Domain.Entities.Genre>
 
 @{
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    Pager pager = new Pager();
+
+    int pageNo = 0;
+
+    if (ViewBag.Pager != null)
+    {
+        pager = ViewBag.Pager;
+        pageNo = pager.CurrentPage;
+    }
 }
 
 <h1>Жанры</h1>
@@ -13,6 +23,11 @@
         <a asp-action="Create" class="btn btn-primary">Создать</a>
     }
 </p>
+
+<form method="get" action="@Url.Action("Index")" class="form-inline mb-3 d-flex">
+    <input type="text" name="searchString" class="form-control mr-2" placeholder="Поиск по названиям" value="@ViewBag.CurrentFilter">
+    <button type="submit" class="btn btn-outline-success search-button">Поиск</button>
+</form>
 
 <a asp-action="Top10MostFavouriteGenre" class="btn btn-primary">Запрос</a>
 
@@ -53,3 +68,37 @@
 }
     </tbody>
 </table>
+
+<div class="container">
+    @if (pager.TotalPages > 0)
+    {
+        <ul class="pagination justify-content-end">
+            @if (pager.CurrentPage > 1)
+            {
+                <li class="page-item">
+                    <a class="page-link" asp-controller="Genre" asp-action="Index" asp-route-page="1">Первая</a>
+                </li>
+                <li class="page-item">
+                    <a class="page-link" asp-controller="Genre" asp-action="Index" asp-route-page="@(pager.CurrentPage - 1)">Пред.</a>
+                </li>
+            }
+
+            @for (var pge = pager.StartPage; pge <= pager.EndPage; pge++)
+            {
+                <li class="page-item @(pge == pager.CurrentPage ? "active" : "")">
+                    <a class="page-link" asp-controller="Genre" asp-action="Index" asp-route-page="@pge">@pge</a>
+                </li>
+            }
+
+            @if (pager.CurrentPage < pager.TotalPages)
+            {
+                <li class="page-item">
+                    <a class="page-link" asp-controller="Genre" asp-action="Index" asp-route-page="@(pager.CurrentPage + 1)">След.</a>
+                </li>
+                <li class="page-item">
+                    <a class="page-link" asp-controller="Genre" asp-action="Index" asp-route-page="@(pager.TotalPages)">Послед.</a>
+                </li>
+            }
+        </ul>
+    }
+</div>

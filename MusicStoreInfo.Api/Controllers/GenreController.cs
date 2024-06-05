@@ -28,9 +28,26 @@ namespace MusicStoreInfo.Api.Controllers
         }
 
         [HttpGet]
-        public IActionResult Index()
+        public async Task<IActionResult> Index(int page = 1, string searchString = null)
         {
-            return View(_service.GetAllAsync().Result);
+            var genres = await _service.GetAllAsync();
+            const int pageSize = 10;
+            if (page < 1)
+                page = 1;
+
+            if (!string.IsNullOrEmpty(searchString))
+            {
+                genres = genres.Where(p => p.Name.Contains(searchString, StringComparison.OrdinalIgnoreCase)).ToList();
+            }
+
+            int recsCount = genres.Count;
+            var pager = new Pager(recsCount, page, pageSize);
+            int recSkip = (page - 1) * pageSize;
+            var data = genres.Skip(recSkip).Take(pageSize).ToList();
+            ViewBag.Pager = pager;
+            ViewBag.CurrentFilter = searchString;
+
+            return View(data);
         }
 
         [HttpGet]

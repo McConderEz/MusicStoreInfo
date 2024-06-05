@@ -1,4 +1,5 @@
-﻿using Microsoft.Data.SqlClient;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.Data.SqlClient;
 using MusicStoreInfo.DAL;
 using MusicStoreInfo.DAL.Repositories;
 using MusicStoreInfo.Domain.Entities;
@@ -36,10 +37,12 @@ namespace MusicStoreInfo.Services.Services
         }
 
         public async Task Register(string userName, string password)
-        {
+        {           
+
             var hashedPassword = _passwordHasher.Generate(password);
 
-            var user = await _userRepository.GetByUserName(userName);
+            var user = await _userRepository.GetByUserName(userName);      
+            
 
             string createUserSql = $@"
                                  CREATE LOGIN {userName} WITH PASSWORD = '{hashedPassword}';
@@ -92,6 +95,65 @@ namespace MusicStoreInfo.Services.Services
             }
         }
 
+        public async Task AddRoot()
+        {
+            var hashedPassword = _passwordHasher.Generate("Root");
+
+            using (SqlConnection connection = new SqlConnection(MusicStoreDbContext.CONNECTION_STRING))
+            {
+                try
+                {
+                    connection.Open();
+
+                    string checkUserSql = $@"
+                IF NOT EXISTS (SELECT * FROM sys.server_principals WHERE name = 'Root')
+                BEGIN
+                    CREATE LOGIN [Root] WITH PASSWORD = '{hashedPassword}';
+                END;
+
+                IF NOT EXISTS (SELECT * FROM sys.database_principals WHERE name = 'Root')
+                BEGIN
+                    CREATE USER [Root] FOR LOGIN [Root];
+                END;";
+
+                    using (SqlCommand command = new SqlCommand(checkUserSql, connection))
+                    {
+                        command.ExecuteNonQuery();
+                    }
+
+                    string getPrincipalIdSql = @"
+                SELECT principal_id 
+                FROM sys.server_principals 
+                WHERE name = 'Root'";
+
+
+                    AssignRoleToUser(MusicStoreDbContext.CONNECTION_STRING, "Root", "Admin");
+
+                    using (SqlCommand command = new SqlCommand(getPrincipalIdSql, connection))
+                    {
+                        var principalId = (int)command.ExecuteScalar();
+                        var user = new User
+                        {
+                            UserName = "Root",
+                            PasswordHash = hashedPassword,
+                            RoleId = 1,
+                            PrincipalId = principalId
+                        };
+                        await _userRepository.Add(user);
+                        ShoppingCart shoppingCart = new ShoppingCart { UserId = user.Id };
+                        await _shoppingCartService.AddAsync(shoppingCart);
+                        user.ShoppingCartId = shoppingCart.Id;
+                        user.ShoppingCart = shoppingCart;
+                        await _dbContext.SaveChangesAsync();
+                    }
+                }
+                catch (Exception ex)
+                {
+                    throw new Exception(ex.Message);
+                }
+            }
+        }
+
         public void AssignRoleToUser(string connectionString, string userName, string roleName)
         {
             string assignRoleSql = $@"
@@ -122,6 +184,11 @@ namespace MusicStoreInfo.Services.Services
             var user = await _userRepository.GetByUserName(userName);
             
             //TODO: Добавить уведомление, что неверные данные 
+
+            if(user == null)
+            {
+                return (null, null);
+            }
 
             var result = _passwordHasher.Verify(password, user.PasswordHash);
 

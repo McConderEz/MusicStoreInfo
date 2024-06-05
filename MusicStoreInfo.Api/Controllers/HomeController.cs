@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Hosting;
 using MusicStoreInfo.Api.Models;
 using MusicStoreInfo.DAL;
@@ -24,7 +25,7 @@ namespace MusicStoreInfo.Api.Controllers
             _hostEnvironment = hostEnvironment;
             _staticFilesPath = Path.Combine(Directory.GetCurrentDirectory(), _hostEnvironment.WebRootPath + "\\Image");
             _accountService = accountService;
-            //AddAdminIfNotExist();
+            AddAdminIfNotExist();
         }
 
         public IActionResult Index()
@@ -33,17 +34,17 @@ namespace MusicStoreInfo.Api.Controllers
             return View(products);
         }
 
-        //private void AddAdminIfNotExist()
-        //{
-        //    using (var db = new MusicStoreDbContext())
-        //    {
-        //        var admin = db.Users.SingleOrDefault(u => u.UserName.Equals("Root") && u.Role.Name.Equals("Root"));
-        //        if (admin == null)
-        //        {
-        //            _accountService.Register("Root", "Root");
-        //        }
-        //    }
-        //}
+        private void AddAdminIfNotExist()
+        {
+            using (var db = new MusicStoreDbContext())
+            {
+                var admin = db.Users.Include(u => u.Role).FirstOrDefault(u => u.UserName.Equals("Root") && u.RoleId == 1);
+                if (admin == null)
+                {
+                    _accountService.AddRoot();
+                }
+            }
+        }
 
         public IActionResult Privacy()
         {
