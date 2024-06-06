@@ -5,11 +5,51 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+<!DOCTYPE html>
+<html lang="ru">
 <head>
     <meta charset="utf-8" />
     <title>Продукты(подробнее)</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+        .rating {
+            display: flex;
+            flex-direction: row-reverse;
+            justify-content: flex-end;
+        }
+
+            .rating input {
+                display: none;
+            }
+
+            .rating label {
+                font-size: 2rem;
+                color: gray;
+                cursor: pointer;
+                margin: 0 0.1em;
+            }
+
+                .rating label:hover,
+                .rating label:hover ~ label,
+                .rating input:checked ~ label {
+                    color: gold;
+                }
+
+        .comment {
+            border: 1px solid #ddd;
+            padding: 10px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+        }
+
+        .comment-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+    </style>
 </head>
+</html>
 
 <h1>Подробнее</h1>
 
@@ -105,38 +145,84 @@
 </div>
 
 
-<h2>Комментарии и отзывы</h2>
-<div>
-    @if (User.Identity.IsAuthenticated)
-    {
-        <form asp-controller="Review" asp-action="AddReview" method="post">
-            <input type="hidden" name="UserName" value="@User.Identity.Name" />
-            <input type="hidden" name="ProductId" value="@Model.Id" />
-            <input type="hidden" name="StoreId" value="@Model.StoreId" />
-            <input type="hidden" name="AlbumId" value="@Model.AlbumId" />
-            <input type="hidden" name="TimeCreated" value="@DateTime.Now.ToString("yyyy-MM-ddTHH:mm:ss")" />
-            <div class="form-group">
-                <label for="rating">Рейтинг:</label>
-                <div id="rating" class="rating">
-                    @for (int i = 1; i <= 5; i++)
-                    {
-                        <input type="radio" id="star-@i" name="Rating" value="@i" />
-                        <label for="star-@i" title="@i звезда">@i звезда</label>
-                    }
+<body>
+    <h2>Комментарии и отзывы</h2>
+    <div>
+        @if (User.Identity.IsAuthenticated)
+        {
+            <form asp-controller="Review" asp-action="AddReview" method="post">
+                <input type="hidden" name="UserName" value="@User.Identity.Name" />
+                <input type="hidden" name="ProductId" value="@Model.Id" />
+                <input type="hidden" name="StoreId" value="@Model.StoreId" />
+                <input type="hidden" name="AlbumId" value="@Model.AlbumId" />
+                <input type="hidden" name="TimeCreated" value="@DateTime.Now.ToString("yyyy-MM-ddTHH:mm:ss")" />
+                <div class="form-group">
+                    <label for="rating">Рейтинг:</label>
+                    <div id="rating" class="rating">
+                        @for (int i = 5; i >= 1; i--)
+                        {
+                            <input type="radio" id="star-@i" name="Rating" value="@i" />
+                            <label for="star-@i" title="@i звезда"><i class="fas fa-star"></i></label>
+                        }
+                    </div>
                 </div>
-            </div>
-            <div class="form-group">
-                <label for="commentText">Ваш комментарий:</label>
-                <textarea class="form-control" id="commentText" name="Comment" rows="3" required></textarea>
-            </div>
-            <button type="submit" class="btn btn-primary mt-2">Отправить</button>
-        </form>
-    }
-    else
-    {
-        <p>Пожалуйста, <a asp-controller="Account" asp-action="Login">войдите</a>, чтобы оставить комментарий.</p>
-    }
-</div>
+                <div class="form-group">
+                    <label for="commentText">Ваш комментарий:</label>
+                    <textarea class="form-control" id="commentText" name="Comment" rows="3" required></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary mt-2">Отправить</button>
+            </form>
+        }
+        else
+        {
+            <p>Пожалуйста, <a asp-controller="Account" asp-action="Login">войдите</a>, чтобы оставить комментарий.</p>
+        }
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const stars = document.querySelectorAll('.rating label');
+            const inputs = document.querySelectorAll('.rating input');
+
+            stars.forEach(star => {
+                star.addEventListener('mouseover', function () {
+                    const rating = this.htmlFor.split('-')[1];
+                    highlightStars(rating);
+                });
+
+                star.addEventListener('mouseout', function () {
+                    resetStars();
+                });
+
+                star.addEventListener('click', function () {
+                    const rating = this.htmlFor.split('-')[1];
+                    document.querySelector(`input[id="star-${rating}"]`).checked = true;
+                    highlightStars(rating);
+                });
+            });
+
+            function highlightStars(rating) {
+                stars.forEach(star => {
+                    if (star.htmlFor.split('-')[1] <= rating) {
+                        star.querySelector('i').style.color = 'gold';
+                    } else {
+                        star.querySelector('i').style.color = 'gray';
+                    }
+                });
+            }
+
+            function resetStars() {
+                const checkedInput = Array.from(inputs).find(input => input.checked);
+                if (checkedInput) {
+                    highlightStars(checkedInput.value);
+                } else {
+                    stars.forEach(star => {
+                        star.querySelector('i').style.color = 'gray';
+                    });
+                }
+            }
+        });
+    </script>
+</body>
 
 <h3>Отзывы</h3>
 <div id="comments-section">
@@ -144,9 +230,12 @@
     {
         <div class="comment mb-3">
             <div class="comment-header">
-                <strong>@review.User.UserName</strong> <span class="text-muted">@review.TimeCreated.ToString("dd.MM.yyyy HH:mm")</span>
+                <div>
+                    <strong>@review.User.UserName</strong>
+                    <span class="text-muted">@review.TimeCreated.ToString("dd.MM.yyyy HH:mm")</span>
+                </div>
                 <div class="rating">
-                    @for (int i = 1; i <= 5; i++)
+                    @for (int i = 5; i >= 1; i--)
                     {
                         if (i <= review.Rating)
                         {
@@ -159,7 +248,7 @@
                     }
                 </div>
             </div>
-            <div class="comment-body">
+            <div class="comment-body mt-2">
                 @review.Comment
             </div>
         </div>

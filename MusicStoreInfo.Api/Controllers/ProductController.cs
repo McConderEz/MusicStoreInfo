@@ -91,6 +91,11 @@ namespace MusicStoreInfo.Api.Controllers
                 case "quantity":
                     products = products.OrderBy(p => p.Quantity).ToList();
                     break;
+                case "rating":
+                    products = products
+                    .OrderByDescending(p => p.Reviews.Any() ? p.Reviews.Average(r => r.Rating) : 0)
+                    .ToList();
+                    break;
                 default:
                     break;
             }

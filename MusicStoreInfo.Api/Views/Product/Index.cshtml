@@ -215,13 +215,14 @@
 
 <body>
     <div class="dropdown">
-        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <button class="btn btn-primary text-white dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             Сортировка
         </button>
         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
             <a class="dropdown-item" href="@Url.Action("Index", new { sortOrder = "price_asc" })">Сначала недорогие</a>
             <a class="dropdown-item" href="@Url.Action("Index", new { sortOrder = "price_desc" })">Сначала дорогие</a>
             <a class="dropdown-item" href="@Url.Action("Index", new { sortOrder = "quantity" })">По количеству альбомов</a>
+            <a class="dropdown-item" href="@Url.Action("Index", new { sortOrder = "rating" })">По рейтингу</a>
         </div>
     </div>
 
