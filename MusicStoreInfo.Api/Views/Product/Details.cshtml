@@ -1,8 +1,12 @@
 ﻿@model MusicStoreInfo.Domain.Entities.Product
-
+@using MusicStoreInfo.DAL
+@using MusicStoreInfo.Services;
 @{
     ViewData["Title"] = "Details";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    var dbContext = new MusicStoreDbContext();
+    var user = dbContext.Users.FirstOrDefault(u => u.UserName.Equals(User.Identity.Name));
+    var order = dbContext.Orders.FirstOrDefault(o => o.ProductId == Model.Id && o.UserId == user.Id);
 }
 
 <!DOCTYPE html>
@@ -144,7 +148,7 @@
     <a asp-action="Index" class="btn btn-secondary">Вернуться назад</a>
 </div>
 
-
+@if(order != null){
 <body>
     <h2>Комментарии и отзывы</h2>
     <div>
@@ -223,6 +227,7 @@
         });
     </script>
 </body>
+}
 
 <h3>Отзывы</h3>
 <div id="comments-section">

@@ -351,7 +351,7 @@
                                             <div class="quantity-container">
                                                 <button class="btn btn-outline-secondary btn-sm minus-button" type="button" data-store-id="@item.StoreId" data-album-id="@item.AlbumId">-</button>
                                                 <span class="quantity">@quantity</span>
-                                                <button class="btn btn-outline-secondary btn-sm plus-button" type="button" data-store-id="@item.StoreId" data-album-id="@item.AlbumId">+</button>
+                                                <button class="btn btn-outline-secondary btn-sm plus-button" type="button" data-store-id="@item.StoreId" data-album-id="@item.AlbumId" data-max-quantity="@item.Quantity">+</button>
                                             </div>
                                         }
                                     </div>
@@ -364,7 +364,7 @@
                                         <div class="quantity-container" style="display: none;">
                                             <button class="btn btn-outline-secondary btn-sm minus-button" type="button" data-store-id="@item.StoreId" data-album-id="@item.AlbumId">-</button>
                                             <span class="quantity">1</span>
-                                            <button class="btn btn-outline-secondary btn-sm plus-button" type="button" data-store-id="@item.StoreId" data-album-id="@item.AlbumId">+</button>
+                                            <button class="btn btn-outline-secondary btn-sm plus-button" type="button" data-store-id="@item.StoreId" data-album-id="@item.AlbumId" data-max-quantity="@item.Quantity">+</button>
                                         </div>
                                     </div>
                                 }
@@ -436,27 +436,33 @@
                                     var quantity = shoppingCart.ShoppingCartProducts.FirstOrDefault(scp => scp.Product.AlbumId == item.AlbumId && scp.Product.StoreId == item.StoreId).Quantity;
                                     <div class="container">
                                         <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-primary btn-sm details-button">Подробнее</a>
-                                        <a class="add-to-cart btn btn-primary btn-sm details-button" data-store-id="@item.StoreId" data-album-id="@item.AlbumId" style="display: none;">Добавить в корзину</a>
-                                        @if (quantity > 0)
-                                        {
-                                            <div class="quantity-container">
-                                                <button class="btn btn-outline-secondary btn-sm minus-button" type="button" data-store-id="@item.StoreId" data-album-id="@item.AlbumId">-</button>
-                                                <span class="quantity">@quantity</span>
-                                                <button class="btn btn-outline-secondary btn-sm plus-button" type="button" data-store-id="@item.StoreId" data-album-id="@item.AlbumId">+</button>
-                                            </div>
+                                        @if(item.Quantity != 0){
+                                            <a class="add-to-cart btn btn-primary btn-sm details-button" data-store-id="@item.StoreId" data-album-id="@item.AlbumId" style="display: none;">Добавить в корзину</a>
+                                            @if (quantity > 0)
+                                            {
+                                                <div class="quantity-container">
+                                                    <button class="btn btn-outline-secondary btn-sm minus-button" type="button" data-store-id="@item.StoreId" data-album-id="@item.AlbumId">-</button>
+                                                    <span class="quantity">@quantity</span>
+                                                    <button class="btn btn-outline-secondary btn-sm plus-button" type="button" data-store-id="@item.StoreId" data-album-id="@item.AlbumId" data-max-quantity="@item.Quantity">+</button>
+                                                </div>
+                                            }
                                         }
                                     </div>
                                 }
                                 else
                                 {
+
+
                                     <div class="container">
                                         <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-primary btn-sm details-button">Подробнее</a>
-                                        <a class="add-to-cart btn btn-primary btn-sm details-button" data-store-id="@item.StoreId" data-album-id="@item.AlbumId">Добавить в корзину</a>
-                                        <div class="quantity-container" style="display: none;">
-                                            <button class="btn btn-outline-secondary btn-sm minus-button" type="button" data-store-id="@item.StoreId" data-album-id="@item.AlbumId">-</button>
-                                            <span class="quantity">1</span>
-                                            <button class="btn btn-outline-secondary btn-sm plus-button" type="button" data-store-id="@item.StoreId" data-album-id="@item.AlbumId">+</button>
-                                        </div>
+                                        @if(item.Quantity > 0){
+                                             <a class="add-to-cart btn btn-primary btn-sm details-button" data-store-id="@item.StoreId" data-album-id="@item.AlbumId">Добавить в корзину</a>
+                                             <div class="quantity-container" style="display: none;">
+                                                 <button class="btn btn-outline-secondary btn-sm minus-button" type="button" data-store-id="@item.StoreId" data-album-id="@item.AlbumId">-</button>
+                                                 <span class="quantity">1</span>
+                                                 <button class="btn btn-outline-secondary btn-sm plus-button" type="button" data-store-id="@item.StoreId" data-album-id="@item.AlbumId" data-max-quantity="@item.Quantity">+</button>
+                                             </div>
+                                        }
                                     </div>
                                 }
                             }
@@ -615,9 +621,14 @@
             var value = parseInt(quantitySpan.text());
             var storeId = button.data('store-id');
             var albumId = button.data('album-id');
+            var maxQuantity = parseInt(button.data('max-quantity'));
 
-            quantitySpan.text(value + 1);
-            updateCart(storeId, albumId, value + 1);
+            if (value < maxQuantity) {
+                quantitySpan.text(value + 1);
+                updateCart(storeId, albumId, value + 1);
+            } else {
+                console.log('Maximum quantity reached');
+            }
         });
 
         function updateCart(storeId, albumId, quantity) {

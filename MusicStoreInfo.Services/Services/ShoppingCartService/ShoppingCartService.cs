@@ -1,4 +1,5 @@
-﻿using MusicStoreInfo.DAL;
+﻿using Microsoft.EntityFrameworkCore;
+using MusicStoreInfo.DAL;
 using MusicStoreInfo.DAL.Repositories;
 using MusicStoreInfo.Domain.Entities;
 using System;
@@ -43,8 +44,15 @@ namespace MusicStoreInfo.Services.Services.ShoppingCartService
 
         public async Task DeleteProductAsync(int id, int albumId, int storeId)
         {
-            var product = await _dbContext.Products.FindAsync(albumId, storeId);
-            await _shoppingCartRepository.DeleteProduct(id, product.Id);
+            try
+            {
+                var product = await _dbContext.Products.FirstOrDefaultAsync(p => p.StoreId == storeId && p.AlbumId == albumId);
+                await _shoppingCartRepository.DeleteProduct(id, product.Id);
+            }
+            catch(Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
         }
     }
 }

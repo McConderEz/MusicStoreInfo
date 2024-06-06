@@ -97,12 +97,19 @@ namespace MusicStoreInfo.DAL.Repositories
 
         public async Task DeleteProduct(int id, int productId)
         {
-            var shoppingCart = await _dbContext.ShoppingCarts.Include(s => s.ShoppingCartProducts).ThenInclude(scp => scp.Product).FirstOrDefaultAsync(s => s.Id == id);
-            var product = shoppingCart.ShoppingCartProducts.FirstOrDefault(p => p.ProductId == productId && p.ShoppingCartId == id);
-            if (shoppingCart != null && product != null)
+            try
             {
-                shoppingCart.ShoppingCartProducts.Remove(product);
-                await _dbContext.SaveChangesAsync();
+                var shoppingCart = await _dbContext.ShoppingCarts.Include(s => s.ShoppingCartProducts).ThenInclude(scp => scp.Product).FirstOrDefaultAsync(s => s.Id == id);
+                var product = shoppingCart.ShoppingCartProducts.FirstOrDefault(p => p.ProductId == productId && p.ShoppingCartId == id);
+                if (shoppingCart != null && product != null)
+                {
+                    shoppingCart.ShoppingCartProducts.Remove(product);
+                    await _dbContext.SaveChangesAsync();
+                }
+            } 
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
             }
         }
     }

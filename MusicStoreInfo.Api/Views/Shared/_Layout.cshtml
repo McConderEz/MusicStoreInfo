@@ -110,6 +110,7 @@
                 @if (User.IsInRole("Client"))
                 {
                     <li class="nav-item"><a asp-area="" asp-controller="Product" asp-action="Index" class="nav-link px-2">Альбомы</a></li>
+                    <li class="nav-item"><a asp-area="" asp-controller="Order" asp-action="Index" class="nav-link px-2">Заказы</a></li>
                 }
                 else if (User.IsInRole("Manager"))
                 {
@@ -127,6 +128,7 @@
                     </li>
                     <li class="nav-item"><a asp-area="" asp-controller="Product" asp-action="Index" class="nav-link px-2">Отчёты</a></li>
                     <li class="nav-item"><a asp-area="" asp-controller="Product" asp-action="Index" class="nav-link px-2">Статистика</a></li>
+                    <li class="nav-item"><a asp-area="" asp-controller="Order" asp-action="Index" class="nav-link px-2">Заказы</a></li>
                 }
                 else if (User.IsInRole("Admin"))
                 {

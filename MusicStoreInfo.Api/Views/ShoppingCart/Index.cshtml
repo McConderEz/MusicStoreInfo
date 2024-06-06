@@ -48,11 +48,11 @@
                 </td>
                 <td>                    
                     <div class="action-container">
-                        <a asp-action="PayForTheProduct" asp-route-storeId="@item.Product.StoreId" asp-route-albumId="@item.Product.AlbumId" class="btn btn-primary btn-sm">Оплатить</a>
+                        <a asp-controller="Order" asp-action="Payment" asp-route-storeId="@item.Product.StoreId" asp-route-albumId="@item.Product.AlbumId" asp-route-userName="@User.Identity.Name" asp-route-quantity="@item.Quantity" class="btn btn-primary btn-sm">Оплатить</a>
                         <div class="quantity-container">
                             <button class="btn btn-outline-secondary btn-sm minus-button" type="button" data-store-id="@item.Product.StoreId" data-album-id="@item.Product.AlbumId">-</button>
                             <span class="quantity">@item.Quantity</span>
-                            <button class="btn btn-outline-secondary btn-sm plus-button" type="button" data-store-id="@item.Product.StoreId" data-album-id="@item.Product.AlbumId">+</button>
+                            <button class="btn btn-outline-secondary btn-sm plus-button" type="button" data-store-id="@item.Product.StoreId" data-album-id="@item.Product.AlbumId" data-max-quantity="@item.Quantity">+</button>
                         </div>
                     </div>
                 </td>
@@ -78,7 +78,6 @@
                 updateCart(storeId, albumId, value - 1);
             } else {
                 updateCart(storeId, albumId, 0, function () {
-                    // Удаляем строку таблицы
                     $('#product-' + storeId + '-' + albumId).remove();
                 });
             }
@@ -90,9 +89,15 @@
             var value = parseInt(quantitySpan.text());
             var storeId = button.data('store-id');
             var albumId = button.data('album-id');
-
-            quantitySpan.text(value + 1);
-            updateCart(storeId, albumId, value + 1);
+            var maxQuantity = parseInt(button.data('max-quantity'));
+            if (value < maxQuantity) {
+                quantitySpan.text(value + 1);
+                updateCart(storeId, albumId, value + 1);
+            } else {
+                console.log('Maximum quantity reached');
+            }
+            // quantitySpan.text(value + 1);
+            // updateCart(storeId, albumId, value + 1);
         });
 
         function updateCart(storeId, albumId, quantity, callback) {

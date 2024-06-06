@@ -21,11 +21,6 @@ namespace MusicStoreInfo.Api.Controllers
             return View(shoppingCart);
         }
 
-        public IActionResult PayForTheProduct(int storeId, int albumId)
-        {
-            //Сделать когда-нибудь потом
-            return View();
-        }
 
         public async Task<IActionResult> DeleteFromShoppingCart(int storeId,int albumId)
         {

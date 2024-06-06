@@ -183,8 +183,7 @@ namespace MusicStoreInfo.Api.Controllers
         [Authorize(Policy = "Client")]
         public async Task<IActionResult> AddInShoppingCart(int storeId, int albumId, int quantity)
         {
-            await _shoppingCartService.AddProductAsync(int.Parse(User.Claims.FirstOrDefault(c => c.Type == "ShoppingCartId")?.Value!), storeId,albumId, quantity);
-
+            await _shoppingCartService.AddProductAsync(int.Parse(User.Claims.FirstOrDefault(c => c.Type == "ShoppingCartId")?.Value!), storeId, albumId, quantity);
             return Json(new { success = true });
         }
     }

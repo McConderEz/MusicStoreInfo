@@ -25,5 +25,6 @@ namespace MusicStoreInfo.Domain.Entities
         public decimal Price { get;set; }
         public virtual ICollection<ShoppingCartProductLink> ShoppingCartProducts { get; set; } = [];
         public virtual ICollection<Review> Reviews { get; set; } = [];
+        public virtual ICollection<Order> Orders { get; set; } = [];
     }
 }

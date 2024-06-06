@@ -1,0 +1,56 @@
+﻿@model MusicStoreInfo.Domain.Entities.Order
+
+@{
+    ViewData["Title"] = "Payment";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Оплата</h1>
+
+<h4>Заказ</h4>
+<hr />
+<div class="row">
+    <div class="col-md-6">
+        <div class="order-details">
+            <p><strong>Название товара:</strong> @Model.Product.Album.Name</p>
+            <p><strong>Название Магазина:</strong> @Model.Product.Store.Name</p>
+            <p><strong>Количество:</strong> @Model.Quantity</p>
+            <p><strong>Общая цена:</strong> @(Model.Quantity * Model.Product.Price)</p>
+            <p><strong>Дата заказа:</strong> @Model.OrderDate.ToString("dd.MM.yyyy")</p>
+            <p><strong>Примерная дата доставки:</strong> @Model.ExpectedArrivalDate.ToString("dd.MM.yyyy")</p>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <form asp-action="Payment" method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Id" />
+            <input type="hidden" asp-for="AlbumId" />
+            <input type="hidden" asp-for="ProductId" />
+            <input type="hidden" asp-for="StoreId" />
+            <input type="hidden" asp-for="UserId" />
+            <input type="hidden" asp-for="OrderDate" />
+            <input type="hidden" asp-for="ExpectedArrivalDate" />
+            <input type="hidden" asp-for="IsDelivered" />
+            <input type="hidden" asp-for="Quantity" />
+
+            <div class="form-group">
+                <label asp-for="DeliveryPoint" class="control-label">Точка доставки товара</label>
+                <input asp-for="DeliveryPoint" class="form-control" />
+                <span asp-validation-for="DeliveryPoint" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Заказать" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-controller="ShoppingCart" class="btn btn-secondary" asp-action="Index">Вернуться назад</a>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

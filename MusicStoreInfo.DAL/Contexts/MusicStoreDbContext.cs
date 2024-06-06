@@ -72,6 +72,7 @@ namespace MusicStoreInfo.DAL
         public DbSet<ShoppingCart> ShoppingCarts { get; set; } = null!;
         public DbSet<ShoppingCartProductLink> ShoppingCartProductLinks { get; set; } = null!;
         public DbSet<Review> Reviews { get; set; } = null!;
+        public DbSet<Order> Orders { get; set; }
         #endregion
     }
 }

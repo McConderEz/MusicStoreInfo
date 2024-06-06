@@ -32,6 +32,11 @@ namespace MusicStoreInfo.DAL.EntitiesConfigurations
                    .WithOne(r => r.Product)
                    .HasForeignKey(r => new { r.StoreId, r.AlbumId })
                    .OnDelete(DeleteBehavior.Cascade);
+
+            builder.HasMany(p => p.Orders)
+                .WithOne(o => o.Product)
+                .HasForeignKey(o => new { o.StoreId, o.AlbumId })
+                .OnDelete(DeleteBehavior.Cascade);
         }
     }
 }
