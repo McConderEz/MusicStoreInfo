@@ -7,6 +7,91 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/MusicStoreInfo.Api.styles.css" asp-append-version="true" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+        body {
+            background-color: #f8f9fa;
+            color: #343a40;
+            font-weight: bold;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #e9ecef;
+            color: #343a40;
+        }
+
+        .nav-link {
+            color: #343a40;
+            text-decoration: none;
+        }
+
+            .nav-link:hover {
+                color: #000000;
+            }
+
+        .dropdown-menu {
+            background-color: #f8f9fa;
+            color: #343a40;
+            display: none;
+            position: absolute;
+        }
+
+        .dropdown-item {
+            color: #343a40;
+            text-decoration: none;
+        }
+
+            .dropdown-item:hover {
+                background-color: #e9ecef;
+                color: #000000;
+            }
+
+        .nav-item.dropdown:hover .dropdown-menu {
+            display: block;
+        }
+
+        .dropdown-toggle::after {
+            display: none;
+        }
+
+        .dropdown-toggle {
+            color: #343a40;
+            text-decoration: none;
+        }
+
+            .dropdown-toggle:hover {
+                color: #000000;
+            }
+
+        footer {
+            background-color: #e9ecef;
+            color: #343a40;
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: center;
+            width: 100%;
+        }
+
+            .nav-container .nav {
+                display: flex;
+                justify-content: center;
+            }
+
+        .nav-item {
+            margin: 0 10px;
+        }
+
+        .center-nav {
+            display: flex;
+            justify-content: center;
+            flex: 1;
+        }
+    </style>
 </head>
 <body>
     <header class="d-flex flex-wrap align-items-center justify-content-between py-3 mb-4 border-bottom">
@@ -20,43 +105,47 @@
                 <svg class="bi" width="40" height="32" role="img" aria-label="Bootstrap"><use xlink:href="#bootstrap"></use></svg>
             </a>
         </div>
-        <ul class="nav mx-auto">
-            @if (User.IsInRole("Client"))
-            {
-                <li class="nav-item"><a asp-area="" asp-controller="Product" asp-action="Index" class="nav-link px-2">Альбомы</a></li>
-            }
-            else if (User.IsInRole("Manager"))
-            {
-                <li class="nav-item dropdown">
-                    <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">Каталог</a>
-                    <ul class="dropdown-menu text-small">
-                        <li><a class="dropdown-item" asp-controller="Album" asp-action="Index">Альбомы</a></li>
-                        <li><a class="dropdown-item" asp-controller="Product" asp-action="Index">Продукты</a></li>
-                        <li><a class="dropdown-item" asp-controller="Store" asp-action="Index">Магазины</a></li>
-                        <li><a class="dropdown-item" asp-controller="Song" asp-action="Index">Песни</a></li>
-                        <li><a class="dropdown-item" asp-controller="Group" asp-action="Index">Группы</a></li>
-                        <li><a class="dropdown-item" asp-controller="Company" asp-action="Index">Компании</a></li>
-                        <li><a class="dropdown-item" asp-controller="Member" asp-action="Index">Исполнители</a></li>
-                    </ul>
-                </li>
-            }
-            else if (User.IsInRole("Admin"))
-            {
-                <li class="nav-item dropdown">
-                    <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">Справочники</a>
-                    <ul class="dropdown-menu text-small">
-                        <li><a class="dropdown-item" asp-controller="Gender" asp-action="Index">Гендеры</a></li>
-                        <li><a class="dropdown-item" asp-controller="Specialization" asp-action="Index">Специализации</a></li>
-                        <li><a class="dropdown-item" asp-controller="OwnershipType" asp-action="Index">Типы собственности</a></li>
-                        <li><a class="dropdown-item" asp-controller="ListenerType" asp-action="Index">Типы прослушивателей</a></li>
-                        <li><a class="dropdown-item" asp-controller="City" asp-action="Index">Города</a></li>
-                        <li><a class="dropdown-item" asp-controller="District" asp-action="Index">Район</a></li>
-                        <li><a class="dropdown-item" asp-controller="Genre" asp-action="Index">Жанры</a></li>
-                    </ul>
-                </li>
-                <li class="nav-item"><a asp-area="" asp-controller="Admin" asp-action="Index" class="nav-link px-2">Админ-панель</a></li>
-            }
-        </ul>
+        <div class="center-nav">
+            <ul class="nav mx-auto">
+                @if (User.IsInRole("Client"))
+                {
+                    <li class="nav-item"><a asp-area="" asp-controller="Product" asp-action="Index" class="nav-link px-2">Альбомы</a></li>
+                }
+                else if (User.IsInRole("Manager"))
+                {
+                    <li class="nav-item dropdown">
+                        <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">Каталог</a>
+                        <ul class="dropdown-menu text-small">
+                            <li><a class="dropdown-item" asp-controller="Album" asp-action="Index">Альбомы</a></li>
+                            <li><a class="dropdown-item" asp-controller="Product" asp-action="Index">Продукты</a></li>
+                            <li><a class="dropdown-item" asp-controller="Store" asp-action="Index">Магазины</a></li>
+                            <li><a class="dropdown-item" asp-controller="Song" asp-action="Index">Песни</a></li>
+                            <li><a class="dropdown-item" asp-controller="Group" asp-action="Index">Группы</a></li>
+                            <li><a class="dropdown-item" asp-controller="Company" asp-action="Index">Компании</a></li>
+                            <li><a class="dropdown-item" asp-controller="Member" asp-action="Index">Исполнители</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item"><a asp-area="" asp-controller="Product" asp-action="Index" class="nav-link px-2">Отчёты</a></li>
+                    <li class="nav-item"><a asp-area="" asp-controller="Product" asp-action="Index" class="nav-link px-2">Статистика</a></li>
+                }
+                else if (User.IsInRole("Admin"))
+                {
+                    <li class="nav-item dropdown">
+                        <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">Справочники</a>
+                        <ul class="dropdown-menu text-small">
+                            <li><a class="dropdown-item" asp-controller="Gender" asp-action="Index">Гендеры</a></li>
+                            <li><a class="dropdown-item" asp-controller="Specialization" asp-action="Index">Специализации</a></li>
+                            <li><a class="dropdown-item" asp-controller="OwnershipType" asp-action="Index">Типы собственности</a></li>
+                            <li><a class="dropdown-item" asp-controller="ListenerType" asp-action="Index">Типы прослушивателей</a></li>
+                            <li><a class="dropdown-item" asp-controller="City" asp-action="Index">Города</a></li>
+                            <li><a class="dropdown-item" asp-controller="District" asp-action="Index">Районы</a></li>
+                            <li><a class="dropdown-item" asp-controller="Genre" asp-action="Index">Жанры</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item"><a asp-area="" asp-controller="Admin" asp-action="Index" class="nav-link px-2">Админ-панель</a></li>
+                }
+            </ul>
+        </div>
         <div class="col-md-3 text-end">
             @if (!User.Identity!.IsAuthenticated)
             {
@@ -96,38 +185,3 @@
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>
-
-<style>
-    header {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-    }
-
-    .nav.me-auto {
-        margin-right: auto;
-    }
-
-    .nav.ms-auto {
-        margin-left: auto;
-    }
-
-    .nav.mx-auto {
-        margin-left: auto;
-        margin-right: auto;
-    }
-
-    .nav-item:first-child {
-        margin-right: auto;
-    }
-
-    .nav-link.px-2.link-secondary {
-        margin-left: 0;
-    }
-
-    .nav-container {
-        display: flex;
-        justify-content: space-between;
-        width: 100%;
-    }
-</style>

@@ -9,5 +9,6 @@ namespace MusicStoreInfo.DAL.Repositories
         Task<List<Product>> Get();
         Task<Product?> GetById(int id);
         Task Update(int id, int albumId, int storeId, decimal price, int quantity, DateTime dateReceived);
+        Task AddReview(Review review, int id);
     }
 }

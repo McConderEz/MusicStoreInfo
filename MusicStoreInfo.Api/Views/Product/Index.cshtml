@@ -266,6 +266,9 @@
             <th>
                 Цена
             </th>
+            <th>
+                Рейтинг
+            </th>
             <th></th>
         </tr>
     </thead>
@@ -304,11 +307,28 @@
                                     @Html.DisplayFor(modelItem => item.Price)
                         </td>
                         <td>
+                            @{
+                                var averageRating = item.Reviews.Any() ? item.Reviews.Average(r => r.Rating) : 0;
+                            }
+                            <i class="fas fa-star" style="color: gold;"></i> @averageRating.ToString("0.0")
+                        </td>
+                        <td>
                             @if ((User.IsInRole("Manager") || User.IsInRole("Admin")) && int.Parse(User.Claims.FirstOrDefault(c => c.Type == "StoreId")?.Value) == item.StoreId)
                             {
-                                <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-primary btn-sm">Изменить</a>
+                                @* <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-primary btn-sm">Изменить</a>
                                 <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-primary btn-sm">Подробнее</a>
-                                <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger btn-sm">Удалить</a>
+                                <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger btn-sm">Удалить</a> *@
+                                <div class="button-container">
+                                    <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-primary btn-sm">
+                                        <i class="fas fa-edit"></i>
+                                    </a>
+                                    <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-primary btn-sm">
+                                        <i class="fas fa-info-circle"></i>
+                                    </a>
+                                    <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger btn-sm">
+                                        <i class="fas fa-trash"></i>
+                                    </a>
+                                </div>
                             }
                             else if (User.IsInRole("Manager"))
                             {
@@ -387,6 +407,12 @@
                         </td>
                         <td>
                             @Html.DisplayFor(modelItem => item.Price)
+                        </td>
+                        <td>
+                            @{
+                                var averageRating = item.Reviews.Any() ? item.Reviews.Average(r => r.Rating) : 0;
+                            }
+                            <i class="fas fa-star" style="color: gold;"></i> @averageRating.ToString("0.0")
                         </td>
                         <td>
                             @if ((User.IsInRole("Manager") || User.IsInRole("Admin")) && int.Parse(User.Claims.FirstOrDefault(c => c.Type == "StoreId")?.Value) == item.StoreId)
@@ -644,12 +670,13 @@
         }
 
         .btn {
-            padding: 10px 15px;
-            font-size: 14px;
+            padding: 10px 12px;
+            font-size: 12px;
             margin: 2px;
             border-radius: 4px;
             text-align: center;
             white-space: nowrap; /* Prevent text wrapping */
         }
     </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 </head>

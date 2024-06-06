@@ -9,5 +9,6 @@ namespace MusicStoreInfo.Services.Services.ProductService
         Task<Product?> DetailsAsync(int id);
         Task EditAsync(int id, Product model);
         Task<List<Product>?> GetAllAsync();
+        Task AddReviewAsync(Review review, int id);
     }
 }

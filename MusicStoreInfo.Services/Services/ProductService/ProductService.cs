@@ -52,5 +52,10 @@ namespace MusicStoreInfo.Services.Services.ProductService
         {
             await _repository.Delete(id);
         }
+
+        public async Task AddReviewAsync(Review review, int id)
+        {
+            await _repository.AddReview(review, id);
+        }
     }
 }

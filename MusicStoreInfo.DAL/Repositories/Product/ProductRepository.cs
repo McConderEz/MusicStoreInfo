@@ -28,6 +28,7 @@ namespace MusicStoreInfo.DAL.Repositories
                 .Include(a => a.Store)
                     .ThenInclude(s => s.District)
                         .ThenInclude(d => d.City)
+                .Include(a => a.Reviews)
                 .ToListAsync();
         }
 
@@ -40,6 +41,8 @@ namespace MusicStoreInfo.DAL.Repositories
                 .Include(a => a.Album)
                     .ThenInclude(a => a.Songs)
                 .Include(a => a.Store)
+                .Include(a => a.Reviews)
+                    .ThenInclude(r => r.User)
                 .FirstOrDefaultAsync(a => a.Id == id);
         }
 
@@ -79,6 +82,17 @@ namespace MusicStoreInfo.DAL.Repositories
                 .Where(a => a.Id == id)
                 .ExecuteDeleteAsync();
             await _dbContext.SaveChangesAsync();
+        }
+
+        public async Task AddReview(Review review, int id)
+        {
+            var product = await GetById(id);
+
+            if(product == null)
+            {
+                product.Reviews.Add(review);
+                await _dbContext.SaveChangesAsync();
+            }
         }
     }
 }
