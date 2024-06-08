@@ -1,0 +1,13 @@
+﻿@{
+    ViewData["Title"] = "Симметричное внутреннее соединение с условием (CompanyId)";
+}
+
+<h2>Симметричное внутреннее соединение с условием (CompanyId)</h2>
+
+<form asp-action="SymmetricInnerJoinWithCondition1" method="post">
+    <div class="form-group">
+        <label for="companyId">ID Компании:</label>
+        <input type="number" class="form-control" id="companyId" name="companyId" required />
+    </div>
+    <button type="submit" class="btn btn-primary">Выполнить отчет</button>
+</form>

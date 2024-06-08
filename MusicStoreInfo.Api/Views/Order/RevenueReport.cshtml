@@ -1,0 +1,79 @@
+﻿@model IEnumerable<dynamic>
+
+@{
+    ViewData["Title"] = "Revenue Report";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Revenue Report</h2>
+
+<form method="get" asp-action="RevenueReport" class="mb-4">
+    <div class="form-group">
+        <label for="startDate">Start Date:</label>
+        <input type="date" id="startDate" name="startDate" class="form-control" required />
+    </div>
+    <div class="form-group">
+        <label for="endDate">End Date:</label>
+        <input type="date" id="endDate" name="endDate" class="form-control" required />
+    </div>
+    <input type="submit" value="Generate Report" class="btn btn-primary" />
+</form>
+
+@if (Model != null && Model.Any())
+{
+    <div>
+        <canvas id="revenueChart" width="400" height="200"></canvas>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns@1.1.1/dist/chartjs-adapter-date-fns.min.js"></script>
+    <script type="text/javascript">
+        document.addEventListener('DOMContentLoaded', function () {
+            var ctx = document.getElementById('revenueChart').getContext('2d');
+            var chartData = {
+                labels: @Html.Raw(Json.Serialize(Model.Select(m => m.Date))),
+                datasets: [{
+                    label: 'Revenue',
+                    data: @Html.Raw(Json.Serialize(Model.Select(m => m.Revenue))),
+                    backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                    borderColor: 'rgba(54, 162, 235, 1)',
+                    borderWidth: 1
+                }]
+            };
+
+            var revenueChart = new Chart(ctx, {
+                type: 'line',
+                data: chartData,
+                options: {
+                    scales: {
+                        x: {
+                            type: 'time',
+                            time: {
+                                unit: 'day',
+                                tooltipFormat: 'yyyy-MM-dd',
+                                displayFormats: {
+                                    day: 'yyyy-MM-dd'
+                                }
+                            },
+                            title: {
+                                display: true,
+                                text: 'Date'
+                            }
+                        },
+                        y: {
+                            beginAtZero: true,
+                            title: {
+                                display: true,
+                                text: 'Revenue'
+                            }
+                        }
+                    }
+                }
+            });
+        });
+    </script>
+}
+else if (Model != null)
+{
+    <p>No data available for the selected period.</p>
+}

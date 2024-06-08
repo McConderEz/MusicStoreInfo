@@ -1,0 +1,21 @@
+﻿@model IEnumerable<dynamic>
+
+<h2>Магазины, имевшие заказы в определённую дату</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>ID Магазина</th>
+            <th>Название Магазина</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.StoreId</td>
+                <td>@item.StoreName</td>
+            </tr>
+        }
+    </tbody>
+</table>

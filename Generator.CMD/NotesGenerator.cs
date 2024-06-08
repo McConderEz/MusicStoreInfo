@@ -442,6 +442,37 @@ namespace Generator.CMD
             _dbContext.SaveChanges();
         }
 
+        public void GenReview()
+        {
+            var productIds = _dbContext.Products.Select(p => p.Id).ToList();
+
+            Random random = new Random();
+
+
+            for(var i = 0;i <  productIds.Count;i++)
+            {
+                var product = _dbContext.Products.FirstOrDefault(p => p.Id == productIds[i]);
+                var userIds = _dbContext.Users.Where(u => u.RoleId != 1 && u.RoleId != 2).Select(u => u.Id).ToList();
+
+                for(var j = 0;j < 5; j++)
+                {
+                    var review = new Review
+                    {
+                        AlbumId = product.AlbumId,
+                        StoreId = product.StoreId,
+                        ProductId = product.Id,
+                        Rating = random.Next(1, 6),
+                        UserId = userIds[random.Next(0,userIds.Count - 1)],
+                        TimeCreated = DateTime.Now,
+                    };
+                    _dbContext.Reviews.Add(review);
+                    product.Reviews.Add(review);
+                }
+            }
+
+            _dbContext.SaveChanges();
+        }
+
     }
 
     

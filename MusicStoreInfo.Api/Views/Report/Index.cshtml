@@ -1,0 +1,19 @@
+﻿@{
+    ViewData["Title"] = "Reports";
+}
+
+<h2>Reports</h2>
+
+<p>Select the report you want to generate:</p>
+
+<ul>
+    <li><a href="@Url.Action("GetAlbumsByCompany", "Report")">Albums by Company</a></li>
+    <li><a href="@Url.Action("GetAlbumsByGroup", "Report")">Albums by Group</a></li>
+    <li><a href="@Url.Action("GetAlbumsReleasedBetween", "Report")">Albums Released Between</a></li>
+    <li><a href="@Url.Action("GetAlbumsWithCompanies", "Report")">Albums with Companies</a></li>
+    <li><a href="@Url.Action("GetAlbumsWithGroups", "Report")">Albums with Groups</a></li>
+    <li><a href="@Url.Action("GetCompaniesWithDistricts", "Report")">Companies with Districts</a></li>
+    <li><a href="@Url.Action("GetAlbumsLeftJoinCompanies", "Report")">Albums Left Join Companies</a></li>
+    <li><a href="@Url.Action("GetCompaniesRightJoinAlbums", "Report")">Companies Right Join Albums</a></li>
+    <li><a href="@Url.Action("GetNestedLeftJoin", "Report")">Nested Left Join</a></li>
+</ul>

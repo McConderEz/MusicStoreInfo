@@ -1,0 +1,151 @@
+﻿@model IEnumerable<MusicStoreInfo.Domain.Entities.Order>
+@using Microsoft.EntityFrameworkCore
+@using MusicStoreInfo.DAL;
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    var dbContext = new MusicStoreDbContext();
+
+    var currentUser = dbContext.Users.Include(u => u.Store).FirstOrDefault(u => u.UserName.Equals(User.Identity.Name));
+}
+
+<h1>Заказы</h1>
+@if(User.IsInRole("Manager")){
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>
+                    Точка доставки
+                </th>
+                <th>
+                    Дата заказа
+                </th>
+                <th>
+                    Ожидаемая дата прибытия заказа
+                </th>
+                <th>
+                    Доставлено
+                </th>
+                <th>
+                    Количество
+                </th>
+                <th>
+                    Альбом
+                </th>
+                <th>
+                    Магазин
+                </th>
+                <th>
+                    Клиент
+                </th>
+                <th>
+                    Общая стоимость
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.Where(o => o.StoreId == currentUser.StoreId))
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.DeliveryPoint)
+                    </td>
+                    <td>
+                        @item.OrderDate.ToString("dd.MM.yyyy")
+                    </td>
+                    <td>
+                        @item.ExpectedArrivalDate.ToString("dd.MM.yyyy")
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.IsDelivered)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Quantity)
+                    </td>
+                    <td>
+                        @item.Product?.Album?.Name
+                    </td>
+                    <td>
+                        @item.Product?.Store?.Name
+                    </td>
+                    <td>
+                        @item.User?.UserName
+                    </td>
+                    <td>
+                        @(item.Product?.Price * item.Quantity)
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>
+                    Точка доставки
+                </th>
+                <th>
+                    Дата заказа
+                </th>
+                <th>
+                    Ожидаемая дата прибытия заказа
+                </th>
+                <th>
+                    Доставлено
+                </th>
+                <th>
+                    Количество
+                </th>
+                <th>
+                    Альбом
+                </th>
+                <th>
+                    Магазин
+                </th>
+                <th>
+                    Общая стоимость
+                </th>
+                <th>
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.Where(o => o.UserId == currentUser.Id))
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.DeliveryPoint)
+                    </td>
+                    <td>
+                        @item.OrderDate.ToString("dd.MM.yyyy")
+                    </td>
+                    <td>
+                        @item.ExpectedArrivalDate.ToString("dd.MM.yyyy")
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.IsDelivered)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Quantity)
+                    </td>
+                    <td>
+                        @item.Product?.Album?.Name
+                    </td>
+                    <td>
+                        @item.Product?.Store?.Name
+                    </td>
+                    <td>
+                        @(item.Product?.Price * item.Quantity)
+                    </td>
+                    <td>
+                        <a asp-controller="Product" asp-action="Details" class="btn btn-primary btn-sm" asp-route-id="@item.ProductId">Оставить отзыв</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}

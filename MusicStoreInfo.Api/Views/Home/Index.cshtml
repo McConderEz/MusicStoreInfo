@@ -6,7 +6,11 @@
 @{
     ViewData["Title"] = "Home Page";
     var random = new Random();
-    var randomItems = Model.OrderBy(x => random.Next()).Take(6).ToList();
+    var randomItems = Model
+    .Where(p => p.Reviews.Any())
+    .OrderByDescending(p => p.Reviews.Average(r => r.Rating))
+    .Take(6)
+    .ToList();
 }
 
 

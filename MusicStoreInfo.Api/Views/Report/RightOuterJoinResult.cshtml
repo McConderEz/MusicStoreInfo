@@ -1,0 +1,27 @@
+﻿@model IEnumerable<dynamic>
+
+<h2>Результаты правого внешнего соединения (Albums и Groups)</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>ID Альбома</th>
+            <th>Название Альбома</th>
+            <th>Дата выпуска</th>
+            <th>ID Группы</th>
+            <th>Название Группы</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.AlbumId</td>
+                <td>@item.AlbumName</td>
+                <td>@item.ReleaseDate.ToString("dd.MM.yyyy")</td>
+                <td>@item.GroupId</td>
+                <td>@item.GroupName</td>
+            </tr>
+        }
+    </tbody>
+</table>

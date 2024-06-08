@@ -1,0 +1,13 @@
+﻿@{
+    ViewData["Title"] = "Запрос на запросе по принципу левого соединения";
+}
+
+<h2>Запрос на запросе по принципу левого соединения (Магазины, имевшие заказы в определённую дату)</h2>
+
+<form asp-action="SubqueryLeftJoin" method="post">
+    <div class="form-group">
+        <label for="orderDate">Дата заказа:</label>
+        <input type="date" class="form-control" id="orderDate" name="orderDate" required />
+    </div>
+    <button type="submit" class="btn btn-primary">Показать магазины</button>
+</form>

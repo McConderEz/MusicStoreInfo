@@ -7,8 +7,8 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/MusicStoreInfo.Api.styles.css" asp-append-version="true" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-    <style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">    
+    <style>       
         body {
             background-color: #f8f9fa;
             color: #343a40;
@@ -92,6 +92,34 @@
             flex: 1;
         }
     </style>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        /* Добавляем стили для корректного отображения вложенных меню */
+        .dropdown-submenu {
+            position: relative;
+        }
+
+            .dropdown-submenu .dropdown-menu {
+                display: none;
+                position: absolute;
+                top: 0;
+                left: 100%;
+                margin-top: -1px;
+            }
+
+            .dropdown-submenu:hover .dropdown-menu {
+                display: block;
+            }
+
+        /* Убираем задержку при наведении */
+        .dropdown:hover > .dropdown-menu {
+            display: block;
+        }
+
+        .dropdown-menu {
+            margin-top: 0;
+        }
+    </style>
 </head>
 <body>
     <header class="d-flex flex-wrap align-items-center justify-content-between py-3 mb-4 border-bottom">
@@ -126,8 +154,35 @@
                             <li><a class="dropdown-item" asp-controller="Member" asp-action="Index">Исполнители</a></li>
                         </ul>
                     </li>
-                    <li class="nav-item"><a asp-area="" asp-controller="Product" asp-action="Index" class="nav-link px-2">Отчёты</a></li>
-                    <li class="nav-item"><a asp-area="" asp-controller="Product" asp-action="Index" class="nav-link px-2">Статистика</a></li>
+                    <li class="nav-item dropdown">
+                        <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">Отчёты</a>
+                        <ul class="dropdown-menu">
+                            <li class="dropdown-submenu">
+                                <a href="#" class="dropdown-item dropdown-toggle">Простые запросы</a>
+                                <ul class="dropdown-menu">
+                                    <li><a class="dropdown-item" asp-controller="Report" asp-action="SymmetricInnerJoinWithCondition1">Альбомы компании</a></li>
+                                    <li><a class="dropdown-item" asp-controller="Report" asp-action="SymmetricInnerJoinWithCondition2">Альбомы группы</a></li>
+                                    <li><a class="dropdown-item" asp-controller="Report" asp-action="SymmetricInnerJoinWithCondition3">Альбомы вышедшие в опред. период</a></li>
+                                    <li><a class="dropdown-item" asp-controller="Report" asp-action="SymmetricInnerJoinWithCondition4">Заказы за опред. период</a></li>
+                                    <li><a class="dropdown-item" asp-controller="Report" asp-action="SymmetricInnerJoinWithoutCondition1">Компании</a></li>
+                                    <li><a class="dropdown-item" asp-controller="Report" asp-action="SymmetricInnerJoinWithoutCondition2">Группы</a></li>
+                                    <li><a class="dropdown-item" asp-controller="Report" asp-action="SymmetricInnerJoinWithoutCondition3">Продукты</a></li>
+                                    <li><a class="dropdown-item" asp-controller="Report" asp-action="LeftOuterJoin">Альбомы и компании(л)</a></li>
+                                    <li><a class="dropdown-item" asp-controller="Report" asp-action="RightOuterJoin">Альбомы и компании(п)</a></li>
+                                    <li><a class="dropdown-item" asp-controller="Report" asp-action="SubqueryLeftJoin">Магазины,имующие заказ в опред. дату</a></li>
+                                </ul>
+                            </li>
+                            <li class="dropdown-submenu">
+                                <a href="#" class="dropdown-item dropdown-toggle">Сложные запросы</a>
+                                <ul class="dropdown-menu">
+                                    <li><a class="dropdown-item" asp-controller="Report" asp-action="ComplexQuery1">Запрос 1</a></li>
+                                    <li><a class="dropdown-item" asp-controller="Report" asp-action="ComplexQuery2">Запрос 2</a></li>
+                                    <li><a class="dropdown-item" asp-controller="Report" asp-action="ComplexQuery3">Запрос 3</a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="nav-item"><a asp-area="" asp-controller="Order" asp-action="RevenueReport" class="nav-link px-2">Статистика</a></li>
                     <li class="nav-item"><a asp-area="" asp-controller="Order" asp-action="Index" class="nav-link px-2">Заказы</a></li>
                 }
                 else if (User.IsInRole("Admin"))
@@ -187,3 +242,62 @@
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>
+
+<link href="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+<style>
+    /* Добавляем стили для корректного отображения вложенных меню */
+    .dropdown-submenu {
+        position: relative;
+    }
+
+        .dropdown-submenu .dropdown-menu {
+            display: none;
+            position: absolute;
+            top: 0;
+            left: 100%;
+            margin-top: -1px;
+        }
+
+        .dropdown-submenu:hover .dropdown-menu {
+            display: block;
+        }
+
+    /* Убираем задержку при наведении */
+    .dropdown:hover > .dropdown-menu {
+        display: block;
+    }
+
+    .dropdown-menu {
+        margin-top: 0;
+    }
+</style>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        // Добавляем JavaScript для корректного отображения вложенных меню
+        document.querySelectorAll('.dropdown-submenu').forEach(function (element) {
+            element.addEventListener('mouseover', function () {
+                const submenu = this.querySelector('.dropdown-menu');
+                if (submenu) {
+                    submenu.classList.add('show');
+                }
+            });
+
+            element.addEventListener('mouseout', function () {
+                const submenu = this.querySelector('.dropdown-menu');
+                if (submenu) {
+                    submenu.classList.remove('show');
+                }
+            });
+        });
+
+        // Закрываем открытые подпункты при клике вне меню
+        document.addEventListener('click', function (e) {
+            if (!e.target.closest('.dropdown-menu')) {
+                document.querySelectorAll('.dropdown-submenu .dropdown-menu').forEach(function (submenu) {
+                    submenu.classList.remove('show');
+                });
+            }
+        });
+    });
+</script>

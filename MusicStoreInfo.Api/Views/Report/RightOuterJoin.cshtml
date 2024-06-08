@@ -1,0 +1,13 @@
+﻿@{
+    ViewData["Title"] = "Правое внешнее соединение";
+}
+
+<h2>Правое внешнее соединение с фильтрацией по названию группы</h2>
+
+<form asp-action="RightOuterJoin" method="post">
+    <div class="form-group">
+        <label for="groupName">Название группы:</label>
+        <input type="text" class="form-control" id="groupName" name="groupName" />
+    </div>
+    <button type="submit" class="btn btn-primary">Фильтровать</button>
+</form>

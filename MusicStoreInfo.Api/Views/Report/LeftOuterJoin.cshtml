@@ -1,0 +1,13 @@
+﻿@{
+    ViewData["Title"] = "Левое внешнее соединение";
+}
+
+<h2>Левое внешнее соединение с фильтрацией по названию компании</h2>
+
+<form asp-action="LeftOuterJoin" method="post">
+    <div class="form-group">
+        <label for="companyName">Название компании:</label>
+        <input type="text" class="form-control" id="companyName" name="companyName" />
+    </div>
+    <button type="submit" class="btn btn-primary">Фильтровать</button>
+</form>

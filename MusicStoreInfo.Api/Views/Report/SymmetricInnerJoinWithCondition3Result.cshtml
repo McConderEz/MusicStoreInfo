@@ -1,0 +1,26 @@
+﻿@model IEnumerable<dynamic>
+
+<h2>Альбомы вышедшие в определённый период</h2>
+<h4>Результаты симметричного внутреннего соединения с условием (По дате)</h4>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>ID Альбома</th>
+            <th>Название Альбома</th>
+            <th>Дата выпуска</th>
+            <th>Цена</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.Id</td>
+                <td>@item.Name</td>
+                <td>@item.ReleaseDate</td>
+                <td>@item.Price</td>
+            </tr>
+        }
+    </tbody>
+</table>

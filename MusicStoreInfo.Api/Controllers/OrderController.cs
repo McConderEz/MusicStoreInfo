@@ -1,5 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using DocumentFormat.OpenXml.InkML;
+using DocumentFormat.OpenXml.VariantTypes;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using MusicStoreInfo.Api.Models;
 using MusicStoreInfo.DAL;
 using MusicStoreInfo.Domain.Entities;
 using MusicStoreInfo.Services.Services.OrderService;
@@ -23,9 +26,54 @@ namespace MusicStoreInfo.Api.Controllers
             _shoppingCartService = shoppingCartService;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            return View();
+            var ordersAll = await _service.GetAsync();
+            return View(ordersAll);
+        }
+
+
+        [HttpGet]
+        public async Task<IActionResult> RevenueReport(DateTime? startDate, DateTime? endDate)
+        {
+            if (!startDate.HasValue)
+            {
+                startDate = DateTime.Now.AddDays(-30);
+            }
+            if (!endDate.HasValue)
+            {
+                endDate = DateTime.Now;
+            }
+
+            var user = await _dbContext.Users.Include(u => u.Store)
+                                             .FirstOrDefaultAsync(u => u.UserName.Equals(User.Identity.Name));
+
+            if (user == null)
+            {
+                return Json(new { success = false, message = "User not found" });
+            }
+
+            var orders = await _service.GetAsync();
+
+            var filteredOrders = orders.Where(o => o.OrderDate >= startDate && o.OrderDate <= endDate && o.StoreId == user.StoreId)
+                                       .ToList();
+
+            var revenueData = filteredOrders
+                .GroupBy(o => o.OrderDate.Date)
+                .Select(g => new
+                {
+                    Date = g.Key.ToString("yyyy-MM-dd"),
+                    Revenue = g.Sum(o => o.Quantity * o.Product.Price)
+                })
+                .OrderBy(r => r.Date)
+                .ToList();
+
+            if (!revenueData.Any())
+            {
+                return Json(new { success = false, message = "No data found" });
+            }
+
+            return View(revenueData);
         }
 
         [HttpGet]

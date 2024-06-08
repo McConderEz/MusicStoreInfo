@@ -1,0 +1,27 @@
+﻿@model IEnumerable<dynamic>
+
+<h2>Симметричное внутреннее соединение без условия (Продукты и Магазины)</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>ID Альбома</th>
+            <th>Название Альбома</th>
+            <th>Дата выпуска</th>
+            <th>Цена</th>
+            <th>Название Магазина</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.AlbumId</td>
+                <td>@item.AlbumName</td>
+                <td>@item.ReleaseDate.ToString("dd.MM.yyyy")</td>
+                <td>@item.Price</td>
+                <td>@item.StoreName</td>
+            </tr>
+        }
+    </tbody>
+</table>

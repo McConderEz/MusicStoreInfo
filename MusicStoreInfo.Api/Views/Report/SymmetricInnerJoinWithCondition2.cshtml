@@ -1,0 +1,13 @@
+﻿@{
+    ViewData["Title"] = "Симметричное внутреннее соединение с условием (GroupId)";
+}
+
+<h2>Симметричное внутреннее соединение с условием (GroupId)</h2>
+
+<form asp-action="SymmetricInnerJoinWithCondition2" method="post">
+    <div class="form-group">
+        <label for="groupId">ID Группы:</label>
+        <input type="number" class="form-control" id="groupId" name="groupId" required />
+    </div>
+    <button type="submit" class="btn btn-primary">Выполнить отчет</button>
+</form>
