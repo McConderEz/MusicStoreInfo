@@ -240,5 +240,174 @@ namespace MusicStoreInfo.Api.Controllers
                 return View("SubqueryLeftJoinResult", result);
             }
         }
+
+        //Итоговый запрос без условия(количество магазинов по типам собственности)
+        [HttpGet]
+        public async Task<IActionResult> StoresByOwnershipType()
+        {
+            using (var connection = new SqlConnection(_connectionString))
+            {
+                var query = @"
+                    SELECT
+                        ot.Name AS OwnershipTypeName,
+                        COUNT(s.Id) AS StoreCount
+                    FROM
+                        dbo.Stores s
+                        INNER JOIN dbo.OwnershipTypes ot ON s.OwnershipTypeId = ot.Id
+                    GROUP BY
+                        ot.Name";
+
+                var result = await connection.QueryAsync(query);
+                return View(result);
+            }
+        }
+
+
+        //Итоговый запрос с условием на данные (Количество альбомов по датам с количеством песен больше указанного числа)
+        [HttpGet]
+        public IActionResult AlbumsBySongCount()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> AlbumsBySongCount(int minSongCount)
+        {
+            using (var connection = new SqlConnection(_connectionString))
+            {
+                var query = @"
+            SELECT
+                YEAR(a.ReleaseDate) AS ReleaseYear,
+                COUNT(a.Id) AS AlbumCount
+            FROM
+                Albums a
+            WHERE
+                a.SongsCount > @MinSongCount
+            GROUP BY
+                YEAR(a.ReleaseDate)
+            ORDER BY
+                ReleaseYear";
+
+                var result = await connection.QueryAsync(query, new { MinSongCount = minSongCount });
+                return View("AlbumsBySongCountResult", result);
+            }
+        }
+
+
+        //Итоговый запрос с условием на группы( Группы с суммарным количеством песен за всё время больше указанного числа)
+        [HttpGet]
+        public IActionResult GroupsByTotalSongCount()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> GroupsByTotalSongCount(int minTotalSongs)
+        {
+            using (var connection = new SqlConnection(_connectionString))
+            {
+                var query = @"
+                    SELECT
+                        g.Name AS GroupName,
+                        SUM(a.SongsCount) AS TotalSongs
+                    FROM
+                        Groups g
+                        INNER JOIN Albums a ON g.Id = a.GroupId
+                    GROUP BY
+                        g.Name
+                    HAVING
+                        SUM(a.SongsCount) > @MinTotalSongs";
+
+                var result = await connection.QueryAsync(query, new { MinTotalSongs = minTotalSongs });
+                return View("GroupsByTotalSongCountResult", result);
+            }
+        }
+
+        //Итоговый запрос с условием на группы и данные( Группы и данные с суммарным количеством песен за определённый промежуток времени больше указанного числа)
+        [HttpGet]
+        public IActionResult GroupsBySongCountAndDateRange()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> GroupsBySongCountAndDateRange(int minTotalSongs, DateTime startDate, DateTime finishDate)
+        {
+            using (var connection = new SqlConnection(_connectionString))
+            {
+                var query = @"
+            SELECT
+                g.Name AS GroupName,
+                SUM(a.SongsCount) AS TotalSongs
+            FROM
+                Groups g
+                INNER JOIN Albums a ON g.Id = a.GroupId
+            WHERE
+                a.ReleaseDate BETWEEN @StartDate AND @FinishDate
+            GROUP BY
+                g.Name
+            HAVING
+                SUM(a.SongsCount) > @MinTotalSongs";
+
+                var result = await connection.QueryAsync(query, new { MinTotalSongs = minTotalSongs, StartDate = startDate, FinishDate = finishDate });
+                return View("GroupsBySongCountAndDateRangeResult", result);
+            }
+        }
+        //Запрос на запросе по принципу итогового запроса (количество альбомов с минимальным количеством песен для каждой группы)
+        [HttpGet]
+        public async Task<IActionResult> AlbumsByMinSongs()
+        {
+            using (var connection = new SqlConnection(_connectionString))
+            {
+                var query = @"
+                SELECT
+                    g.Name AS GroupName,
+                    COUNT(*) AS AlbumsCount
+                FROM
+                    dbo.Albums a
+                    INNER JOIN dbo.Groups g ON a.GroupId = g.Id
+                WHERE
+                    a.SongsCount = (
+                        SELECT MIN(a2.SongsCount) AS MinSongsCount
+                        FROM dbo.Albums a2
+                        WHERE a2.GroupId = a.GroupId
+                    )
+                GROUP BY
+                    g.Name";
+
+                var result = await connection.QueryAsync(query);
+                return View("AlbumsByMinSongs", result);
+            }
+        }
+
+        //Запрос с подзапросом (группы, которые выпустили альбомы в определённом диапазоне дат)
+        [HttpGet]
+        public IActionResult GroupsByAlbumDateRange()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> GroupsByAlbumDateRange(DateTime startDate, DateTime endDate)
+        {
+            using (var connection = new SqlConnection(_connectionString))
+            {
+                var query = @"
+                SELECT
+                    g.Name AS GroupName
+                FROM
+                    Groups g
+                WHERE
+                    g.Id IN (
+                        SELECT a.GroupId
+                        FROM Albums a
+                        WHERE a.ReleaseDate BETWEEN @StartDate AND @EndDate
+                    )";
+
+                var result = await connection.QueryAsync(query, new { StartDate = startDate, EndDate = endDate });
+                return View("GroupsByAlbumDateRangeResult", result);
+            }
+        }
+
     }
 }

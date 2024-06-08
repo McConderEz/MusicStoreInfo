@@ -1,0 +1,21 @@
+﻿@{
+    ViewData["Title"] = "Группы и данные с суммарным количеством песен за определённый промежуток времени больше указанного числа";
+}
+
+<h2>Группы и данные с суммарным количеством песен за определённый промежуток времени больше указанного числа</h2>
+
+<form asp-action="GroupsBySongCountAndDateRange" method="post">
+    <div class="form-group">
+        <label for="minTotalSongs">Минимальное количество песен:</label>
+        <input type="number" class="form-control" id="minTotalSongs" name="minTotalSongs" required />
+    </div>
+    <div class="form-group">
+        <label for="startDate">Дата начала:</label>
+        <input type="date" class="form-control" id="startDate" name="startDate" required />
+    </div>
+    <div class="form-group">
+        <label for="finishDate">Дата окончания:</label>
+        <input type="date" class="form-control" id="finishDate" name="finishDate" required />
+    </div>
+    <button type="submit" class="btn btn-primary">Показать группы</button>
+</form>

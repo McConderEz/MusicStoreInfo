@@ -1,0 +1,21 @@
+﻿@model IEnumerable<dynamic>
+
+<h2>Группы с суммарным количеством песен за всё время больше указанного числа</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Название группы</th>
+            <th>Общее количество песен</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.GroupName</td>
+                <td>@item.TotalSongs</td>
+            </tr>
+        }
+    </tbody>
+</table>

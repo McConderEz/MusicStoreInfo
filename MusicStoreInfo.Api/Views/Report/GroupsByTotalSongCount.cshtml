@@ -1,0 +1,13 @@
+﻿@{
+    ViewData["Title"] = "Группы с суммарным количеством песен за всё время больше указанного числа";
+}
+
+<h2>Группы с суммарным количеством песен за всё время больше указанного числа</h2>
+
+<form asp-action="GroupsByTotalSongCount" method="post">
+    <div class="form-group">
+        <label for="minTotalSongs">Минимальное количество песен:</label>
+        <input type="number" class="form-control" id="minTotalSongs" name="minTotalSongs" required />
+    </div>
+    <button type="submit" class="btn btn-primary">Показать группы</button>
+</form>

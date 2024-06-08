@@ -36,6 +36,7 @@ namespace Generator.CMD
             GenAlbum();
             GenSong();
             GenProduct();
+            GenReview();
         }
 
         public void GenGenres()
@@ -445,14 +446,13 @@ namespace Generator.CMD
         public void GenReview()
         {
             var productIds = _dbContext.Products.Select(p => p.Id).ToList();
-
+            var userIds = _dbContext.Users.Where(u => u.RoleId != 1 && u.RoleId != 2).Select(u => u.Id).ToList();
             Random random = new Random();
 
 
             for(var i = 0;i <  productIds.Count;i++)
             {
                 var product = _dbContext.Products.FirstOrDefault(p => p.Id == productIds[i]);
-                var userIds = _dbContext.Users.Where(u => u.RoleId != 1 && u.RoleId != 2).Select(u => u.Id).ToList();
 
                 for(var j = 0;j < 5; j++)
                 {
@@ -467,6 +467,39 @@ namespace Generator.CMD
                     };
                     _dbContext.Reviews.Add(review);
                     product.Reviews.Add(review);
+                }
+            }
+
+            _dbContext.SaveChanges();
+        }
+
+
+        public void GenOrder()
+        {
+            var productIds = _dbContext.Products.Select(p => p.Id).ToList();
+            var userIds = _dbContext.Users.Where(u => u.RoleId != 1 && u.RoleId != 2).Select(u => u.Id).ToList();
+
+            for(var i = 0; i < productIds.Count;i++)
+            {
+                Random random = new Random();
+                var product = _dbContext.Products.FirstOrDefault(p => p.Id == productIds[i]);
+
+                for (var j = 0; j < random.Next(1,6); j++)
+                {
+                    var order = new Order
+                    {
+                        DeliveryPoint = "Куда-то",
+                        OrderDate = DateTime.Now,
+                        ExpectedArrivalDate = DateTime.Now.AddDays(7),
+                        IsDelivered = false,
+                        Quantity = random.Next(1, 10),
+                        UserId = userIds[random.Next(0, userIds.Count - 1)],
+                        StoreId = product.StoreId,
+                        AlbumId = product.AlbumId,
+                        ProductId = product.Id
+                    };
+                    _dbContext.Orders.Add(order);
+                    product.Orders.Add(order);
                 }
             }
 

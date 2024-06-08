@@ -1,0 +1,21 @@
+﻿@model IEnumerable<dynamic>
+
+<h2>Количество музыкальных магазинов по типам собственности</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Тип собственности</th>
+            <th>Количество магазинов</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.OwnershipTypeName</td>
+                <td>@item.StoreCount</td>
+            </tr>
+        }
+    </tbody>
+</table>

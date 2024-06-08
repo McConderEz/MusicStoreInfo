@@ -1,0 +1,21 @@
+﻿@model IEnumerable<dynamic>
+
+<h2>Количество альбомов по датам с количеством песен больше указанного числа</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Дата выпуска</th>
+            <th>Количество альбомов</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.ReleaseYear</td>
+                <td>@item.AlbumCount</td>
+            </tr>
+        }
+    </tbody>
+</table>

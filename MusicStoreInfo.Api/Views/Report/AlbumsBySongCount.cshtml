@@ -1,0 +1,13 @@
+﻿@{
+    ViewData["Title"] = "Количество альбомов по датам с количеством песен больше указанного числа";
+}
+
+<h2>Количество альбомов по датам с количеством песен больше указанного числа</h2>
+
+<form asp-action="AlbumsBySongCount" method="post">
+    <div class="form-group">
+        <label for="minSongCount">Минимальное количество песен:</label>
+        <input type="number" class="form-control" id="minSongCount" name="minSongCount" required />
+    </div>
+    <button type="submit" class="btn btn-primary">Показать альбомы</button>
+</form>

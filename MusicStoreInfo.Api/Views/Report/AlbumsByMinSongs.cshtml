@@ -1,0 +1,25 @@
+﻿@model IEnumerable<dynamic>
+
+@{
+    ViewData["Title"] = "Результаты поиска альбомов с минимальным количеством песен для каждой группы";
+}
+
+<h2>Результаты поиска альбомов с минимальным количеством песен для каждой группы</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Название группы</th>
+            <th>Количество альбомов</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.GroupName</td>
+                <td>@item.AlbumsCount</td>
+            </tr>
+        }
+    </tbody>
+</table>

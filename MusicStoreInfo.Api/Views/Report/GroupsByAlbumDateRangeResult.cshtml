@@ -1,0 +1,23 @@
+﻿@model IEnumerable<dynamic>
+
+@{
+    ViewData["Title"] = "Результаты поиска групп, выпустивших альбомы в определённом диапазоне дат";
+}
+
+<h2>Результаты поиска групп, выпустивших альбомы в определённом диапазоне дат</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Название группы</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.GroupName</td>
+            </tr>
+        }
+    </tbody>
+</table>
