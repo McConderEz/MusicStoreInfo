@@ -35,8 +35,6 @@
         .dropdown-menu {
             background-color: #f8f9fa;
             color: #343a40;
-            display: none;
-            position: absolute;
         }
 
         .dropdown-item {
@@ -48,10 +46,6 @@
                 background-color: #e9ecef;
                 color: #000000;
             }
-
-        .nav-item.dropdown:hover .dropdown-menu {
-            display: block;
-        }
 
         .dropdown-toggle::after {
             display: none;
@@ -91,25 +85,23 @@
             justify-content: center;
             flex: 1;
         }
-    </style>
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
-    <style>
+
         /* Добавляем стили для корректного отображения вложенных меню */
         .dropdown-submenu {
             position: relative;
         }
 
-            .dropdown-submenu .dropdown-menu {
-                display: none;
-                position: absolute;
-                top: 0;
-                left: 100%;
-                margin-top: -1px;
-            }
+        .dropdown-submenu .dropdown-menu {
+            display: none;
+            position: absolute;
+            top: 0;
+            left: 100%;
+            margin-top: -1px;
+        }
 
-            .dropdown-submenu:hover .dropdown-menu {
-                display: block;
-            }
+        .dropdown-submenu:hover .dropdown-menu {
+            display: block;
+        }
 
         /* Убираем задержку при наведении */
         .dropdown:hover > .dropdown-menu {
@@ -119,7 +111,14 @@
         .dropdown-menu {
             margin-top: 0;
         }
+
+        /* Стили для выпадающего списка профиля */
+        .profile-dropdown .dropdown-menu {
+            right: 0;
+            left: auto;
+        }
     </style>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
     <header class="d-flex flex-wrap align-items-center justify-content-between py-3 mb-4 border-bottom">
@@ -169,7 +168,7 @@
                                     <li><a class="dropdown-item" asp-controller="Report" asp-action="SymmetricInnerJoinWithoutCondition3">Продукты</a></li>
                                     <li><a class="dropdown-item" asp-controller="Report" asp-action="LeftOuterJoin">Альбомы и компании(л)</a></li>
                                     <li><a class="dropdown-item" asp-controller="Report" asp-action="RightOuterJoin">Альбомы и компании(п)</a></li>
-                                    <li><a class="dropdown-item" asp-controller="Report" asp-action="SubqueryLeftJoin">Магазины,имующие заказ в опред. дату</a></li>
+                                    <li><a class="dropdown-item" asp-controller="Report" asp-action="SubqueryLeftJoin">Магазины, имеющие заказ в опред. дату</a></li>
                                 </ul>
                             </li>
                             <li class="dropdown-submenu">
@@ -214,12 +213,12 @@
             }
             else
             {
-                <div class="dropdown text-end">
+                <div class="dropdown text-end profile-dropdown">
                     <a href="#" class="d-inline-flex align-items-center link-body-emphasis text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
                         <img src="@Url.Content("~/image/" + User.Claims.FirstOrDefault(c => c.Type == "ImagePath")?.Value)" alt="User Image" width="32" height="32" class="rounded-circle me-2">
                         <span>@User.Identity.Name</span>
                     </a>
-                    <ul class="dropdown-menu text-small">
+                    <ul class="dropdown-menu dropdown-menu-end text-small">
                         <li><a class="dropdown-item" asp-controller="ShoppingCart" asp-action="Index" asp-route-id="@int.Parse(User.Claims.FirstOrDefault(c => c.Type == "ShoppingCartId")?.Value)">Корзина</a></li>
                         <li><a class="dropdown-item" asp-controller="Account" asp-action="Profile">Профиль</a></li>
                         <li><hr class="dropdown-divider"></li>
@@ -247,33 +246,6 @@
 </html>
 
 <link href="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
-<style>
-    /* Добавляем стили для корректного отображения вложенных меню */
-    .dropdown-submenu {
-        position: relative;
-    }
-
-        .dropdown-submenu .dropdown-menu {
-            display: none;
-            position: absolute;
-            top: 0;
-            left: 100%;
-            margin-top: -1px;
-        }
-
-        .dropdown-submenu:hover .dropdown-menu {
-            display: block;
-        }
-
-    /* Убираем задержку при наведении */
-    .dropdown:hover > .dropdown-menu {
-        display: block;
-    }
-
-    .dropdown-menu {
-        margin-top: 0;
-    }
-</style>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
 <script>
     document.addEventListener('DOMContentLoaded', function () {
