@@ -1,9 +1,11 @@
-﻿using Dapper;
+﻿using ClosedXML.Excel;
+using Dapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using MusicStoreInfo.Api.Models;
 using MusicStoreInfo.DAL;
+using OfficeOpenXml;
 
 namespace MusicStoreInfo.Api.Controllers
 {
@@ -290,6 +292,49 @@ namespace MusicStoreInfo.Api.Controllers
 
                 var result = await connection.QueryAsync(query, new { MinSongCount = minSongCount });
                 return View("AlbumsBySongCountResult", result);
+            }
+        }
+        [HttpPost]
+        public async Task<IActionResult> ExportToExcel(int minSongCount)
+        {
+            using (var connection = new SqlConnection(_connectionString))
+            {
+                var query = @"
+                SELECT
+                    YEAR(a.ReleaseDate) AS ReleaseYear,
+                    COUNT(a.Id) AS AlbumCount
+                FROM
+                    Albums a
+                WHERE
+                    a.SongsCount > @MinSongCount
+                GROUP BY
+                    YEAR(a.ReleaseDate)
+                ORDER BY
+                    ReleaseYear";
+
+                var result = await connection.QueryAsync(query, new { MinSongCount = minSongCount });
+
+                using (var workbook = new XLWorkbook())
+                {
+                    var worksheet = workbook.Worksheets.Add("Albums");
+                    worksheet.Cell(1, 1).Value = "Дата выпуска";
+                    worksheet.Cell(1, 2).Value = "Количество альбомов";
+
+                    var row = 2;
+                    foreach (var item in result)
+                    {
+                        worksheet.Cell(row, 1).Value = item.ReleaseYear;
+                        worksheet.Cell(row, 2).Value = item.AlbumCount;
+                        row++;
+                    }
+
+                    using (var stream = new MemoryStream())
+                    {
+                        workbook.SaveAs(stream);
+                        var content = stream.ToArray();
+                        return File(content, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "Albums.xlsx");
+                    }
+                }
             }
         }
 

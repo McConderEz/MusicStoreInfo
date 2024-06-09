@@ -1,6 +1,11 @@
 ﻿@model IEnumerable<dynamic>
 
-<h2>Количество альбомов по датам с количеством песен больше указанного числа</h2>
+@{
+    ViewData["Title"] = "Результаты отчета по альбомам";
+    ViewData["MinSongCount"] = TempData["MinSongCount"];
+}
+
+<h2>@ViewData["Title"]</h2>
 
 <table class="table">
     <thead>
@@ -19,3 +24,63 @@
         }
     </tbody>
 </table>
+
+<div>
+    <canvas id="albumsChart" width="400" height="200"></canvas>
+</div>
+
+<form asp-action="ExportToExcel" method="post">
+    <input type="hidden" name="minSongCount" value="@ViewData["MinSongCount"]" />
+    <button type="submit" class="btn btn-success">Выгрузить в Excel</button>
+</form>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns@3.0.0/dist/chartjs-adapter-date-fns.bundle.min.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        var canvas = document.getElementById('albumsChart');
+        if (canvas) {
+            var ctx = canvas.getContext('2d');
+            var labels = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(Model.Select(m => m.ReleaseYear)));
+            var data = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(Model.Select(m => m.AlbumCount)));
+
+            console.log("Метки: ", labels);  // Отладка
+            console.log("Данные: ", data);   // Отладка
+
+            var chartData = {
+                labels: labels,
+                datasets: [{
+                    label: 'Количество альбомов',
+                    data: data,
+                    backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                    borderColor: 'rgba(75, 192, 192, 1)',
+                    borderWidth: 1
+                }]
+            };
+
+            var albumsChart = new Chart(ctx, {
+                type: 'line',
+                data: chartData,
+                options: {
+                    scales: {
+                        x: {
+                            title: {
+                                display: true,
+                                text: 'Дата выпуска'
+                            }
+                        },
+                        y: {
+                            beginAtZero: true,
+                            title: {
+                                display: true,
+                                text: 'Количество альбомов'
+                            }
+                        }
+                    }
+                }
+            });
+        } else {
+            console.error("Элемент canvas не найден.");
+        }
+    });
+</script>
