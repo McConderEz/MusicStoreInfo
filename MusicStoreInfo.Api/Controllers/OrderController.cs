@@ -8,6 +8,7 @@ using MusicStoreInfo.Domain.Entities;
 using MusicStoreInfo.Services.Services.OrderService;
 using MusicStoreInfo.Services.Services.ProductService;
 using MusicStoreInfo.Services.Services.ShoppingCartService;
+using System.Text.Json;
 
 namespace MusicStoreInfo.Api.Controllers
 {
@@ -34,6 +35,12 @@ namespace MusicStoreInfo.Api.Controllers
 
 
         [HttpGet]
+        public IActionResult RevenueReport()
+        {
+            return View();
+        }
+
+        [HttpPost]
         public async Task<IActionResult> RevenueReport(DateTime? startDate, DateTime? endDate)
         {
             if (!startDate.HasValue)
@@ -73,7 +80,7 @@ namespace MusicStoreInfo.Api.Controllers
                 return Json(new { success = false, message = "No data found" });
             }
 
-            return View(revenueData);
+            return View("RevenueReportResult", revenueData);
         }
 
         [HttpGet]

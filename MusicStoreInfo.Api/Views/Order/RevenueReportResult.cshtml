@@ -1,0 +1,99 @@
+﻿@model IEnumerable<dynamic>
+@using Microsoft.EntityFrameworkCore
+@using MusicStoreInfo.DAL
+@{
+    ViewData["Title"] = "Отчет по доходам";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var context = new MusicStoreDbContext();
+    var storeName = context.Users.Include(u => u.Store).FirstOrDefault(u => u.UserName.Equals(User.Identity.Name)).Store.Name;
+}
+
+<h2>Отчет по доходам для @storeName</h2>
+
+@if (Model != null && Model.Any())
+{
+    <div>
+        <canvas id="revenueChart" width="400" height="200"></canvas>
+    </div>
+
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Дата</th>
+                <th>Доход</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.Date</td>
+                    <td>@item.Revenue</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns@3.0.0/dist/chartjs-adapter-date-fns.bundle.min.js"></script>
+    <script type="text/javascript">
+        document.addEventListener('DOMContentLoaded', function () {
+            var canvas = document.getElementById('revenueChart');
+            if (canvas) {
+                var ctx = canvas.getContext('2d');
+                var labels = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(Model.Select(m => m.Date)));
+                var data = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(Model.Select(m => m.Revenue)));
+
+                console.log("Метки: ", labels);  // Отладка
+                console.log("Данные: ", data);   // Отладка
+
+                var chartData = {
+                    labels: labels,
+                    datasets: [{
+                        label: 'Доход',
+                        data: data,
+                        backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                        borderColor: 'rgba(54, 162, 235, 1)',
+                        borderWidth: 1
+                    }]
+                };
+
+                var revenueChart = new Chart(ctx, {
+                    type: 'line',
+                    data: chartData,
+                    options: {
+                        scales: {
+                            x: {
+                                type: 'time',
+                                time: {
+                                    unit: 'day',
+                                    tooltipFormat: 'yyyy-MM-dd',
+                                    displayFormats: {
+                                        day: 'yyyy-MM-dd'
+                                    }
+                                },
+                                title: {
+                                    display: true,
+                                    text: 'Дата'
+                                }
+                            },
+                            y: {
+                                beginAtZero: true,
+                                title: {
+                                    display: true,
+                                    text: 'Доход'
+                                }
+                            }
+                        }
+                    }
+                });
+            } else {
+                console.error("Элемент canvas не найден.");
+            }
+        });
+    </script>
+}
+else
+{
+    <p>Нет данных за выбранный период.</p>
+}
