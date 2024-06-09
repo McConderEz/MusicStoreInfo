@@ -1,0 +1,25 @@
+﻿@model IEnumerable<dynamic>
+
+@{
+    ViewData["Title"] = "Количество альбомов, выпущенных каждой группой, и общее количество альбомов";
+}
+
+<h2>Количество альбомов, выпущенных каждой группой, и общее количество альбомов</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Название группы</th>
+            <th>Количество альбомов</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.GroupName</td>
+                <td>@item.AlbumCount</td>
+            </tr>
+        }
+    </tbody>
+</table>

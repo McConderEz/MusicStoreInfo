@@ -1,0 +1,23 @@
+﻿@model IEnumerable<dynamic>
+
+@{
+    ViewData["Title"] = "Группы с названием, начинающимся на 'A'";
+}
+
+<h2>Группы с названием, начинающимся на 'A'</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Название группы</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.GroupName</td>
+            </tr>
+        }
+    </tbody>
+</table>

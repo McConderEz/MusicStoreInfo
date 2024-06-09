@@ -1,0 +1,23 @@
+﻿@model IEnumerable<dynamic>
+
+@{
+    ViewData["Title"] = "Группы, которые не выпустили альбомы после 2010 года";
+}
+
+<h2>Группы, которые не выпустили альбомы после 2010 года</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Название группы</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.GroupName</td>
+            </tr>
+        }
+    </tbody>
+</table>

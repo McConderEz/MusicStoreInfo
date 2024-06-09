@@ -1,0 +1,29 @@
+﻿@model IEnumerable<dynamic>
+
+@{
+    ViewData["Title"] = "Альбомы с комментариями по количеству песен";
+}
+
+<h2>Альбомы с комментариями по количеству песен</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Название альбома</th>
+            <th>Дата выпуска</th>
+            <th>Количество песен</th>
+            <th>Комментарий</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.AlbumName</td>
+                <td>@item.ReleaseDate</td>
+                <td>@item.SongsCount</td>
+                <td>@item.SongComment.ToString()</td>
+            </tr>
+        }
+    </tbody>
+</table>

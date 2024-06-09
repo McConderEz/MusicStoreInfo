@@ -1,0 +1,25 @@
+﻿@model IEnumerable<dynamic>
+
+@{
+    ViewData["Title"] = "Группы и компании, которые выпустили альбомы в 2020 году";
+}
+
+<h2>Группы и компании, которые выпустили альбомы в 2020 году</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Название группы</th>
+            <th>Название компании</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.GroupName</td>
+                <td>@item.CompanyName</td>
+            </tr>
+        }
+    </tbody>
+</table>

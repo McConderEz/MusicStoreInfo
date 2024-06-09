@@ -409,5 +409,137 @@ namespace MusicStoreInfo.Api.Controllers
             }
         }
 
+
+        [HttpGet]
+        public async Task<IActionResult> GroupsWithFewSongs()
+        {
+            using (var connection = new SqlConnection(_connectionString))
+            {
+                var query = @"
+                SELECT DISTINCT
+                    g.Name AS GroupName
+                FROM
+                    Groups g
+                WHERE
+                    g.Id IN (SELECT a.GroupId FROM Albums a WHERE a.SongsCount < 10)";
+
+                var result = await connection.QueryAsync(query);
+                return View("GroupsWithFewSongs", result);
+            }
+        }
+
+
+        [HttpGet]
+        public async Task<IActionResult> GroupsBefore2010()
+        {
+            using (var connection = new SqlConnection(_connectionString))
+            {
+                var query = @"
+            SELECT DISTINCT
+                g.Name AS GroupName
+            FROM
+                Groups g
+            WHERE
+                g.Id NOT IN (SELECT a.GroupId FROM Albums a WHERE a.ReleaseDate >= '2010-01-01')";
+
+                var result = await connection.QueryAsync(query);
+                return View("GroupsBefore2010", result);
+            }
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> AlbumsWithSongComments()
+        {
+            using (var connection = new SqlConnection(_connectionString))
+            {
+                var query = @"
+    SELECT
+        a.Name AS AlbumName,
+        a.ReleaseDate,
+        a.SongsCount,
+        (CASE 
+            WHEN a.SongsCount < 5 THEN N'Мало'
+            WHEN a.SongsCount BETWEEN 5 AND 10 THEN N'Средне'
+            ELSE N'Много'
+        END) AS SongComment
+    FROM
+        Albums a";
+
+                var result = await connection.QueryAsync(query);
+                return View("AlbumsWithSongComments", result);
+            }
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> GroupsStartingWithA()
+        {
+            using (var connection = new SqlConnection(_connectionString))
+            {
+                var query = @"
+            SELECT
+                g.Name AS GroupName
+            FROM
+                Groups g
+            WHERE
+                g.Name LIKE 'A%'";
+
+                var result = await connection.QueryAsync(query);
+                return View("GroupsStartingWithA", result);
+            }
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> GroupsAndCompanies2020()
+        {
+            using (var connection = new SqlConnection(_connectionString))
+            {
+                var query = @"
+            SELECT
+                g.Name AS GroupName,
+                c.Name AS CompanyName
+            FROM
+                Groups g
+                JOIN Albums a ON g.Id = a.GroupId
+                JOIN Companies c ON a.CompanyId = c.Id
+            WHERE
+                a.ReleaseDate BETWEEN '2020-01-01' AND '2020-12-31'
+            UNION
+            SELECT
+                g.Name AS GroupName,
+                c.Name AS CompanyName
+            FROM
+                Companies c
+                JOIN Albums a ON c.Id = a.CompanyId
+                JOIN Groups g ON a.GroupId = g.Id
+            WHERE
+                a.ReleaseDate BETWEEN '2020-01-01' AND '2020-12-31'";
+
+                var result = await connection.QueryAsync(query);
+                return View("GroupsAndCompanies2020", result);
+            }
+        }
+
+
+        [HttpGet]
+        public async Task<IActionResult> CountAlbumsByGroups()
+        {
+            using (var connection = new SqlConnection(_connectionString))
+            {
+                var query = @"
+            SELECT
+                g.Name AS GroupName,
+                COUNT(a.Id) AS AlbumCount
+            FROM
+                Groups g
+                LEFT JOIN Albums a ON g.Id = a.GroupId
+            GROUP BY
+                GROUPING SETS (g.Name, ())
+            ORDER BY
+                g.Name";
+
+                var result = await connection.QueryAsync(query);
+                return View("CountAlbumsByGroups", result);
+            }
+        }
     }
 }
