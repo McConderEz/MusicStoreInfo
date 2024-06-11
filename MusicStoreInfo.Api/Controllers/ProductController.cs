@@ -29,16 +29,23 @@ namespace MusicStoreInfo.Api.Controllers
 
         [HttpGet]
         public IActionResult Index(int page = 1, int? minPrice = null, int? maxPrice = null,
-                                   int? minQuantity = null, int? maxQuantity = null,
-                                   List<int> storeIds = null, List<int> groupIds = null, List<int> genreIds = null, string sortOrder = null, string searchString = null)
+                           int? minQuantity = null, int? maxQuantity = null,
+                           List<int> storeIds = null, List<int> groupIds = null, List<int> genreIds = null, string sortOrder = null, string searchString = null)
         {
             var products = _service.GetAllAsync().Result;
+
+            if (User.IsInRole("Manager"))
+            {
+                var currentUser = _dbContext.Users.Include(u => u.Store).FirstOrDefault(u => u.UserName.Equals(User.Identity.Name));
+                products = _service.GetAllAsync().Result.Where(p => p.StoreId == currentUser.StoreId).ToList();
+            }
+
 
             products = Filter(minPrice, maxPrice, minQuantity, maxQuantity, storeIds, groupIds, genreIds, products);
 
             if (!string.IsNullOrEmpty(searchString))
             {
-                products = products.Where(p => p.Album.Name.Contains(searchString, StringComparison.OrdinalIgnoreCase) 
+                products = products.Where(p => p.Album.Name.Contains(searchString, StringComparison.OrdinalIgnoreCase)
                                         || p.Album.Group.Name.Contains(searchString, StringComparison.OrdinalIgnoreCase)
                                         || p.Store.Name.Contains(searchString, StringComparison.OrdinalIgnoreCase)).ToList();
             }
@@ -146,11 +153,18 @@ namespace MusicStoreInfo.Api.Controllers
 
         [HttpGet]
         [Authorize(Policy = "Manager")]
-        public IActionResult Edit()
+        public async Task<IActionResult> Edit(int storeId, int albumId)
         {
-            ViewBag.Albums = new SelectList(_dbContext.Albums, "Id", "Name");
-            ViewBag.Stores = new SelectList(_dbContext.Stores, "Id", "Name");
-            return View();
+            var product = await _dbContext.Products.FindAsync(storeId, albumId);
+            if (product == null)
+            {
+                return NotFound();
+            }
+
+            ViewBag.Albums = new SelectList(_dbContext.Albums, "Id", "Name", product.AlbumId);
+            ViewBag.Stores = new SelectList(_dbContext.Stores, "Id", "Name", product.StoreId);
+
+            return View(product);
         }
 
         [HttpPost]
@@ -158,7 +172,9 @@ namespace MusicStoreInfo.Api.Controllers
         {
             if (!ModelState.IsValid)
             {
-                return View();
+                ViewBag.Albums = new SelectList(_dbContext.Albums, "Id", "Name", model.AlbumId);
+                ViewBag.Stores = new SelectList(_dbContext.Stores, "Id", "Name", model.StoreId);
+                return View(model);
             }
 
             await _service.EditAsync(id, model);

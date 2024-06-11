@@ -64,9 +64,10 @@ namespace MusicStoreInfo.DAL.Repositories
             await _dbContext.SaveChangesAsync();
         }
 
-        public async Task Update(int id, int listenerTypeId, int companyId, int groupId,
+        public async Task Update(int id, int listenerTypeId, int groupId, int companyId,
             string name, int duration, DateTime releaseDate, int songsCount, string imagePath)
         {
+
             await _dbContext.Albums
                 .Where(a => a.Id == id)
                 .ExecuteUpdateAsync(s => s

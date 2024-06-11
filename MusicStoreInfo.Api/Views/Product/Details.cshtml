@@ -7,6 +7,7 @@
     var dbContext = new MusicStoreDbContext();
     var user = dbContext.Users.FirstOrDefault(u => u.UserName.Equals(User.Identity.Name));
     var order = dbContext.Orders.FirstOrDefault(o => o.ProductId == Model.Id && o.UserId == user.Id);
+    var reviewOnProduct = dbContext.Reviews.FirstOrDefault(r => r.UserId == user.Id && r.ProductId == Model.Id);
 }
 
 <!DOCTYPE html>
@@ -108,9 +109,12 @@
 <h2>Песни альбома</h2>
 <table class="table table-bordered">
     <tr>
-        <th>
-            Id
-        </th>
+        @if (!User.IsInRole("Client"))
+        {
+            <th>
+                Id
+            </th>
+        }
         <th>
             Название
         </th>
@@ -124,9 +128,12 @@
     @foreach (var item in Model.Album.Songs)
     {
         <tr>
-            <td>
-                @item.Id
-            </td>
+            @if (!User.IsInRole("Client"))
+            {
+                <td>
+                    @item.Id
+                </td>
+            }
             <td>
                 @item.Name
             </td>
@@ -143,12 +150,13 @@
 <div>
     @if (User.IsInRole("Manager"))
     {
-        <a asp-action="Edit" class="btn btn-primary" asp-route-id="@Model?.Id">Изменить</a>
+        <a asp-action="Edit" class="btn btn-primary" asp-route-storeId="@Model.StoreId" asp-route-albumId="@Model.AlbumId">Изменить</a>
     }
     <a asp-action="Index" class="btn btn-secondary">Вернуться назад</a>
 </div>
 
-@if(order != null){
+@if (order != null && reviewOnProduct == null)
+{
 <body>
     <h2>Комментарии и отзывы</h2>
     <div>

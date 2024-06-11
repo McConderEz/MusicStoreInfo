@@ -47,7 +47,7 @@ namespace MusicStoreInfo.Services.Services.ShoppingCartService
             try
             {
                 var product = await _dbContext.Products.FirstOrDefaultAsync(p => p.StoreId == storeId && p.AlbumId == albumId);
-                await _shoppingCartRepository.DeleteProduct(id, product.Id);
+                await _shoppingCartRepository.DeleteProductAsync(id, product.Id);
             }
             catch(Exception ex)
             {

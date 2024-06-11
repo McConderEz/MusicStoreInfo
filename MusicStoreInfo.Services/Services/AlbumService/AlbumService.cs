@@ -33,7 +33,7 @@ namespace MusicStoreInfo.Services.Services.AlbumService
 
         public async Task EditAsync(int id, Album model)
         {
-            var album = _repository.GetById(id);
+            var album = await _repository.GetById(id);
 
             if (album == null)
                 throw new InvalidOperationException("Данный объект не найден в коллекции");

@@ -30,7 +30,7 @@ namespace MusicStoreInfo.Services.Services.ProductService
 
         public async Task EditAsync(int id, Product model)
         {
-            var product = _repository.GetById(id);
+            var product = await _repository.GetById(id);
 
             if (product == null)
                 throw new InvalidOperationException("Данный объект не найден в коллекции");

@@ -9,6 +9,7 @@ using MusicStoreInfo.Services.Services.OrderService;
 using MusicStoreInfo.Services.Services.ProductService;
 using MusicStoreInfo.Services.Services.ShoppingCartService;
 using System.Text.Json;
+using System.Transactions;
 
 namespace MusicStoreInfo.Api.Controllers
 {
@@ -18,13 +19,15 @@ namespace MusicStoreInfo.Api.Controllers
         private readonly IProductService _productService;
         private readonly IShoppingCartService _shoppingCartService;
         private readonly MusicStoreDbContext _dbContext;
+        private readonly IServiceProvider _serviceProvider;
 
-        public OrderController(IOrderService orderService, IProductService productService, MusicStoreDbContext dbContext, IShoppingCartService shoppingCartService)
+        public OrderController(IOrderService orderService, IProductService productService, MusicStoreDbContext dbContext, IShoppingCartService shoppingCartService, IServiceProvider serviceProvider)
         {
             _service = orderService;
             _productService = productService;
             _dbContext = dbContext;
             _shoppingCartService = shoppingCartService;
+            _serviceProvider = serviceProvider;
         }
 
         public async Task<IActionResult> Index()
@@ -118,18 +121,47 @@ namespace MusicStoreInfo.Api.Controllers
         {
             if (ModelState.IsValid)
             {
-                var product = _dbContext.Products.FirstOrDefault(p => p.StoreId == order.StoreId && p.AlbumId == order.AlbumId);
-                int id = int.Parse(User.Claims.FirstOrDefault(c => c.Type == "ShoppingCartId")?.Value!);
-                if (product != null)
+                using (var scope = _serviceProvider.CreateScope())
                 {
-                    product.Quantity -= order.Quantity;
-                    await _service.AddAsync(order);
-                    await _productService.EditAsync(product.Id, product);
-                    await _shoppingCartService.DeleteProductAsync(id, product.AlbumId, product.StoreId);
-                    _dbContext.SaveChanges();
-                }
+                    var scopedDbContext = scope.ServiceProvider.GetRequiredService<MusicStoreDbContext>();
+                    var scopedOrderService = scope.ServiceProvider.GetRequiredService<IOrderService>();
+                    var scopedProductService = scope.ServiceProvider.GetRequiredService<IProductService>();
+                    var scopedCartService = scope.ServiceProvider.GetRequiredService<IShoppingCartService>();
 
-                return RedirectToAction("Index", "ShoppingCart", new {id = id});
+                    using (var transaction = await scopedDbContext.Database.BeginTransactionAsync())
+                    {
+                        try
+                        {
+                            var product = await scopedDbContext.Products.FirstOrDefaultAsync(p => p.StoreId == order.StoreId && p.AlbumId == order.AlbumId);
+                            int id = int.Parse(User.Claims.FirstOrDefault(c => c.Type == "ShoppingCartId")?.Value!);
+                            if (product != null)
+                            {
+                                product.Quantity -= order.Quantity;
+                                await scopedDbContext.SaveChangesAsync(); // Сохранение изменений в продукте
+
+                                await scopedOrderService.AddAsync(order);
+                                await scopedDbContext.SaveChangesAsync(); // Сохранение нового заказа
+
+                                // Редактирование продукта
+                                scopedDbContext.Products.Attach(product);
+                                await scopedProductService.EditAsync(product.Id, product);
+                                await scopedDbContext.SaveChangesAsync(); // Сохранение изменений в продукте через сервис
+
+                                // Удаление продукта из корзины
+                                await scopedCartService.DeleteProductAsync(id, product.AlbumId, product.StoreId);
+                                await scopedDbContext.SaveChangesAsync(); // Сохранение изменений в корзине
+                            }
+
+                            await transaction.CommitAsync();
+                            return RedirectToAction("Index", "ShoppingCart", new { id = id });
+                        }
+                        catch (Exception)
+                        {
+                            await transaction.RollbackAsync();
+                            throw;
+                        }
+                    }
+                }
             }
 
             return View(order);

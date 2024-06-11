@@ -62,7 +62,8 @@ namespace MusicStoreInfo.DAL.Repositories
 
                 if(quantity <= 0 && product != null)
                 {
-                    DeleteProduct(id, product!.Id);
+                    await DeleteProductAsync(id, product!.Id);
+                    return;
                 }
 
                 var shoppingCartProduct = await _dbContext.ShoppingCartProductLinks.FirstOrDefaultAsync(scp => scp.ProductId == product.Id && scp.ShoppingCartId == shoppingCart.Id);
@@ -95,18 +96,29 @@ namespace MusicStoreInfo.DAL.Repositories
             }
         }
 
-        public async Task DeleteProduct(int id, int productId)
+        public async Task DeleteProductAsync(int id, int productId)
         {
             try
             {
-                var shoppingCart = await _dbContext.ShoppingCarts.Include(s => s.ShoppingCartProducts).ThenInclude(scp => scp.Product).FirstOrDefaultAsync(s => s.Id == id);
-                var product = shoppingCart.ShoppingCartProducts.FirstOrDefault(p => p.ProductId == productId && p.ShoppingCartId == id);
-                if (shoppingCart != null && product != null)
+                var shoppingCart = await _dbContext.ShoppingCarts
+                    .Include(s => s.ShoppingCartProducts)
+                    .ThenInclude(scp => scp.Product)
+                    .FirstOrDefaultAsync(s => s.Id == id);
+
+                if (shoppingCart == null)
+                {
+                    throw new Exception("Shopping cart is null!");
+                }
+
+                var product = shoppingCart.ShoppingCartProducts
+                    .FirstOrDefault(p => p.ProductId == productId && p.ShoppingCartId == id);
+
+                if (product != null)
                 {
                     shoppingCart.ShoppingCartProducts.Remove(product);
                     await _dbContext.SaveChangesAsync();
                 }
-            } 
+            }
             catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);

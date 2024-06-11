@@ -1,4 +1,4 @@
-﻿@using Microsoft.CodeAnalysis
+﻿﻿@using Microsoft.CodeAnalysis
 @using MusicStoreInfo.Domain.Entities
 @using MusicStoreInfo.DAL
 @using Microsoft.EntityFrameworkCore;
@@ -234,57 +234,59 @@
 
 
 <body>
-<table class="table table-bordered">
-    <thead>
-        <tr>
-            @if (User.IsInRole("Manager") || User.IsInRole("Admin"))
-            {
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                @if (User.IsInRole("Manager") || User.IsInRole("Admin"))
+                {
+                    <th>
+                        Id
+                    </th>
+                }
                 <th>
-                    Id
-            </th>
-            }
-            <th>
-                Обложка
-            </th>
-            <th>
-                Альбом
-            </th>
-            <th>
-                Магазин
-            </th>
-            <th>
-                Район
-            </th>
-            <th>
-                Город
-            </th>           
-            <th>
-                Группа
-            </th>
-            <th>
-                Количество
-            </th>
-            <th>
-                Цена
-            </th>
-            <th>
-                Рейтинг
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-    @if(User.IsInRole("Manager"))
-    {
-            @foreach (var item in Model.Products.Where(p => p.Store.Name.Equals(currentUser.Store?.Name))) {
+                    Обложка
+                </th>
+                <th>
+                    Альбом
+                </th>
+                <th>
+                    Магазин
+                </th>
+                <th>
+                    Район
+                </th>
+                <th>
+                    Город
+                </th>
+                <th>
+                    Группа
+                </th>
+                <th>
+                    Количество
+                </th>
+                <th>
+                    Цена
+                </th>
+                <th>
+                    Рейтинг
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (User.IsInRole("Manager"))
+            {
+                @foreach (var item in Model.Products.Where(p => p.Store.Name.Equals(currentUser.Store?.Name)))
+                {
                     <tr>
-                            @if (User.IsInRole("Manager") || User.IsInRole("Admin")){
+                        @if (User.IsInRole("Manager") || User.IsInRole("Admin"))
+                        {
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Id)
+                            </td>
+                        }
                         <td>
-                            @Html.DisplayFor(modelItem => item.Id)
-                        </td>
-                            }
-                        <td>
-                                <img src="@("~/image/" + item.Album.ImagePath)" asp-append-version="true" width="50px" height="50px" class="rounded-circle" />
+                            <img src="@("~/image/" + item.Album.ImagePath)" asp-append-version="true" width="50px" height="50px" class="rounded-circle" />
                         </td>
                         <td>
                             @Html.DisplayFor(modelItem => item.Album.Name)
@@ -305,7 +307,7 @@
                             @Html.DisplayFor(modelItem => item.Quantity)
                         </td>
                         <td>
-                                    @Html.DisplayFor(modelItem => item.Price)
+                            @Html.DisplayFor(modelItem => item.Price)
                         </td>
                         <td>
                             @{
@@ -317,8 +319,8 @@
                             @if ((User.IsInRole("Manager") || User.IsInRole("Admin")) && int.Parse(User.Claims.FirstOrDefault(c => c.Type == "StoreId")?.Value) == item.StoreId)
                             {
                                 @* <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-primary btn-sm">Изменить</a>
-                                <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-primary btn-sm">Подробнее</a>
-                                <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger btn-sm">Удалить</a> *@
+                    <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-primary btn-sm">Подробнее</a>
+                    <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger btn-sm">Удалить</a> *@
                                 <div class="button-container">
                                     <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-primary btn-sm">
                                         <i class="fas fa-edit"></i>
@@ -436,7 +438,8 @@
                                     var quantity = shoppingCart.ShoppingCartProducts.FirstOrDefault(scp => scp.Product.AlbumId == item.AlbumId && scp.Product.StoreId == item.StoreId).Quantity;
                                     <div class="container">
                                         <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-primary btn-sm details-button">Подробнее</a>
-                                        @if(item.Quantity != 0){
+                                        @if (item.Quantity != 0)
+                                        {
                                             <a class="add-to-cart btn btn-primary btn-sm details-button" data-store-id="@item.StoreId" data-album-id="@item.AlbumId" style="display: none;">Добавить в корзину</a>
                                             @if (quantity > 0)
                                             {
@@ -455,13 +458,14 @@
 
                                     <div class="container">
                                         <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-primary btn-sm details-button">Подробнее</a>
-                                        @if(item.Quantity > 0){
-                                             <a class="add-to-cart btn btn-primary btn-sm details-button" data-store-id="@item.StoreId" data-album-id="@item.AlbumId">Добавить в корзину</a>
-                                             <div class="quantity-container" style="display: none;">
-                                                 <button class="btn btn-outline-secondary btn-sm minus-button" type="button" data-store-id="@item.StoreId" data-album-id="@item.AlbumId">-</button>
-                                                 <span class="quantity">1</span>
-                                                 <button class="btn btn-outline-secondary btn-sm plus-button" type="button" data-store-id="@item.StoreId" data-album-id="@item.AlbumId" data-max-quantity="@item.Quantity">+</button>
-                                             </div>
+                                        @if (item.Quantity > 0)
+                                        {
+                                            <a class="add-to-cart btn btn-primary btn-sm details-button" data-store-id="@item.StoreId" data-album-id="@item.AlbumId">Добавить в корзину</a>
+                                            <div class="quantity-container" style="display: none;">
+                                                <button class="btn btn-outline-secondary btn-sm minus-button" type="button" data-store-id="@item.StoreId" data-album-id="@item.AlbumId">-</button>
+                                                <span class="quantity">1</span>
+                                                <button class="btn btn-outline-secondary btn-sm plus-button" type="button" data-store-id="@item.StoreId" data-album-id="@item.AlbumId" data-max-quantity="@item.Quantity">+</button>
+                                            </div>
                                         }
                                     </div>
                                 }
@@ -472,8 +476,8 @@
                 }
             }
         </tbody>
-    
-</table>
+
+    </table>
 </body>
 
 <div class="container">

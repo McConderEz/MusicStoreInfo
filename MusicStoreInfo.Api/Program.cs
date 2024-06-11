@@ -56,7 +56,6 @@ builder.Services.AddDbContext<MusicStoreDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
 });
 
-
 #region Внедрение зависимостей
 builder.Services.AddScoped<IAlbumRepository, AlbumRepository>();
 builder.Services.AddScoped<IAlbumService, AlbumService>();
@@ -122,6 +121,8 @@ builder.Services.AddScoped<IReviewService, ReviewService>();
 builder.Services.AddScoped<IOrderRepository, OrderRepository>();
 builder.Services.AddScoped<IOrderService, OrderService>();
 #endregion
+
+
 
 var app = builder.Build();
 app.UseStaticFiles();
